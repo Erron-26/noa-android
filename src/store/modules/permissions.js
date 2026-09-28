@@ -27,7 +27,7 @@ export const usePermissionsStore = defineStore("permissions", {
         async load() {
             if (this.isLoaded) return;
             const { authService } = await import("@services/api/auth.service.js");
-            const { user } = await authService.getProfile();
+            const user = await authService.getProfile();
             this.setUser(user);
         },
 

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOA Transportes — Dashboard Mockup Android</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1f2e;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+    gap: 40px;
+    flex-wrap: wrap;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Phone Shell ── */
+  .phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .phone-tag {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #0f1623;
+    border-radius: 48px;
+    border: 3px solid #2a3448;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #0a0e17,
+      0 40px 80px rgba(0,0,0,.6),
+      inset 0 1px 0 rgba(255,255,255,.06);
+  }
+
+  /* Dynamic island */
+  .dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* ── App Interna ── */
+  .app {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #f0f3f8;
+  }
+
+  /* Status bar */
+  .status-bar {
+    height: 54px;
+    background: #0c2461;
+    padding: 28px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .status-bar .time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .status-bar .sicons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .status-bar .sicons span {
+    font-size: 12px;
+    color: #fff;
+  }
+
+  /* Top nav */
+  .topnav {
+    background: #0c2461;
+    padding: 10px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: #1e40af;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: #60a5fa;
+    letter-spacing: -.5px;
+  }
+  .logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .02em;
+  }
+  .logo-sub {
+    font-size: 10px;
+    color: #93c5fd;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .bell-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.1);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+  .bell-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  .bell-badge {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    width: 7px;
+    height: 7px;
+    background: #f97316;
+    border-radius: 50%;
+    border: 1.5px solid #0c2461;
+  }
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* Scroll area */
+  .scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    padding-bottom: 80px;
+  }
+  .scroll-area::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Hero Card ── */
+  .hero-card {
+    margin: 14px 16px 0;
+    border-radius: 20px;
+    padding: 18px 18px 16px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.04);
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-driver {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .hero-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    border: 2px solid rgba(255,255,255,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .greeting {
+    font-size: 11px;
+    color: #93c5fd;
+    font-weight: 400;
+  }
+  .name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 1px;
+  }
+  .badge-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .badge {
+    font-size: 9px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-role {
+    background: #f97316;
+    color: #fff;
+  }
+  .badge-license {
+    background: rgba(34,197,94,.25);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,.3);
+  }
+  .hero-meta {
+    font-size: 10px;
+    color: rgba(255,255,255,.5);
+    margin-top: 6px;
+  }
+  .hero-meta span {
+    color: rgba(255,255,255,.7);
+  }
+
+  /* Stats strip */
+  .stats-strip {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .stat-item {
+    flex: 1;
+    background: rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 8px 6px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .sv {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .sl {
+    font-size: 9px;
+    color: rgba(255,255,255,.55);
+    margin-top: 1px;
+  }
+
+  /* ── Section Header (Gestión Rápida) ── */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 16px 8px;
+  }
+  .section-header.mt {
+    margin-top: 6px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+  .section-title .icon {
+    width: 20px;
+    height: 20px;
+    background: #1e40af;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title .icon.orange {
+    background: #f97316;
+  }
+  .section-title .icon svg {
+    width: 11px;
+    height: 11px;
+  }
+  .see-all {
+    font-size: 11px;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+  .search-input {
+    font-size: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 4px 8px;
+    color: #94a3b8;
+    background: #f8fafc;
+    width: 110px;
+    font-family: inherit;
+    outline: none;
+  }
+  .search-input::placeholder {
+    color: #94a3b8;
+  }
+
+  /* ── Module Grid (.module-grid) ── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 16px;
+  }
+  .module-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .mc-blue::before { background: #3b82f6; }
+  .mc-orange::before { background: #f97316; }
+  .mc-green::before { background: #22c55e; }
+  .mc-teal::before { background: #14b8a6; }
+
+  .mc-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mc-blue .mc-icon-wrap { background: #eff6ff; }
+  .mc-orange .mc-icon-wrap { background: #fff7ed; }
+  .mc-green .mc-icon-wrap { background: #f0fdf4; }
+  .mc-teal .mc-icon-wrap { background: #f0fdfa; }
+  .mc-icon-wrap svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mc-count {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .mc-blue .mc-count { background: #dbeafe; color: #1d4ed8; }
+  .mc-orange .mc-count { background: #ffedd5; color: #c2410c; }
+  .mc-green .mc-count { background: #dcfce7; color: #15803d; }
+  .mc-teal .mc-count { background: #ccfbf1; color: #0f766e; }
+
+  .mc-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+  }
+  .mc-desc {
+    font-size: 10px;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+  .mc-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .mc-btn-primary {
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  .mc-blue .mc-btn-primary { background: #3b82f6; }
+  .mc-orange .mc-btn-primary { background: #f97316; }
+  .mc-green .mc-btn-primary { background: #22c55e; }
+  .mc-teal .mc-btn-primary { background: #14b8a6; }
+
+  .mc-btn-secondary {
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  /* ── Sección Mis Vehículos ── */
+  .vehicle-section {
+    padding: 0 16px;
+    margin-top: 4px;
+  }
+  .empty-vehicle {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .ev-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    opacity: .45;
+  }
+  .ev-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+  .ev-sub {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  /* ── Bottom Nav (.bottomnav) ── */
+  .bottomnav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 8px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+    z-index: 50;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    flex: 1;
+    padding-top: 4px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+  }
+  .nav-item span {
+    font-size: 9px;
+    font-weight: 600;
+  }
+  .nav-item.active svg {
+    stroke: #2563eb;
+  }
+  .nav-item.active span {
+    color: #2563eb;
+  }
+  .nav-item:not(.active) svg {
+    stroke: #94a3b8;
+  }
+  .nav-item:not(.active) span {
+    color: #94a3b8;
+  }
+
+  /* Home indicator */
+  .home-indicator {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 5px;
+    background: rgba(0,0,0,.2);
+    border-radius: 3px;
+    z-index: 200;
+  }
+
+  /* ── Panel de Anotaciones (derecha) ── */
+  .label-panel {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 60px;
+  }
+  .label-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .label-line {
+    width: 24px;
+    height: 1px;
+    background: #374151;
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+  .lt {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .ld {
+    font-size: 12px;
+    color: #d1d5db;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- Phone Shell -->
+<div class="phone-wrapper">
+  <div class="phone-tag">Android · Capacitor</div>
+  <div class="phone">
+    <!-- Dynamic island -->
+    <div class="dynamic-island"></div>
+
+    <!-- App Interna -->
+    <div class="app">
+      <!-- Status bar -->
+      <div class="status-bar">
+        <span class="time">9:41</span>
+        <div class="sicons">
+          <span>▲ 4G</span>
+          <span>🔋</span>
+        </div>
+      </div>
+
+      <!-- Top nav -->
+      <div class="topnav">
+        <div class="logo">
+          <div class="logo-mark">NOA</div>
+          <div>
+            <div class="logo-text">NOA Transportes</div>
+            <div class="logo-sub">Portal Conductor</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="bell-btn" type="button" aria-label="Notificaciones">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 01-3.46 0"/>
+            </svg>
+            <span class="bell-badge"></span>
+          </button>
+          <div class="avatar">HE</div>
+        </div>
+      </div>
+
+      <!-- Scroll Area -->
+      <div class="scroll-area">
+        <!-- Hero card -->
+        <div class="hero-card">
+          <div class="hero-top">
+            <div class="hero-driver">
+              <div class="hero-avatar">HE</div>
+              <div class="hero-info">
+                <div class="greeting">Buenas tardes</div>
+                <div class="name">Sr. Hector</div>
+                <div class="badge-row">
+                  <span class="badge badge-role">ROL CONDUCTOR</span>
+                  <span class="badge badge-license">Cat. C2 · ACTIVA</span>
+                </div>
+                <div class="hero-meta">CC: <span>92521182</span> · Vence: <span>2029-02-23</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="stats-strip">
+            <div class="stat-item"><div class="sv">0</div><div class="sl">Inspecciones</div></div>
+            <div class="stat-item"><div class="sv">0</div><div class="sl">Planillas</div></div>
+            <div class="stat-item"><div class="sv">0</div><div class="sl">FUECs</div></div>
+            <div class="stat-item"><div class="sv">0</div><div class="sl">Servicios</div></div>
+          </div>
+        </div>
+
+        <!-- Gestión rápida -->
+        <div class="section-header">
+          <div class="section-title">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+              </svg>
+            </span>
+            Gestión Rápida
+          </div>
+          <span class="see-all">Ver todo</span>
+        </div>
+
+        <!-- Module Grid -->
+        <div class="module-grid">
+          <!-- 1. Inspecciones (mc-blue) -->
+          <div class="module-card mc-blue">
+            <span class="mc-count">0 registradas</span>
+            <div class="mc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="8" y="2" width="8" height="4" rx="1"/>
+                <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+                <path d="M9 14l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="mc-title">Inspecciones</div>
+            <div class="mc-desc">Historial de seguridad vial pre-operacional</div>
+            <div class="mc-actions">
+              <button class="mc-btn-primary" type="button">Ver inspecciones</button>
+              <button class="mc-btn-secondary" type="button">+ Nueva</button>
+            </div>
+          </div>
+
+          <!-- 2. Planillas (mc-orange) -->
+          <div class="module-card mc-orange">
+            <span class="mc-count">0 registradas</span>
+            <div class="mc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <path d="M14 2v6h6"/>
+                <path d="M9 13h6M9 17h6"/>
+              </svg>
+            </div>
+            <div class="mc-title">Planillas de Control</div>
+            <div class="mc-desc">Verificación de documentos PDF y auditoría</div>
+            <div class="mc-actions">
+              <button class="mc-btn-primary" type="button">Ver planillas</button>
+              <button class="mc-btn-secondary" type="button">+ Nueva</button>
+            </div>
+          </div>
+
+          <!-- 3. FUEC (mc-green) -->
+          <div class="module-card mc-green">
+            <span class="mc-count">0 asignados</span>
+            <div class="mc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <path d="M14 2v6h6"/>
+              </svg>
+            </div>
+            <div class="mc-title">FUEC</div>
+            <div class="mc-desc">Extractos únicos de contrato vigentes</div>
+            <div class="mc-actions">
+              <button class="mc-btn-primary" type="button">Mis FUECs</button>
+              <button class="mc-btn-secondary" type="button">✓ Doc. en ruta</button>
+            </div>
+          </div>
+
+          <!-- 4. Control Servicio (mc-teal) -->
+          <div class="module-card mc-teal">
+            <span class="mc-count">0 servicios</span>
+            <div class="mc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.9 19.1a10 10 0 010-14.2M7.8 16.2a5.5 5.5 0 010-8.4M16.2 7.8a5.5 5.5 0 010 8.4M19.1 4.9a10 10 0 010 14.2"/>
+                <circle cx="12" cy="12" r="1.5" fill="#14b8a6"/>
+              </svg>
+            </div>
+            <div class="mc-title">Control de Servicio</div>
+            <div class="mc-desc">Planillas PCP, hora y km de recorrido</div>
+            <div class="mc-actions">
+              <button class="mc-btn-primary" type="button">Registrar</button>
+              <button class="mc-btn-secondary" type="button">Listado</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mis vehículos -->
+        <div class="section-header mt">
+          <div class="section-title">
+            <span class="icon orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 8h14v9H1zM15 11h4l3 3v3h-7z"/>
+                <circle cx="6" cy="19" r="1.6"/>
+                <circle cx="17" cy="19" r="1.6"/>
+              </svg>
+            </span>
+            Mis Vehículos
+          </div>
+          <input class="search-input" type="text" placeholder="🔍 Buscar placa..." autocomplete="off">
+        </div>
+
+        <!-- Vehicle section -->
+        <div class="vehicle-section">
+          <div class="empty-vehicle">
+            <div class="ev-icon">🚌</div>
+            <div class="ev-title">Sin vehículos asignados</div>
+            <div class="ev-sub">No tienes vehículos vinculados a proyectos o extractos de contrato (FUEC) activos.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottomnav">
+        <button class="nav-item active" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Inicio</span>
+        </button>
+        <button class="nav-item" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="2" width="8" height="4" rx="1"/>
+            <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+            <path d="M9 12h6M9 16h6"/>
+          </svg>
+          <span>FUECs</span>
+        </button>
+        <button class="nav-item" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 8h14v9H1zM15 11h4l3 3v3h-7z"/>
+            <circle cx="6" cy="19" r="1.6"/>
+            <circle cx="17" cy="19" r="1.6"/>
+          </svg>
+          <span>Vehículos</span>
+        </button>
+        <button class="nav-item" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Perfil</span>
+        </button>
+      </div>
+
+      <!-- Home indicator -->
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Label Panel (derecha) -->
+<div class="label-panel">
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Status bar</div>
+      <div class="ld">Zona segura — respeta safe-area de Android</div>
+    </div>
+  </div>
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Top nav</div>
+      <div class="ld">Logo + campana de notif. + avatar compactos</div>
+    </div>
+  </div>
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Hero card</div>
+      <div class="ld">Saludo, badges de rol/licencia y strip de estadísticas rápidas</div>
+    </div>
+  </div>
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Grid 2×2</div>
+      <div class="ld">Los 4 módulos condensados con color accent y acciones primaria/secundaria</div>
+    </div>
+  </div>
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Vehículos</div>
+      <div class="ld">Estado vacío centrado — buscador compacto en el header</div>
+    </div>
+  </div>
+  <div class="label-item">
+    <div class="label-line"></div>
+    <div>
+      <div class="lt">Bottom nav</div>
+      <div class="ld">4 ítems principales — thumb-zone friendly — fijo con safe-area bottom</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

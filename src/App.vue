@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { Capacitor } from '@capacitor/core';
 import DashboardLayout from '@/components/DashboardLayout.vue';
 import { useNotificationsStore } from '@/features/notifications/store/notifications.store.js';
 import { useConfigStore } from '@/store/modules/config.js';
@@ -11,12 +12,17 @@ import { useVersionUpdateStore } from '@/features/versionUpdate/store/versionUpd
 import VersionUpdateBanner from '@/components/VersionUpdateBanner.vue';
 import VersionUpdateModal from '@/components/VersionUpdateModal.vue';
 
+// El modal de actualización solo aplica en la app Android nativa.
+// En web (navegador) no se muestra — el banner ya cubre ese caso.
+const isNative = Capacitor.isNativePlatform();
+
 const route = useRoute();
 const notificationsStore = useNotificationsStore();
 const configStore = useConfigStore();
 const versionUpdateStore = useVersionUpdateStore();
 
 const showVersionBanner = computed(() => {
+  if (!isNative) return false;
   if (route.path === '/login') return false;
   if (configStore.isAppLoading) return false;
   return versionUpdateStore.shouldOffer;
@@ -114,9 +120,9 @@ const getInitialsLabel = (type) => {
   <!-- Alerta de nueva versión (web y Android): no intrusiva, oculta en /login -->
   <VersionUpdateBanner v-if="showVersionBanner" />
 
-  <!-- Modal de nueva versión: se muestra en CUALQUIER ruta (incluido
-       /login) apenas se detecta update, sin necesidad de iniciar sesión -->
-  <VersionUpdateModal />
+  <!-- Modal de nueva versión: SOLO en app Android nativa (Capacitor).
+       En web el VersionUpdateBanner ya informa sin ser intrusivo. -->
+  <VersionUpdateModal v-if="isNative" />
 
   <!-- Alertas temporales transitorias; el conteo persistente vive en los clumps del Navbar -->
   <div class="expiry-notifications-hub">

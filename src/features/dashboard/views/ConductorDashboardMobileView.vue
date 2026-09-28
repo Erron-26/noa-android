@@ -47,117 +47,51 @@
          Prioridad 2: Inicio / Control de Servicio en Ruta
     ═══════════════════════════════════════════════════════════ -->
     <div class="priority-flow-card" :class="tieneInspeccionHoy ? 'is-inspected' : 'is-pending'" role="region" aria-labelledby="titulo-prioridad">
-      <!-- Caso 1: Inspección pendiente (Prioridad 1) -->
+
+      <!-- Caso 1: Inspección pendiente — banner amber compacto -->
       <template v-if="!tieneInspeccionHoy">
-        <div class="priority-header">
-          <div class="priority-badge-wrap">
-            <span class="priority-pill pill-warning">
-              <span class="priority-pulse-dot" aria-hidden="true"></span>
-              PASO 1 · PREOPERACIONAL PENDIENTE
-            </span>
+        <div class="pf-compact-row">
+          <div class="pf-left">
+            <span class="pf-pulse-dot" aria-hidden="true"></span>
+            <i class="fas fa-clipboard-check pf-icon" aria-hidden="true"></i>
+            <span id="titulo-prioridad" class="pf-label">Preoperacional pendiente</span>
+            <span v-if="primerVehiculo" class="pf-plate">{{ formatearPlaca(primerVehiculo.plate) }}</span>
           </div>
-          <span v-if="primerVehiculo" class="priority-vehicle-tag">
-            <i class="fas fa-truck me-1" aria-hidden="true"></i>{{ formatearPlaca(primerVehiculo.plate) }}
-          </span>
-        </div>
-
-        <div class="priority-body">
-          <div class="priority-icon-box box-warning" aria-hidden="true">
-            <i class="fas fa-clipboard-check"></i>
-          </div>
-          <div class="priority-text">
-            <h2 id="titulo-prioridad" class="priority-title">Inspección Preoperacional Obligatoria</h2>
-            <p class="priority-desc">
-              Antes de salir a ruta o iniciar servicios, debes registrar la inspección diaria de tu vehículo.
-            </p>
-          </div>
-        </div>
-
-        <div class="priority-actions">
-          <router-link
-            to="/inspeccion-vehiculos/crear"
-            class="priority-main-btn btn-warning-action"
-          >
-            <i class="fas fa-play-circle me-1" aria-hidden="true"></i>
-            <span>Iniciar Inspección del Día</span>
+          <router-link to="/inspeccion-vehiculos/crear" class="pf-action-btn pf-btn-amber">
+            Iniciar <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
           </router-link>
-
-          <button
-            type="button"
-            class="priority-blocked-btn"
-            disabled
-            title="Debes realizar la inspección preoperacional antes de iniciar el servicio"
-          >
-            <i class="fas fa-lock me-1" aria-hidden="true"></i>
-            <span>Servicio bloqueado (Paso 2)</span>
-          </button>
         </div>
       </template>
 
-      <!-- Caso 2: Inspección completada -> Iniciar Servicio (Prioridad 2) -->
+      <!-- Caso 2: Inspección completada → opción de servicio compacta -->
       <template v-else>
-        <div class="priority-header">
-          <div class="priority-badge-wrap">
-            <span class="priority-pill pill-success">
-              <i class="fas fa-check-circle me-1" aria-hidden="true"></i>
-              PREOPERACIONAL DEL DÍA COMPLETADO
+        <div class="pf-compact-row">
+          <div class="pf-left">
+            <i class="fas fa-check-circle pf-icon pf-icon-green" aria-hidden="true"></i>
+            <span id="titulo-prioridad" class="pf-label">
+              {{ tieneServicioActivo ? 'Servicio en curso' : 'Listo para salir a ruta' }}
             </span>
+            <span v-if="primerVehiculo" class="pf-plate pf-plate-green">{{ formatearPlaca(primerVehiculo.plate) }}</span>
           </div>
-          <span v-if="primerVehiculo" class="priority-vehicle-tag is-success">
-            <i class="fas fa-truck me-1" aria-hidden="true"></i>{{ formatearPlaca(primerVehiculo.plate) }}
-          </span>
-        </div>
-
-        <div class="priority-body">
-          <div class="priority-icon-box box-success" aria-hidden="true">
-            <i class="fas fa-steering-wheel"></i>
-          </div>
-          <div class="priority-text">
-            <h2 id="titulo-prioridad" class="priority-title">
-              {{ tieneServicioActivo ? 'Servicio en Curso Habilitado' : 'Listo para Salir a Ruta' }}
-            </h2>
-            <p class="priority-desc">
-              <template v-if="tieneServicioActivo">
-                {{ activeService.project_name || 'Servicio activo' }}
-                <span v-if="activeService.start_time"> · Salida: {{ activeService.start_time }}</span>
-              </template>
-              <template v-else>
-                Vehículo verificado. Ya puedes abrir tu hoja de control y registrar recorridos.
-              </template>
-            </p>
-          </div>
-        </div>
-
-        <div class="priority-actions">
-          <!-- Si hay servicio activo: Continuar servicio -->
+          <!-- Si hay servicio activo: Continuar -->
           <router-link
             v-if="tieneServicioActivo && activeService.service_uuid"
             :to="`/planilla-de-control-de-prestacion-servicios/control-de-servicios?service_uuid=${activeService.service_uuid}`"
-            class="priority-main-btn btn-success-action"
+            class="pf-action-btn pf-btn-green"
           >
-            <i class="fas fa-play-circle me-1" aria-hidden="true"></i>
-            <span>Continuar Servicio en Ruta</span>
+            Continuar <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
           </router-link>
-
-          <!-- Si no hay servicio activo: Iniciar servicio -->
+          <!-- Si no hay servicio activo: Iniciar -->
           <router-link
             v-else
             to="/planilla-de-control-de-prestacion-servicios/control-de-servicios"
-            class="priority-main-btn btn-primary-action"
+            class="pf-action-btn pf-btn-blue"
           >
-            <i class="fas fa-steering-wheel me-1" aria-hidden="true"></i>
-            <span>Iniciar Control de Servicio</span>
-          </router-link>
-
-          <router-link
-            to="/inspeccion-vehiculos"
-            class="priority-sub-btn"
-          >
-            <i class="fas fa-clipboard-check me-1" aria-hidden="true"></i>
-            <span>Ver inspección de hoy</span>
+            Iniciar <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
           </router-link>
         </div>
       </template>
+
     </div>
 
     <!-- Módulos de gestión rápida -->
@@ -264,59 +198,23 @@
       </div>
     </div>
 
-    <!-- Pie de página móvil y acción de cierre de sesión -->
-    <div class="mobile-section mobile-footer-actions">
-      <button
-        type="button"
-        class="mobile-logout-full-btn"
-        :disabled="isLoggingOut"
-        @click="ejecutarCerrarSesion"
-      >
-        <span v-if="isLoggingOut" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-        <i v-else class="fas fa-sign-out-alt me-2" aria-hidden="true"></i>
-        <span>{{ isLoggingOut ? 'Cerrando sesión...' : 'Cerrar sesión' }}</span>
-      </button>
-      <p class="mobile-app-version">NOA Transportes · Conductor v{{ appVersion }}</p>
-    </div>
+
+
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useAuthStore, useConfigStore, usePermissionsStore, useUserStore } from '@store';
+import { useAuthStore, usePermissionsStore, useUserStore } from '@store';
 import { useDashboardStore } from '../store/dashboard.store';
-import { confirmLogout } from '@/utils/confirm.js';
-import { env } from '@utils/env.js';
 import { logger } from '@utils/logger.js';
 
-const appVersion = computed(() => env.APP_VERSION || '1.1.0');
-
 const authStore = useAuthStore();
-const configStore = useConfigStore();
 const userStore = useUserStore();
 const permissionsStore = usePermissionsStore();
 const dashboardStore = useDashboardStore();
 
 const busqueda = ref('');
-const isLoggingOut = ref(false);
-
-async function ejecutarCerrarSesion() {
-  if (isLoggingOut.value) return;
-
-  const confirmado = await confirmLogout();
-  if (!confirmado) return;
-
-  isLoggingOut.value = true;
-  configStore.setLoading(true, 'Cerrando sesión...');
-
-  try {
-    await authStore.logout({ redirect: true });
-  } catch (error) {
-    isLoggingOut.value = false;
-    configStore.setLoading(false);
-    logger.error('Error al cerrar sesión desde panel móvil:', error);
-  }
-}
 
 const datos = computed(() => dashboardStore.conductorData || {});
 const nombreCompleto = computed(() => {
@@ -437,7 +335,7 @@ onMounted(async () => {
   gap: 3px;
 }
 .hero-card {
-  margin: 6px 6px 0;
+  margin: 14px 16px 0;
   background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
   border-radius: 20px;
   padding: 18px 18px 16px;
@@ -557,28 +455,95 @@ onMounted(async () => {
   letter-spacing: 0;
   text-transform: none;
 }
-/* ── TARJETA DE FLUJO OPERATIVO PRIORITARIO (SMART BANNER) ── */
+/* ── BANNER PREOPERACIONAL COMPACTO ── */
 .priority-flow-card {
-  margin: 6px 6px 0;
-  border-radius: 16px;
+  margin: 10px 16px 0;
+  border-radius: 12px;
   background: #ffffff;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  position: relative;
-  overflow: hidden;
+  padding: 10px 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   border: 1px solid rgba(226, 232, 240, 0.8);
+  overflow: hidden;
 }
 .priority-flow-card.is-pending {
   border-left: 4px solid #f97316;
-  background: linear-gradient(180deg, #fffaf5 0%, #ffffff 100%);
+  background: #fffbf5;
 }
 .priority-flow-card.is-inspected {
   border-left: 4px solid #10b981;
-  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+  background: #f6fef9;
 }
+/* Fila compacta */
+.pf-compact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+.pf-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.pf-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f97316;
+  flex-shrink: 0;
+  animation: pulse-dot 1.4s infinite;
+}
+.pf-icon {
+  font-size: 13px;
+  color: #f97316;
+  flex-shrink: 0;
+}
+.pf-icon-green { color: #16a34a; }
+.pf-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pf-plate {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1px 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pf-plate-green {
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+.pf-action-btn {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  text-decoration: none !important;
+  color: #fff !important;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.pf-action-btn:active { opacity: 0.85; }
+.pf-btn-amber { background: #f97316; }
+.pf-btn-green { background: #16a34a; }
+.pf-btn-blue  { background: #2563eb; }
 .priority-header {
   display: flex;
   align-items: center;
@@ -1036,7 +1001,7 @@ a.mc-btn-secondary:active {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 14px 8px 24px;
+  padding: 14px 16px 24px;
 }
 .mobile-logout-full-btn {
   width: 100%;

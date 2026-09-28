@@ -7,7 +7,6 @@
  */
 import { ref } from "vue";
 import { Capacitor } from "@capacitor/core";
-import { FileOpener } from "@capacitor-community/file-opener";
 import { useVersionUpdateStore } from "@/features/versionUpdate/store/versionUpdate.store.js";
 import { logger } from "@utils/logger.js";
 
@@ -46,6 +45,7 @@ async function handleUpdate() {
         const filePath = dl && dl.path ? dl.path : fileName;
         statusMessage.value = "Abriendo instalador…";
         try {
+            const { FileOpener } = await import('@capacitor-community/file-opener');
             await FileOpener.open({
                 filePath,
                 contentType: "application/vnd.android.package-archive",

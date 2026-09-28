@@ -39,6 +39,13 @@ export const responseInterceptor = {
     error: async (error) => {
         const { response, config } = error;
 
+        // Las rutas públicas de autenticación gestionan su propio error en la vista
+        // de login (mensaje inline). No deben limpiar la sesión ni emitir
+        // `auth:unauthorized`, o un 401 por credenciales se convierte en logout global.
+        const url = String(config?.url || '');
+        const esRutaAuthPublica = url.includes('/login') || url.includes('/refresh-token');
+        if (esRutaAuthPublica) return Promise.reject(error);
+
         if (response?.status === 401) {
             if (_isHandling401) return Promise.reject(error);
             _isHandling401 = true;

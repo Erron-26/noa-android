@@ -8,8 +8,14 @@
                 </p>
             </div>
             <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-700">v1.0.0</p>
+                <p class="mb-0 text-700">v{{ appVersion }}</p>
             </div>
         </div>
     </footer>
 </template>
+
+<script setup>
+import env from '@/utils/env.js';
+
+const appVersion = env.APP_VERSION;
+</script>

@@ -76,7 +76,7 @@ export async function fetchLatestRelease() {
  * Retorna { hasUpdate, currentVersion, latestVersion, apkUrl, releaseUrl }.
  */
 export async function checkForUpdate() {
-    const currentVersion = env.APP_VERSION || "1.0.0";
+    const currentVersion = env.APP_VERSION || "1.1.6";
     const latest = await fetchLatestRelease();
     if (!latest) {
         return { hasUpdate: false, currentVersion, latestVersion: null, apkUrl: null, releaseUrl: "" };

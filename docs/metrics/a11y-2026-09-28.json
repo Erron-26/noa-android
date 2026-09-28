@@ -1,0 +1,363 @@
+{
+  "fecha": "2026-09-28",
+  "totales": {
+    "langEnHtml": 0,
+    "labelsSinFor": 91,
+    "controlesVModelSinId": 129,
+    "erroresSinRole": 0,
+    "ariaLabelsIngles": 0,
+    "roleButtonEnRouterLink": 0,
+    "enlacesMuertos": 1,
+    "aRoleButtonSinHref": 0,
+    "iconosSinAriaHidden": 959
+  },
+  "porArchivo": {
+    "src\\components\\assistant\\BubbleChat.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\components\\layout\\Navbar.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\components\\RuesLookupPanel.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 1,
+      "enlacesMuertos": 1,
+      "iconosSinAriaHidden": 19
+    },
+    "src\\components\\SignaturePad.vue": {
+      "labelsSinFor": 1
+    },
+    "src\\features\\affiliateAdminCharges\\views\\AffiliateAdminChargesDetailView.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\affiliateAdminCharges\\views\\AffiliateAdminChargesFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 10
+    },
+    "src\\features\\affiliateAdminCharges\\views\\AffiliateAdminChargesListView.vue": {
+      "labelsSinFor": 4,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 29
+    },
+    "src\\features\\assistant\\views\\ChatView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 9
+    },
+    "src\\features\\auth\\views\\GoogleCallbackView.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\auth\\views\\Rolepermissionsform.vue": {
+      "labelsSinFor": 4,
+      "controlesVModelSinId": 3,
+      "iconosSinAriaHidden": 23
+    },
+    "src\\features\\auth\\views\\UserProfileView.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 2,
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\auth\\views\\UsersListView.vue": {
+      "controlesVModelSinId": 2,
+      "iconosSinAriaHidden": 10
+    },
+    "src\\features\\bankDetails\\views\\BankDetailsDetailView.vue": {
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\bankDetails\\views\\BankDetailsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\bankDetails\\views\\BankDetailsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\branches\\views\\BranchesDetailView.vue": {
+      "iconosSinAriaHidden": 2
+    },
+    "src\\features\\branches\\views\\BranchesFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 4
+    },
+    "src\\features\\branches\\views\\BranchesListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 13
+    },
+    "src\\features\\businessCollaborationAgreements\\views\\BusinessCollaborationAgreementsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\businessCollaborationAgreements\\views\\BusinessCollaborationAgreementsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\companies\\views\\CompaniesDetailView.vue": {
+      "iconosSinAriaHidden": 17
+    },
+    "src\\features\\companies\\views\\CompaniesFormView.vue": {
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\companies\\views\\CompaniesListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 13
+    },
+    "src\\features\\controlSheets\\views\\ControlSheetsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\controlSheets\\views\\ControlSheetsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 15
+    },
+    "src\\features\\conveyorCapacity\\views\\ConveyorCapacityFormView.vue": {
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\conveyorCapacity\\views\\ConveyorCapacityListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\dashboard\\components\\QuickActionsGrid.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\dashboard\\views\\ConductorDashboardView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 33
+    },
+    "src\\features\\dashboard\\views\\DashboardView.vue": {
+      "iconosSinAriaHidden": 13
+    },
+    "src\\features\\economicactivity\\views\\EconomicActivitiesDetailView.vue": {
+      "iconosSinAriaHidden": 4
+    },
+    "src\\features\\economicactivity\\views\\EconomicActivitiesFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\economicactivity\\views\\EconomicActivitiesListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\enablingResolutions\\views\\EnablingResolutionsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\enablingResolutions\\views\\EnablingResolutionsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\experiences\\views\\ExperiencesFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\experiences\\views\\ExperiencesListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\financialStatements\\views\\FinancialStatementsDetailView.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\financialStatements\\views\\FinancialStatementsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 5
+    },
+    "src\\features\\financialStatements\\views\\FinancialStatementsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\fuec\\views\\FuecFormView.vue": {
+      "controlesVModelSinId": 7,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\fuec\\views\\FuecListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 8
+    },
+    "src\\features\\fuec\\views\\FuecPdf.vue": {
+      "iconosSinAriaHidden": 5
+    },
+    "src\\features\\humanResources\\views\\EmploymentContractsFormView.vue": {
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\humanResources\\views\\EmploymentContractsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\maintenance\\views\\MaintenanceForecastView.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 8
+    },
+    "src\\features\\maintenance\\views\\MaintenanceFormView.vue": {
+      "controlesVModelSinId": 3,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\maintenance\\views\\MaintenanceListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\notifications\\views\\NotificationsListView.vue": {
+      "controlesVModelSinId": 2,
+      "iconosSinAriaHidden": 12
+    },
+    "src\\features\\operationCards\\views\\OperationCardsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\operationCards\\views\\OperationCardsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\projects\\views\\ProjectsDetailView.vue": {
+      "iconosSinAriaHidden": 18
+    },
+    "src\\features\\projects\\views\\ProjectsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 13
+    },
+    "src\\features\\projects\\views\\ProjectsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 15
+    },
+    "src\\features\\rupRecords\\views\\RupRecordsDetailView.vue": {
+      "iconosSinAriaHidden": 2
+    },
+    "src\\features\\rupRecords\\views\\RupRecordsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\rupRecords\\views\\RupRecordsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\serviceDeliveryControlSheet\\components\\FirmaPad.vue": {
+      "labelsSinFor": 2,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 2
+    },
+    "src\\features\\serviceDeliveryControlSheet\\views\\ServiceDeliveryControlSheetFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\serviceDeliveryControlSheet\\views\\ServiceDeliveryControlSheetListView.vue": {
+      "controlesVModelSinId": 2,
+      "iconosSinAriaHidden": 20
+    },
+    "src\\features\\serviceDeliveryControlSheet\\views\\ServiceTemplateView.vue": {
+      "labelsSinFor": 34,
+      "controlesVModelSinId": 29,
+      "iconosSinAriaHidden": 120
+    },
+    "src\\features\\systemConfiguration\\views\\PlatformFeesView.vue": {
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\systemConfiguration\\views\\SystemConfigurationView.vue": {
+      "labelsSinFor": 6,
+      "controlesVModelSinId": 4,
+      "iconosSinAriaHidden": 37
+    },
+    "src\\features\\taxDeclarations\\views\\TaxDeclarationsDetailView.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\taxDeclarations\\views\\TaxDeclarationsFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\taxDeclarations\\views\\TaxDeclarationsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 6
+    },
+    "src\\features\\taxInformation\\views\\TaxInformationFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\taxInformation\\views\\TaxInformationListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\thirdParties\\views\\ThirdPartiesDetailView.vue": {
+      "iconosSinAriaHidden": 2
+    },
+    "src\\features\\thirdParties\\views\\ThirdPartiesFormView.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\thirdParties\\views\\ThirdPartiesListView.vue": {
+      "labelsSinFor": 19,
+      "controlesVModelSinId": 20,
+      "iconosSinAriaHidden": 32
+    },
+    "src\\features\\tracking\\components\\DriverMarker.vue": {
+      "iconosSinAriaHidden": 5
+    },
+    "src\\features\\tracking\\components\\DriverSelfMap.vue": {
+      "iconosSinAriaHidden": 15
+    },
+    "src\\features\\tracking\\views\\DriverHistoryView.vue": {
+      "controlesVModelSinId": 2,
+      "iconosSinAriaHidden": 3
+    },
+    "src\\features\\tracking\\views\\GeofenceFormView.vue": {
+      "labelsSinFor": 1,
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\tracking\\views\\GeofenceListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 13
+    },
+    "src\\features\\tracking\\views\\LiveMapView.vue": {
+      "iconosSinAriaHidden": 5
+    },
+    "src\\features\\tracking\\views\\TrackingMapView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\vehicleDocuments\\views\\VehicleDocumentsDetailView.vue": {
+      "iconosSinAriaHidden": 1
+    },
+    "src\\features\\vehicleDocuments\\views\\VehicleDocumentsFormView.vue": {
+      "controlesVModelSinId": 4,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\vehicleDocuments\\views\\VehicleDocumentsListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 9
+    },
+    "src\\features\\vehicleInspections\\views\\VehicleInspectionFormView.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 9
+    },
+    "src\\features\\vehicleInspections\\views\\VehicleInspectionListView.vue": {
+      "labelsSinFor": 1,
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 33
+    },
+    "src\\features\\vehicles\\components\\VehicleDocumentsMenu.vue": {
+      "iconosSinAriaHidden": 7
+    },
+    "src\\features\\vehicles\\views\\VehiclesDetailView.vue": {
+      "iconosSinAriaHidden": 35
+    },
+    "src\\features\\vehicles\\views\\VehiclesFormView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\features\\vehicles\\views\\VehiclesListView.vue": {
+      "controlesVModelSinId": 1,
+      "iconosSinAriaHidden": 11
+    },
+    "src\\pages\\FuecValidationView.vue": {
+      "labelsSinFor": 11,
+      "iconosSinAriaHidden": 40
+    },
+    "src\\pages\\HomeView.vue": {
+      "labelsSinFor": 2,
+      "controlesVModelSinId": 1
+    },
+    "src\\pages\\public\\PublicSignatureView.vue": {
+      "labelsSinFor": 1,
+      "iconosSinAriaHidden": 18
+    }
+  }
+}

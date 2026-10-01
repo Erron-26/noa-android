@@ -1,5 +1,7 @@
 // Confirmaciones con SweetAlert2 cargado de forma diferida.
 // Se usa `import()` para no sumar SweetAlert2 al arranque de la aplicación.
+import { mobileBaseConfig } from './swal-mobile.js';
+
 let SwalPromise = null;
 
 function getSwal() {
@@ -16,7 +18,7 @@ function getSwal() {
 export async function confirmUnsavedChanges() {
     try {
         const Swal = await getSwal();
-        const result = await Swal.fire({
+        const result = await Swal.fire(mobileBaseConfig({
             title: 'Tienes cambios sin guardar',
             text: 'Puedes guardarlos antes de continuar o salir sin guardar.',
             icon: 'warning',
@@ -28,7 +30,7 @@ export async function confirmUnsavedChanges() {
             confirmButtonColor: '#2c7be5',
             denyButtonColor: '#e63757',
             reverseButtons: true,
-        });
+        }));
 
         if (result.isConfirmed) return 'save';
         if (result.isDenied) return 'discard';
@@ -46,7 +48,7 @@ export async function confirmUnsavedChanges() {
 export async function confirmLogout() {
     try {
         const Swal = await getSwal();
-        const result = await Swal.fire({
+        const result = await Swal.fire(mobileBaseConfig({
             title: '¿Cerrar sesión?',
             text: '¿Estás seguro de que deseas salir de tu cuenta?',
             icon: 'question',
@@ -56,7 +58,7 @@ export async function confirmLogout() {
             confirmButtonColor: '#e63757',
             cancelButtonColor: '#748194',
             reverseButtons: true,
-        });
+        }));
 
         return Boolean(result.isConfirmed);
     } catch {

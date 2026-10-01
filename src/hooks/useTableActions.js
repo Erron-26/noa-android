@@ -4,6 +4,7 @@
  * Ubicación: src/hooks/useTableActions.js
  */
 import Swal from 'sweetalert2';
+import { mobileBaseConfig } from '@utils/swal-mobile.js';
 
 /**
  * @param {object} store   - Pinia store que expone deleteItem(id)
@@ -20,7 +21,7 @@ export function useTableActions(store, router = null) {
     const confirmDelete = async (item, options = {}) => {
         const name = item[options.nameField ?? 'name'] ?? 'este registro';
 
-        const { isConfirmed } = await Swal.fire({
+        const { isConfirmed } = await Swal.fire(mobileBaseConfig({
             title:             options.title       ?? '¿Eliminar registro?',
             html:              options.html        ?? `
                 <p class="mb-2">¿Estás seguro de eliminar <strong>"${name}"</strong>?</p>
@@ -41,7 +42,7 @@ export function useTableActions(store, router = null) {
                 confirmButton: 'rounded-pill px-4',
                 cancelButton: 'rounded-pill px-4',
             },
-        });
+        }));
 
         if (!isConfirmed) return false;
 

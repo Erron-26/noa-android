@@ -128,10 +128,16 @@ function handleLater() {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   background: rgba(0, 28, 65, 0.55);
+  overflow-y: auto;
 }
 .version-update-card {
-  width: min(420px, 100%);
+  width: min(420px, calc(100vw - 2.5rem));
+  max-width: calc(100vw - 2.5rem);
+  max-height: 90dvh;
+  overflow-y: auto;
+  margin: auto;
   background: #ffffff;
   border-radius: 14px;
   padding: 28px 24px 24px;

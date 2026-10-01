@@ -1,0 +1,133 @@
+/*
+ * Modales responsive SOLO en Android nativo (Capacitor).
+ * Se activa cuando <body> tiene la clase `is-android`.
+ * En web/desktop no aplica: no altera el diseño actual.
+ */
+
+/* ── PrimeVue Dialog ─────────────────────────────── */
+.is-android .p-dialog {
+    width: calc(100vw - 1.5rem) !important;
+    max-width: calc(100vw - 1.5rem) !important;
+    margin: 0.75rem auto !important;
+    max-height: 90dvh !important;
+}
+
+.is-android .p-dialog-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem !important;
+}
+
+/* Tablas y grids dentro del dialog: que no fuercen ancho mínimo */
+.is-android .p-dialog .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.is-android .p-dialog table {
+    min-width: 0 !important;
+}
+
+.is-android .p-dialog .row > [class*="col-6"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+.is-android .p-dialog .col-md-4,
+.is-android .p-dialog .col-md-6 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+/* ── SweetAlert2 ─────────────────────────────────── */
+.is-android .swal2-popup.noa-swal-mobile,
+.is-android .swal2-popup {
+    width: 100% !important;
+    max-width: min(560px, calc(100vw - 1.5rem)) !important;
+    padding: 1rem !important;
+    margin: auto !important;
+    font-size: 0.9rem !important;
+}
+
+.is-android .swal2-html-container {
+    margin: 0.5em 0 0 !important;
+    overflow-x: hidden !important;
+}
+
+.is-android .swal2-html-container .row > [class*="col-6"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+.is-android .swal2-actions {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    margin-top: 1rem !important;
+}
+
+.is-android .swal2-actions .swal2-confirm,
+.is-android .swal2-actions .swal2-deny,
+.is-android .swal2-actions .swal2-cancel {
+    flex: 1 1 100% !important;
+    margin: 0 !important;
+}
+
+/* Toasts en Android: ancho completo arriba, sin desborde lateral */
+.is-android .swal2-container.swal2-top-end > .swal2-popup.toast-thin {
+    max-width: calc(100vw - 1rem) !important;
+    margin: 0.5rem auto 0 !important;
+}
+
+/* ── Bootstrap Modal ─────────────────────────────── */
+.is-android .modal-dialog {
+    margin: 0.5rem !important;
+    max-width: calc(100vw - 1rem) !important;
+}
+
+.is-android .modal-content {
+    max-height: 90dvh !important;
+    overflow-y: auto !important;
+}
+
+/* ── Modales custom (teleport / overlays propios) ── */
+.is-android .modal-backdrop-custom {
+    padding: 0.75rem !important;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.is-android .modal-dialog-custom,
+.is-android .version-update-card {
+    width: calc(100% - 1.5rem) !important;
+    max-width: min(420px, calc(100vw - 1.5rem)) !important;
+    max-height: 90dvh !important;
+    overflow-y: auto !important;
+    margin: auto !important;
+}
+
+.is-android .version-update-overlay {
+    padding: 0.75rem !important;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.is-android .version-update-actions {
+    flex-direction: column !important;
+}
+
+.is-android .version-update-actions .btn {
+    width: 100% !important;
+}
+
+/* Solo pantallas pequeñas: refuerzo extra */
+@media (max-width: 576px) {
+    .is-android .p-dialog-header {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .is-android .p-dialog-header h5 {
+        font-size: 1rem !important;
+    }
+
+    .is-android .license-plate-badge {
+        font-size: 0.85rem !important;
+    }
+}

@@ -224,7 +224,7 @@
 
     <!-- MODAL: Detalle de pólizas RCC y RCE -->
     <Dialog v-model:visible="showPoliciesModal" :modal="true" :closable="true" :draggable="false"
-        :style="{ width: '680px' }" class="p-fluid policies-dialog" header="Detalle de Pólizas">
+        :style="{ width: '680px', maxWidth: '95vw' }" :breakpoints="{ '960px': '92vw', '640px': '95vw' }" :content-style="{ overflowY: 'auto' }" class="p-fluid policies-dialog" header="Detalle de Pólizas">
         <template v-if="selectedPolicies && selectedPolicies.vehicle">
             <div class="text-center mb-3">
                 <span class="badge bg-200 text-dark font-monospace px-3 py-2" style="font-size: 1rem;">

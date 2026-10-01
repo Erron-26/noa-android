@@ -314,7 +314,7 @@
     </div>
 
     <!-- DIÁLOGO HISTORIAL -->
-    <Dialog v-model:visible="showHistoryDialog" :modal="true" :closable="true" :draggable="false" :style="{ width: '780px' }" class="p-fluid history-dialog">
+    <Dialog v-model:visible="showHistoryDialog" :modal="true" :closable="true" :draggable="false" :style="{ width: '780px', maxWidth: '95vw' }" :breakpoints="{ '960px': '92vw', '640px': '95vw' }" :content-style="{ overflowY: 'auto' }" class="p-fluid history-dialog">
         <template #header>
             <div class="d-flex align-items-center gap-2">
                 <i class="fad fa-history text-primary fs-4"></i>
@@ -470,7 +470,7 @@
     </Dialog>
 
     <!-- DIÁLOGO FIRMA -->
-    <Dialog v-model:visible="showSignatureDialog" :modal="true" :closable="true" :draggable="false" :style="{ width: '520px' }" class="p-fluid signature-dialog">
+    <Dialog v-model:visible="showSignatureDialog" :modal="true" :closable="true" :draggable="false" :style="{ width: '520px', maxWidth: '95vw' }" :breakpoints="{ '960px': '92vw', '640px': '95vw' }" :content-style="{ overflowY: 'auto' }" class="p-fluid signature-dialog">
         <template #header>
             <div class="d-flex align-items-center gap-2">
                 <i class="fad fa-signature text-primary fs-4"></i>

@@ -36,6 +36,14 @@ const layoutComponent = computed(() => {
 });
 
 onMounted(() => {
+  // Marca Android nativo para CSS responsive solo en app (.is-android).
+  // En web/desktop no se añade: los modales quedan intactos.
+  try {
+    if (isNative) document.body.classList.add('is-android');
+    else document.body.classList.remove('is-android');
+  } catch {
+    /* DOM no disponible: no bloquea el arranque */
+  }
   notificationsStore.startExpiryAlertInterval();
   // Check de nueva versión al abrir: forzado (sin throttle) para avisar
   // de una vez, incluso sin iniciar sesión. Si falla la red, el store

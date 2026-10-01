@@ -109,7 +109,7 @@
 
     <!-- Modal edición de roles -->
     <div class="modal fade" id="userRolesModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header" style="background: linear-gradient(135deg,#0f172a 0%,#1e293b 100%);">
                     <h6 class="modal-title text-white fw-bold"><i class="fad fa-user-shield me-2" />Editar roles de {{ editingUser?.name }}</h6>

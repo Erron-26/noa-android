@@ -3191,10 +3191,18 @@ h1, h2, h3, h4, h5, h6,
     z-index: 1055;
     backdrop-filter: blur(4px);
     padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
 }
 
 .modal-dialog-custom {
     animation: modalSlide 0.2s ease-out;
+    width: calc(100% - 0px);
+    max-width: 100%;
+    max-height: 90dvh;
+    overflow-y: auto;
+    margin: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 @keyframes modalSlide {

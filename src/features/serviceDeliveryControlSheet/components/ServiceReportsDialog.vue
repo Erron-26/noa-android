@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="visible" :modal="true" :closable="true" :draggable="false" :style="{ width: '560px' }" class="p-fluid">
+    <Dialog v-model:visible="visible" :modal="true" :closable="true" :draggable="false" :style="{ width: '560px', maxWidth: '95vw' }" :breakpoints="{ '960px': '92vw', '640px': '95vw' }" :content-style="{ overflowY: 'auto' }" class="p-fluid">
         <template #header>
             <div class="d-flex align-items-center gap-2">
                 <i class="fad fa-file-chart-column text-primary fs-4" aria-hidden="true"></i>
@@ -15,11 +15,11 @@
             <PrimeSelect input-id="rep-tipo" v-model="tipo" :options="tipos" option-label="label" option-value="value" class="w-100 mb-3" :invalid="!!error" />
 
             <div class="row g-2">
-                <div v-if="tipo === 'rango' || muestraRango" class="col-6">
+                <div v-if="tipo === 'rango' || muestraRango" class="col-12 col-sm-6">
                     <label class="form-label" for="rep-desde">Desde</label>
                     <input id="rep-desde" v-model="filtros.fecha_desde" type="date" class="form-control form-control-sm" :max="filtros.fecha_hasta || undefined" />
                 </div>
-                <div v-if="tipo === 'rango' || muestraRango" class="col-6">
+                <div v-if="tipo === 'rango' || muestraRango" class="col-12 col-sm-6">
                     <label class="form-label" for="rep-hasta">Hasta (máx 62 días)</label>
                     <input id="rep-hasta" v-model="filtros.fecha_hasta" type="date" class="form-control form-control-sm" :min="filtros.fecha_desde || undefined" />
                 </div>
@@ -41,13 +41,13 @@
                     <label class="form-label" for="rep-dia">Fecha</label>
                     <input id="rep-dia" v-model="filtros.fecha" type="date" class="form-control form-control-sm" />
                 </div>
-                <div v-if="tipo === 'mensual'" class="col-6">
+                <div v-if="tipo === 'mensual'" class="col-12 col-sm-6">
                     <label class="form-label" for="rep-month">Mes</label>
                     <select id="rep-month" v-model="filtros.month" class="form-select form-select-sm">
                         <option v-for="m in 12" :key="m" :value="m">{{ nombreMes(m) }}</option>
                     </select>
                 </div>
-                <div v-if="tipo === 'mensual'" class="col-6">
+                <div v-if="tipo === 'mensual'" class="col-12 col-sm-6">
                     <label class="form-label" for="rep-year">Año</label>
                     <select id="rep-year" v-model="filtros.year" class="form-select form-select-sm">
                         <option v-for="y in years" :key="y" :value="y">{{ y }}</option>

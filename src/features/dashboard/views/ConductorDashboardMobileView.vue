@@ -198,8 +198,6 @@
       </div>
     </div>
 
-
-
   </div>
 </template>
 
@@ -208,6 +206,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useAuthStore, usePermissionsStore, useUserStore } from '@store';
 import { useDashboardStore } from '../store/dashboard.store';
 import { logger } from '@utils/logger.js';
+import { primerNombre as primerNombreDe, iniciales as inicialesDe, saludoPorHora, filtrarVehiculos, formatearNumero, formatearPlaca } from '../utils/presentacionConductor.js';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -222,51 +221,14 @@ const nombreCompleto = computed(() => {
   void authStore.currentTenant;
   return datos.value.conductor?.name || userStore.fullName || userStore.username || 'Conductor';
 });
-const primerNombre = computed(() => {
-  const crudo = nombreCompleto.value.trim();
-  if (!crudo) return 'Conductor';
-  const primera = crudo.split(/\s+/)[0];
-  return primera.charAt(0).toUpperCase() + primera.slice(1).toLowerCase();
-});
-const iniciales = computed(() => {
-  const partes = nombreCompleto.value.trim().split(/\s+/).filter(Boolean);
-  if (partes.length >= 2) return (partes[0][0] + partes[1][0]).toUpperCase();
-  return (partes[0] || 'CO').substring(0, 2).toUpperCase();
-});
+const primerNombre = computed(() => primerNombreDe(nombreCompleto.value));
+const iniciales = computed(() => inicialesDe(nombreCompleto.value));
+const saludo = computed(() => saludoPorHora());
+const vehiculosFiltrados = computed(() => filtrarVehiculos(vehiculos.value, busqueda.value));
 const documento = computed(() => datos.value.conductor?.document || null);
 const licencia = computed(() => datos.value.conductor?.license || null);
 const kpis = computed(() => datos.value.kpis || {});
 const vehiculos = computed(() => datos.value.vehicles || []);
-
-const saludo = computed(() => {
-  const hora = new Date().getHours();
-  if (hora < 12) return 'Buenos días';
-  if (hora < 18) return 'Buenas tardes';
-  return 'Buenas noches';
-});
-
-const vehiculosFiltrados = computed(() => {
-  const consulta = busqueda.value.trim().toLowerCase();
-  if (!consulta) return vehiculos.value;
-  return vehiculos.value.filter((v) => {
-    const placa = String(v.plate || '').toLowerCase();
-    const marca = String(v.brand || '').toLowerCase();
-    const linea = String(v.line || '').toLowerCase();
-    return placa.includes(consulta) || marca.includes(consulta) || linea.includes(consulta);
-  });
-});
-
-function formatearNumero(valor) {
-  if (valor === null || valor === undefined || Number.isNaN(Number(valor))) return '0';
-  return Number(valor).toLocaleString('es-CO');
-}
-
-function formatearPlaca(placa) {
-  if (!placa) return 'SIN-PLACA';
-  const limpia = String(placa).trim().toUpperCase();
-  if (limpia.length === 6) return `${limpia.substring(0, 3)} · ${limpia.substring(3)}`;
-  return limpia;
-}
 
 const primerVehiculo = computed(() => {
   if (vehiculos.value && vehiculos.value.length > 0) {

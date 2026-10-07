@@ -7,14 +7,16 @@ const LOGIN_ROUTE = "/login";
 const DASHBOARD_ROUTE = "/dashboard";
 const CONDUCTOR_DASHBOARD_ROUTE = "/dashboard/conductor";
 
-function getDashboardRoute() {
+function esConductor() {
     try {
-        const permStore = usePermissionsStore();
-        if (permStore.hasRole && permStore.hasRole('CONDUCTOR')) {
-            return CONDUCTOR_DASHBOARD_ROUTE;
-        }
-    } catch { /* Sin permisos legibles: se usa la ruta por defecto. */ }
-    return DASHBOARD_ROUTE;
+        return usePermissionsStore().hasRole('CONDUCTOR');
+    } catch {
+        return false; // Sin permisos legibles: se usa el destino por defecto.
+    }
+}
+
+function getDashboardRoute() {
+    return esConductor() ? CONDUCTOR_DASHBOARD_ROUTE : DASHBOARD_ROUTE;
 }
 
 export async function authGuard(to, from, next) {
@@ -44,13 +46,8 @@ export async function authGuard(to, from, next) {
         }
 
         // Si el conductor intenta acceder al dashboard general, redirigir al suyo
-        if (to.path === '/dashboard' && !to.path.includes('/dashboard/conductor')) {
-            try {
-                const permStore = usePermissionsStore();
-                if (permStore.hasRole && permStore.hasRole('CONDUCTOR')) {
-                    return next({ path: CONDUCTOR_DASHBOARD_ROUTE });
-                }
-            } catch { /* Sin permisos legibles: se continúa al destino original. */ }
+        if (to.path === '/dashboard' && esConductor()) {
+            return next({ path: CONDUCTOR_DASHBOARD_ROUTE });
         }
 
         next();

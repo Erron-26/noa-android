@@ -553,6 +553,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useAuthStore, useUserStore } from '@store';
 import { useDashboardStore } from '../store/dashboard.store';
 import DriverSelfMap from '@/features/tracking/components/DriverSelfMap.vue';
+import { primerNombre, iniciales, saludoPorHora, filtrarVehiculos, formatearNumero, formatearPlaca } from '../utils/presentacionConductor.js';
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -562,24 +563,11 @@ const selectedPeriod = ref('30');
 const vehicleSearch = ref('');
 const isLoading = computed(() => dashboardStore.isLoading);
 
-// Saludo dinámico según la hora
-const greeting = computed(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Buenos días';
-    if (hour < 18) return 'Buenas tardes';
-    return 'Buenas noches';
-});
 
 // Datos reactivos del store
 const conductorData = computed(() => dashboardStore.conductorData || {});
 const conductorName = computed(() => {
     return conductorData.value.conductor?.name || userStore.fullName || userStore.username || 'Conductor';
-});
-const conductorFirstName = computed(() => {
-    const raw = (conductorData.value.conductor?.name || userStore.fullName || userStore.username || '').trim();
-    if (!raw) return 'Conductor';
-    const firstWord = raw.split(/\s+/)[0];
-    return firstWord.charAt(0).toUpperCase() + firstWord.slice(1).toLowerCase();
 });
 const conductorDocument = computed(() => conductorData.value.conductor?.document || null);
 const companyName = computed(() => authStore.currentTenant?.name || userStore.companyName || 'Falcon Transportes S.A.S.');
@@ -602,6 +590,13 @@ const esDisponibilidadActiva = computed(() => {
     return !activeService.value.routes_count;
 });
 
+const conductorFirstName = computed(() => primerNombre(conductorData.value.conductor?.name || userStore.fullName || userStore.username));
+const greeting = computed(() => saludoPorHora());
+const driverInitials = computed(() => iniciales(conductorName.value));
+const filteredVehicles = computed(() => filtrarVehiculos(vehiclesList.value, vehicleSearch.value));
+const formatNumber = formatearNumero;
+const formatPlate = formatearPlaca;
+
 const preferredVehicleUuid = computed(() => {
     const serviceVehicle = conductorData.value.active_service?.vehicle_uuid;
     if (serviceVehicle) return serviceVehicle;
@@ -609,46 +604,9 @@ const preferredVehicleUuid = computed(() => {
     return firstVehicle?.uuid || null;
 });
 
-// Iniciales del avatar
-const driverInitials = computed(() => {
-    const name = conductorName.value;
-    if (!name) return 'CO';
-    const parts = name.trim().split(' ');
-    if (parts.length >= 2) {
-        return (parts[0][0] + parts[1][0]).toUpperCase();
-    }
-    return parts[0].substring(0, 2).toUpperCase();
-});
 
-// Filtro de vehículos
-const filteredVehicles = computed(() => {
-    const list = vehiclesList.value;
-    if (!vehicleSearch.value.trim()) return list;
-    const query = vehicleSearch.value.toLowerCase().trim();
-    return list.filter(v => {
-        const plate = (v.plate || '').toLowerCase();
-        const brand = (v.brand || '').toLowerCase();
-        const line = (v.line || '').toLowerCase();
-        const internal = (v.internal_number || '').toLowerCase();
-        return plate.includes(query) || brand.includes(query) || line.includes(query) || internal.includes(query);
-    });
-});
 
-// Formatear número con separador de miles
-const formatNumber = (num) => {
-    if (num === null || num === undefined || isNaN(num)) return '0';
-    return Number(num).toLocaleString('es-CO');
-};
 
-// Formatear placa colombiana (ej: GUX649 -> GUX · 649)
-const formatPlate = (plate) => {
-    if (!plate) return 'SIN-PLACA';
-    const clean = plate.trim().toUpperCase();
-    if (clean.length === 6) {
-        return `${clean.substring(0, 3)} · ${clean.substring(3)}`;
-    }
-    return clean;
-};
 
 // Cargar datos
 const loadData = async () => {

@@ -317,7 +317,8 @@ import { useTrackingStore } from '@/features/tracking/store/tracking.store';
 import DriverMap from '@/features/tracking/components/DriverMap.vue';
 import ConductorDashboardView from './ConductorDashboardView.vue';
 import ConductorDashboardMobileView from './ConductorDashboardMobileView.vue';
-import { usePlatform } from '@/hooks/usePlatform.js';
+import { useModoConductor } from '@/hooks/useModoConductor.js';
+import { saludoPorHora } from '@/features/dashboard/utils/presentacionConductor.js';
 
 const route = useRoute();
 const authStore = useAuthStore();
@@ -325,12 +326,9 @@ const userStore = useUserStore();
 const permissionsStore = usePermissionsStore();
 const dashboardStore = useDashboardStore();
 const trackingStore = useTrackingStore();
-const { esAndroidNativo } = usePlatform();
 
 // ── CONTROL DE ROL Y MODO CONDUCTOR ─────────────────────────
-const isConductorRole = computed(() => {
-    return permissionsStore.hasRole('CONDUCTOR');
-});
+const { modoConductor: isConductorMode, movilConductor: esMovilAndroidConductor } = useModoConductor();
 
 const canViewRestrictedSections = computed(() => {
     return permissionsStore.hasRole('ADMINISTRADOR') || 
@@ -339,27 +337,8 @@ const canViewRestrictedSections = computed(() => {
            permissionsStore.hasRole('SUPERADMIN');
 });
 
-const isConductorMode = computed(() => {
-    if (route.query.view === 'conductor') return true;
-    if (route.query.view === 'admin') return false;
-    return isConductorRole.value;
-});
-
-// Solo Android nativo o modo móvil usa la vista compacta del mockup Capacitor.
-const esMovilAndroidConductor = computed(() => {
-    if (route.query.view === 'admin') return false;
-    const esModoConductor = isConductorRole.value || route.query.view === 'conductor';
-    const esPlataformaMovil = esAndroidNativo.value || route.query.view === 'conductor' || (window.innerWidth <= 768 && isConductorRole.value);
-    return esPlataformaMovil && esModoConductor;
-});
-
 // ── ESTADO GENERAL ──────────────────────────────────────────
-const greeting = computed(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Buenos días';
-    if (hour < 18) return 'Buenas tardes';
-    return 'Buenas noches';
-});
+const greeting = computed(() => saludoPorHora());
 const greetingIcon = computed(() => {
     const hour = new Date().getHours();
     if (hour < 12) return { icon: 'fas fa-sun', color: '#f5803e' }; // Naranja/Amarillo

@@ -143,8 +143,8 @@
                                 <template #body="{ data }">
                                     <div class="btn-group btn-group-sm" role="group">
                                         <button v-if="data.vehicle" class="btn btn-falcon-default"
-                                            type="button" title="Mantenimiento PDF" :aria-label="`Descargar PDF de mantenimiento de ${data.vehicle?.vehicle_license_plate}`" @click="downloadMaintenanceHistoryPdf(data.vehicle)">
-                                            <i class="fad fa-tools text-success" style="font-size:14px;" />
+                                            type="button" title="Descargar hoja de vida de mantenimiento (PDF)" :aria-label="`Descargar PDF de mantenimiento de ${data.vehicle?.vehicle_license_plate}`" @click="downloadMaintenanceHistoryPdf(data.vehicle)">
+                                            <i class="fad fa-file-pdf text-danger" style="font-size:14px;" />
                                         </button>
                                     </div>
                                 </template>
@@ -219,7 +219,18 @@ const handleDelete = (item) => confirmDelete(item, {
 });
 
 const downloadMaintenanceHistoryPdf = async (vehicle) => {
-    if (!vehicle?.uuid) return;
+    if (!vehicle?.uuid) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin vehículo',
+            text: 'Este registro no trae el identificador del vehículo. Recargue el listado e intente de nuevo.',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+        });
+        return;
+    }
     try {
         await VehiclesService.downloadMaintenanceHistory(vehicle.uuid);
     } catch (error) {
@@ -227,7 +238,7 @@ const downloadMaintenanceHistoryPdf = async (vehicle) => {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: error.response?.data?.message || 'No se pudo descargar la hoja de vida de mantenimiento.',
+            text: error?.message || error.response?.data?.message || 'No se pudo descargar la hoja de vida de mantenimiento.',
             toast: true,
             position: 'top-end',
             showConfirmButton: false,

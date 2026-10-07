@@ -251,14 +251,42 @@ export class BaseService {
 
     /**
      * Convierte un error blob del backend en un Error con mensaje legible.
+     * Maneja respuestas inesperadas (como errores de servidor HTML) que no son PDFs.
      */
     async _blobErrorToMessage(err) {
         try {
             const data = err?.response?.data;
             if (data instanceof Blob) {
                 const texto = await data.text();
+                // Filtrar mensajes que no son errores de PDF (ej. propiedades CSS aleatorias)
+                if (texto && texto.length < 500) {
+                    const textoLimpo = texto.trim();
+                    // Evitar mostrar propiedades CSS u otros ruidos del servidor como mensaje de error
+                    const patronesNoValidos = [
+                        /object.fit/i,
+                        /not a recognized CSS property/i,
+                    ];
+                    const esMensajeNoValido = patronesNoValidos.some(p => p.test(textoLimpo));
+                    if (!esMensajeNoValido) {
+                        try {
+                            const json = JSON.parse(textoLimpo);
+                            const msg = json?.message || json?.error;
+                            if (msg) {
+                                const e = new Error(msg);
+                                e.response = err.response;
+                                return e;
+                            }
+                        } catch {
+                            // Si no es JSON válido, usar el texto crudo (pero ya filtrado)
+                            const e = new Error(textoLimpo);
+                            e.response = err.response;
+                            return e;
+                        }
+                    }
+                }
+                // Si el mensaje es inválido o ocurrió un error, intentar parseo JSON completo
                 try {
-                    const json = JSON.parse(texto);
+                    const json = JSON.parse(texto || '');
                     const msg = json?.message || json?.error;
                     if (msg) {
                         const e = new Error(msg);
@@ -266,11 +294,7 @@ export class BaseService {
                         return e;
                     }
                 } catch {
-                    if (texto && texto.length < 500) {
-                        const e = new Error(texto);
-                        e.response = err.response;
-                        return e;
-                    }
+                    // Ignorar y caer al error original
                 }
             }
         } catch {

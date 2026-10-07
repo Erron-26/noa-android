@@ -1,60 +1,23 @@
 <script setup>
 import { ref } from "vue";
-import { Capacitor } from "@capacitor/core";
-import { FileOpener } from "@capacitor-community/file-opener";
 import { useVersionUpdateStore } from "@/features/versionUpdate/store/versionUpdate.store.js";
-import { logger } from "@utils/logger.js";
+import { installUpdate } from "@services/versionUpdate.service.js";
 
 const versionStore = useVersionUpdateStore();
 const statusMessage = ref("");
 const isWorking = ref(false);
 
-function openInBrowser() {
-    if (versionStore.apkUrl) {
-        window.open(versionStore.apkUrl, "_blank", "noopener");
-    } else if (versionStore.releaseUrl) {
-        window.open(versionStore.releaseUrl, "_blank", "noopener");
-    }
-}
-
 async function handleUpdate() {
-    // En web (no nativo) la instalación es manual: se abre la descarga.
-    if (!Capacitor.isNativePlatform()) {
-        openInBrowser();
-        return;
-    }
-    if (!versionStore.apkUrl) {
-        openInBrowser();
-        return;
-    }
     isWorking.value = true;
-    statusMessage.value = "Descargando actualización…";
     try {
-        const { Filesystem, Directory } = await import("@capacitor/filesystem");
-        const fileName = `NOA-v${versionStore.latestVersion}.apk`;
-        const dl = await Filesystem.downloadFile({
-            url: versionStore.apkUrl,
-            path: fileName,
-            directory: Directory.Cache,
-        });
-        const filePath = dl && dl.path ? dl.path : fileName;
-        statusMessage.value = "Abriendo instalador…";
-        try {
-            await FileOpener.open({
-                filePath,
-                contentType: "application/vnd.android.package-archive",
-            });
-            statusMessage.value = "";
-        } catch (e) {
-            // Si el instalador no se abre: el navegador descarga y el usuario instala.
-            logger.warn("VersionUpdate: FileOpener fallo, abro navegador", { error: e.message });
-            statusMessage.value = "Completa la instalación desde el navegador.";
-            openInBrowser();
-        }
-    } catch (e) {
-        logger.warn("VersionUpdate: fallo la descarga del APK", { error: e.message });
-        statusMessage.value = "No se pudo descargar. Intenta desde el navegador.";
-        openInBrowser();
+        await installUpdate(
+            {
+                apkUrl: versionStore.apkUrl,
+                releaseUrl: versionStore.releaseUrl,
+                latestVersion: versionStore.latestVersion,
+            },
+            (texto) => { statusMessage.value = texto; },
+        );
     } finally {
         isWorking.value = false;
     }

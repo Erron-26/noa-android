@@ -323,7 +323,7 @@ const router = useRouter();
 const store = useControlSheetsStore();
 const permissionsStore = usePermissionsStore();
 
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 const isViewLoading = ref(true);
 const searchQuery = ref('');

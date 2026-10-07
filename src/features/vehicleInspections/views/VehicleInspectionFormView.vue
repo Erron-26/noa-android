@@ -248,7 +248,7 @@ const router = useRouter();
 const store = useVehicleInspectionsStore();
 const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
-const isSuperAdmin = computed(() => permissionsStore.hasRole('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 const isConductor = computed(() => permissionsStore.hasRole('CONDUCTOR'));
 
 

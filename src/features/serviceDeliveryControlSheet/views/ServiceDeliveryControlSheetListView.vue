@@ -401,7 +401,7 @@ const reportDrivers = computed(() => store.catalogs.drivers ?? []);
 const downloadingDaily = ref(null);
 const sharingLink = ref(null);
 
-const canShareCoordinatorLink = computed(() => (permissionsStore.roles || []).some(r => r === 'SUPERADMIN' || r === 'ADMIN_EMPRESA' || r?.name === 'SUPERADMIN' || r?.name === 'ADMIN_EMPRESA'));
+const canShareCoordinatorLink = computed(() => permissionsStore.hasAnyRole('SUPERADMIN', 'ADMIN_EMPRESA'));
 
 const permissions = reactive({ edit: false, delete: false, pdf: false });
 const { debouncedSearch } = useTable({}, () => store.setGlobalFilter(searchQuery.value));

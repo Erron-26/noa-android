@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { rbac } from "@services/security/permissions/rbac.js";
 import { defineAbilities } from "@services/security/permissions/abilities.js";
 import { permissionsPersistencePlugin } from "@store/plugins/persistence.js";
 
@@ -13,13 +12,19 @@ export const usePermissionsStore = defineStore("permissions", {
         isHydrated: false,
     }),
 
+    getters: {
+        /** SUPERADMIN opera sin filtro de empresa ni de tercero. */
+        isSuperAdmin() {
+            return this.hasRole('SUPERADMIN');
+        },
+    },
+
     actions: {
         setUser(user) {
             this.user = user;
             this.roles = Array.isArray(user.roles) ? user.roles : Object.values(user.roles || {});
             this.permissions = Array.isArray(user.permissions) ? user.permissions : Object.values(user.permissions || {});
 
-            rbac.setUser({ ...user, roles: this.roles, permissions: this.permissions });
             this.abilities = defineAbilities({ roles: this.roles, permissions: this.permissions });
             this.isLoaded = true;
         },
@@ -41,7 +46,11 @@ export const usePermissionsStore = defineStore("permissions", {
                 const name = typeof r === 'string' ? r : r?.name;
                 if (!name) return false;
                 return normalize(name) === target;
-            }) || (typeof rbac.hasRole === 'function' && rbac.hasRole(role));
+            });
+        },
+
+        hasAnyRole(...roles) {
+            return roles.some(r => this.hasRole(r));
         },
 
         can(action, subject = null) {
@@ -55,12 +64,11 @@ export const usePermissionsStore = defineStore("permissions", {
                 permissionName = `${subject}.${action}`;
             }
             
-            return this.permissions.includes(permissionName) || rbac.can(action, subject);
+            return this.permissions.includes(permissionName);
         },
 
         clear() {
             this.$reset();
-            rbac.clearUser();
         }
     },
     persist: { plugins: [permissionsPersistencePlugin] }

@@ -237,7 +237,7 @@ const router = useRouter();
 const store = useBusinessCollaborationAgreementsStore();
 const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 
 const isEditMode = computed(() => route.params.id !== undefined);

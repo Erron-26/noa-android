@@ -321,7 +321,7 @@ const store = useAffiliateAdminChargesStore();
 const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
 
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 const systemConfigStore = useSystemConfigurationStore();
 const cutoffDay = ref(5);

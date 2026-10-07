@@ -152,7 +152,7 @@ const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
 
 // --- ESTADOS ---
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 const isEditMode = computed(() => route.params.id !== undefined);
 

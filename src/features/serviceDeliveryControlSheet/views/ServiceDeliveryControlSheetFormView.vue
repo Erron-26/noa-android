@@ -315,13 +315,10 @@ const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
 
 // --- ESTADOS ---
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 // Solo administradores (SUPERADMIN o ADMIN_EMPRESA) pueden compartir el enlace de firma
-const canShareCoordinatorLink = computed(() => (permissionsStore.roles || []).some((r) => {
-    const name = typeof r === 'string' ? r : (r?.name ?? '');
-    return name === 'SUPERADMIN' || name === 'ADMIN_EMPRESA';
-}));
+const canShareCoordinatorLink = computed(() => permissionsStore.hasAnyRole('SUPERADMIN', 'ADMIN_EMPRESA'));
 const isEditMode = computed(() => route.params.id !== undefined);
 const pageTitle = computed(() => isEditMode.value ? 'Actualizar Hoja de Control' : 'Registrar Hoja de Control');
 const pageSubtitle = computed(() => isEditMode.value ? 'Modifica los datos del registro' : 'Completa los datos para crear un nuevo registro');

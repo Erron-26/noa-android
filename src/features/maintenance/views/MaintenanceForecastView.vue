@@ -192,13 +192,7 @@ onMounted(async () => {
 
         const permissionsStore = usePermissionsStore();
         const userStore = useUserStore();
-        const roles = permissionsStore.roles || [];
-        const validRoles = roles
-            .filter(role => typeof role === 'string')
-            .map(role => role.toUpperCase());
-        const isAfiliado = validRoles.some(role => 
-            ['AFILIADO', 'EMPLEADO', 'CONDUCTOR'].includes(role)
-        );
+        const isAfiliado = permissionsStore.hasAnyRole('AFILIADO', 'EMPLEADO', 'CONDUCTOR');
         const thirdPartyUuid = userStore.third_party_uuid;
 
         let params = {};

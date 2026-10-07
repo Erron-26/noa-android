@@ -31,18 +31,10 @@ export class BaseService {
         const userStore = useUserStore();
         const permissionsStore = usePermissionsStore();
 
-        const roles = permissionsStore.roles || [];
-
-        const validRoles = roles
-            .filter(role => typeof role === 'string')
-            .map(role => role.toUpperCase());
-
-        const hasRole = (role) => validRoles.includes(role);
-
-        const isSuperAdmin = hasRole(ROLES.SUPERADMIN);
-        const isConductor = hasRole(ROLES.CONDUCTOR);
-        const hasAfiliadoRole = hasRole(ROLES.AFILIADO);
-        const hasEmpleadoRole = hasRole(ROLES.EMPLEADO);
+        const isSuperAdmin = permissionsStore.hasRole(ROLES.SUPERADMIN);
+        const isConductor = permissionsStore.hasRole(ROLES.CONDUCTOR);
+        const hasAfiliadoRole = permissionsStore.hasRole(ROLES.AFILIADO);
+        const hasEmpleadoRole = permissionsStore.hasRole(ROLES.EMPLEADO);
 
         // "isAfiliado" = tiene acceso de tipo afiliado (afiliado, empleado o conductor)
         const isAfiliado = hasAfiliadoRole || hasEmpleadoRole || isConductor;

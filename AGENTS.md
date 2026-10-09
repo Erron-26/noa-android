@@ -133,7 +133,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 - **PR apiladas:** evitar. Una PR por propósito; si dos cambios dependen uno del otro, van en una sola PR.
 - **Quién abre la PR:** el usuario, o el agente cuando el usuario lo pida explícitamente.
 - **Cuerpo del PR:** resumen, cambios, verificación (tests, build, perf) y pendientes. Sin línea de atribución ni firma (decisión del usuario).
-- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE, 2026-10-09). PR #1 del fork abierta y apilada sobre ella (`refactor/store-run-helper`, 2026-10-09): al fusionarse la del original, esta se reubica a su `main` y se reabre allí. Rama activa: `refactor/store-run-helper` (commit `c55cbee`, subida).
+- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE, 2026-10-09). PR #1 del fork abierta y apilada sobre ella (`refactor/store-run-helper`, 2026-10-09): al fusionarse la del original, esta se reubica a su `main` y se reabre allí. Rama activa: `refactor/store-run-helper` (subida).
 - Para actualizar el fork: `git fetch upstream && git merge --ff-only upstream/main`.
 
 ## Lanzamientos (quién publica y cómo)
@@ -174,10 +174,10 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.
 11. Portal del conductor: revisar el enlace "Ver todo" (hoy lleva a `/dashboard/conductor`, la misma pantalla).
 12. Rediseño móvil del conductor con Stitch: primero tokens compartidos, luego Inicio, después el resto. Pendiente de decisión: si el sidebar se oculta por completo para el rol conductor.
-13. Decidir si `AGENTS.md` y `docs/agents/` se quedan en el repo (ya están en PR #1) y si se commitea el ajuste de este archivo.
+13. Decidir si `AGENTS.md` y `docs/agents/` se quedan en el repo (ya están en PR #1).
 
 ### Decisiones abiertas
-- Commit de este `AGENTS.md`: pendiente de confirmación del usuario.
+- Ninguna pendiente. La última abierta (commit de este archivo) se resolvió el 2026-10-09.
 
 ## Reglas para el Agente
 

@@ -1,5 +1,5 @@
 <template>
-  <span class="status-pill" :style="{ '--sp-color': estado.color }">
+  <span class="status-pill" :style="{ '--sp-fondo': estado.fondo, '--sp-texto': estado.texto, '--sp-borde': estado.borde }">
     <i :class="estado.icono" aria-hidden="true"></i>
     <span class="sp-text">{{ estado.etiqueta }}</span>
   </span>
@@ -28,9 +28,9 @@ const estado = computed(() => describirEstado(props.estado));
   gap: 4px;
   padding: 3px 9px;
   border-radius: var(--noa-radius-full);
-  border: 1px solid var(--sp-color);
-  color: var(--sp-color);
-  background: var(--noa-card);
+  border: 1px solid var(--sp-borde);
+  color: var(--sp-texto);
+  background: var(--sp-fondo);
   font-size: var(--noa-text-meta);
   font-weight: 600;
   line-height: 1.4;

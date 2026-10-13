@@ -240,7 +240,7 @@ const handleLegal = (nombre) => {
   letter-spacing: -.02em;
 }
 .brand-sub {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   letter-spacing: .18em;
   text-transform: uppercase;

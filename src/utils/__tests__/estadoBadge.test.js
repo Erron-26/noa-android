@@ -14,20 +14,22 @@ describe("describirEstado", () => {
         expect(describirEstado("  activo ")).toMatchObject({ etiqueta: "Activo", tono: "exito" });
     });
 
-    it("cada estado lleva siempre color e icono (nunca solo color)", () => {
+    it("cada estado lleva fondo, texto, borde e icono con contraste (nunca solo color)", () => {
         const d = describirEstado("PENDIENTE");
-        expect(d.color).toBe(TONOS.pendiente.color);
+        expect(d.fondo).toBe(TONOS.pendiente.fondo);
+        expect(d.texto).toBe(TONOS.pendiente.texto);
+        expect(d.borde).toBeTruthy();
         expect(d.icono).toBeTruthy();
     });
 
-    it("usa el naranja solo para pendientes y alertas", () => {
-        expect(describirEstado("PENDIENTE").color).toBe("var(--noa-alert)");
-        expect(describirEstado("CERRADA_CON_EXCEPCION").color).toBe("var(--noa-alert)");
-        expect(describirEstado("CERTIFICADA").color).not.toBe("var(--noa-alert)");
+    it("usa el naranja solo en el borde de pendientes y alertas", () => {
+        expect(describirEstado("PENDIENTE").borde).toBe("var(--noa-alert)");
+        expect(describirEstado("CERRADA_CON_EXCEPCION").borde).toBe("var(--noa-alert)");
+        expect(describirEstado("CERTIFICADA").borde).not.toBe("var(--noa-alert)");
     });
 
-    it("un estado desconocido se muestra tal cual, en tono neutro", () => {
-        expect(describirEstado("LO_QUE_SEA")).toMatchObject({ etiqueta: "LO_QUE_SEA", tono: "neutro" });
+    it("un estado desconocido se humaniza en tono neutro", () => {
+        expect(describirEstado("EN_REVISION")).toMatchObject({ etiqueta: "En Revision", tono: "neutro" });
     });
 
     it("sin estado (nulo o vacío) no rompe", () => {

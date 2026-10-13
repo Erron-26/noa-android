@@ -901,7 +901,7 @@ onUnmounted(() => destroyTooltips());
 }
 
 :deep(.p-paginator .p-dropdown .p-dropdown-label) {
-    font-size: 0.725rem !important;
+    font-size: 0.75rem !important;
     padding: 0 0.25rem !important;
 }
 

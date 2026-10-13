@@ -167,8 +167,8 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 3. Hecho 2026-10-13: `src/router/middleware/` eliminado (sin referencias).
 4. Hecho 2026-10-13: restos `FactusNext` renombrados a NOA y evento `factus:logout` a `noa:logout`.
 5. Hecho 2026-10-13: `DashboardService` migrado a `BaseService` con 5 pruebas (`refactor/limpieza-consistencia`); el store consume el cuerpo `{ success, data }`. Peso neutro (+0.1 kB).
-6. Hecho 2026-10-13: `Sidebar.vue` y `router/guards/auth.js` usan la regla única (`esDashboardDeConductor`, `esModoConductor`); no queda lógica de conductor duplicada.
-7. Hecho 2026-10-13: `?view=conductor` fuerza el modo conductor en cualquier ruta y `?view=admin` lo anula (override explícito de previsualización), fijado con pruebas.
+6. Hecho 2026-10-13: `Sidebar.vue` usa la regla única (`esDashboardDeConductor`); no queda lógica duplicada en vistas. El guard (`router/guards/auth.js`) sigue decidiendo solo por rol a propósito: el `?view` no lo toca hasta que se cierre el punto 7.
+7. Abierto (decisión de producto, 2026-10-13): ¿`?view=conductor` oculta el sidebar en cualquier ruta o solo en las operativas? Hoy lo fuerza en todas y en rutas no operativas deja la pantalla sin navegación. Probarlo y decidirlo antes de tocar el guard.
 8. Migrar `console.*` (79 archivos) a `logger` y `sweetalert2` directo (36 archivos) a `toast`, en PRs separados por feature.
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.

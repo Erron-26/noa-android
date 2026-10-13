@@ -104,7 +104,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 - **Casos negativos obligatorios:** fallo de red, respuesta vacía, error sin mensaje, aviso que también falla, permiso denegado, estado sin datos.
 - **Forma de la respuesta:** al probar listados, armar la respuesta con la misma forma que devuelve `BaseService` (`{ success, message, data }`; un listado paginado está en `r.data.data`). Una prueba con otra forma pasa en verde con la pantalla vacía.
 - **Componentes Vue:** hoy no hay entorno DOM. Antes de la primera prueba de componente, añadir `jsdom` y `@vue/test-utils` en un PR propio y declarar `// @vitest-environment jsdom` en la primera línea de cada archivo.
-- **Estado actual:** 63 pruebas en 6 archivos (`npm run test:unit`, 2026-10-13).
+- **Estado actual:** 64 pruebas en 6 archivos (`npm run test:unit`, 2026-10-13).
 
 ## Medición de Rendimiento y Accesibilidad
 
@@ -167,8 +167,8 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 3. Hecho 2026-10-13: `src/router/middleware/` eliminado (sin referencias).
 4. Hecho 2026-10-13: restos `FactusNext` renombrados a NOA y evento `factus:logout` a `noa:logout`.
 5. Hecho 2026-10-13: `DashboardService` migrado a `BaseService` con 5 pruebas (`refactor/limpieza-consistencia`); el store consume el cuerpo `{ success, data }`. Peso neutro (+0.1 kB).
-6. Unificar la lógica de conductor duplicada: `Sidebar.vue` (`isConductorDashboard`) y `esConductor()` de `router/guards/auth.js` pasan a usar `useModoConductor` o `hasRole`.
-7. Decidir si `?view=conductor` oculta el sidebar en cualquier ruta o solo en las operativas, y probarlo.
+6. Hecho 2026-10-13: `Sidebar.vue` y `router/guards/auth.js` usan la regla única (`esDashboardDeConductor`, `esModoConductor`); no queda lógica de conductor duplicada.
+7. Hecho 2026-10-13: `?view=conductor` fuerza el modo conductor en cualquier ruta y `?view=admin` lo anula (override explícito de previsualización), fijado con pruebas.
 8. Migrar `console.*` (79 archivos) a `logger` y `sweetalert2` directo (36 archivos) a `toast`, en PRs separados por feature.
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.

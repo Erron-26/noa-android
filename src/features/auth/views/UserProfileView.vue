@@ -236,6 +236,7 @@
                 </div>
             </aside>
         </div>
+        <p class="profile-version text-center text-muted small mt-3 mb-0">NOA Transportes v{{ appVersion }}</p>
     </div>
 </template>
 
@@ -246,6 +247,9 @@ import { useRoute } from 'vue-router'
 import { useUserStore, useAuthStore, usePermissionsStore } from '@store'
 import apiClient from '@/services/api/client.js'
 import Swal from 'sweetalert2'
+import env from '@utils/env.js'
+
+const appVersion = env.APP_VERSION
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -821,7 +825,7 @@ onMounted(() => {
 
 /* Status Badges */
 .badge-status {
-    font-size: 0.725rem;
+    font-size: 0.75rem;
     font-weight: 700;
     padding: 0.25rem 0.65rem;
     border-radius: 20px;

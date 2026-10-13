@@ -194,17 +194,7 @@ const items = computed(() => {
     });
   }
 
-  // 2. FUECs (Extractos Únicos de Contrato en ruta)
-  if (permissionsStore.hasRole('CONDUCTOR') || permissionsStore.can('fuec.index')) {
-    lista.push({
-      to: '/extracto-de-contrato',
-      etiqueta: 'FUECs',
-      icono: 'fas fa-file-contract',
-      prefijos: ['/extracto-de-contrato'],
-    });
-  }
-
-  // 3. Control de Servicios en Ruta (PCP - Planillas de prestación de servicio)
+  // 2. Control de Servicios en Ruta (PCP - Planillas de prestación de servicio)
   if (permissionsStore.hasRole('CONDUCTOR') || permissionsStore.can('service_delivery_control_sheets.index')) {
     lista.push({
       to: '/planilla-de-control-de-prestacion-servicios/control-de-servicios',
@@ -222,7 +212,7 @@ const items = computed(() => {
     });
   }
 
-  // 4. Perfil del conductor (credenciales, licencia y configuración)
+  // 3. Perfil del conductor (credenciales, licencia y configuración)
   lista.push({
     to: '/profile',
     etiqueta: 'Perfil',
@@ -508,24 +498,24 @@ function esActiva(item) {
   align-items: center;
   gap: 3px;
   padding: 10px 4px 12px;
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--noa-ink-soft);
   text-decoration: none;
   position: relative;
   min-height: 56px;
 }
 .mobile-nav-item i {
-  font-size: 20px;
+  font-size: 24px;
 }
 .mobile-nav-item.is-active {
-  color: #2563eb;
+  color: var(--noa-action);
 }
 .mobile-nav-dot {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--noa-action);
 }
 
 /* ── ADAPTACIÓN DE VISTAS Y FORMULARIOS OPERATIVOS EN MÓVIL ────────── */

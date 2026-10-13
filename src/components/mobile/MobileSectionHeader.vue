@@ -65,30 +65,30 @@ defineEmits(['action']);
 .msh-icon {
   width: 22px;
   height: 22px;
-  border-radius: 6px;
+  border-radius: var(--noa-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   flex-shrink: 0;
 }
 
 .msh-text {
-  font-size: 13px;
+  font-size: var(--noa-text-body);
   font-weight: 700;
-  color: #1e293b;
+  color: var(--noa-ink);
   margin: 0;
   line-height: 1.2;
 }
 
 .msh-badge {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
-  background: #e2e8f0;
-  color: #475569;
+  background: var(--noa-paper);
+  color: var(--noa-ink-soft);
   padding: 2px 7px;
-  border-radius: 12px;
+  border-radius: var(--noa-radius-full);
 }
 
 .msh-actions {
@@ -99,8 +99,8 @@ defineEmits(['action']);
 }
 
 .msh-action-link {
-  font-size: 11px;
-  color: #3b82f6;
+  font-size: var(--noa-text-meta);
+  color: var(--noa-action);
   font-weight: 600;
   cursor: pointer;
 }

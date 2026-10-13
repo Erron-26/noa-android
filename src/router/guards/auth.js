@@ -1,22 +1,23 @@
 import { useAuthStore } from "@store/modules/auth.js";
 import { usePermissionsStore } from "@store/modules/permissions.js";
 import { handleGlobalError } from "@utils/error-handler.js";
+import { esModoConductor } from "@utils/modoConductor.js";
 
 // Sustituimos ROUTES por rutas directas o constantes locales
 const LOGIN_ROUTE = "/login";
 const DASHBOARD_ROUTE = "/dashboard";
 const CONDUCTOR_DASHBOARD_ROUTE = "/dashboard/conductor";
 
-function esConductor() {
+function esConductor(view = null) {
     try {
-        return usePermissionsStore().hasRole('CONDUCTOR');
+        return esModoConductor({ view, esConductor: usePermissionsStore().hasRole('CONDUCTOR') });
     } catch {
         return false; // Sin permisos legibles: se usa el destino por defecto.
     }
 }
 
-function getDashboardRoute() {
-    return esConductor() ? CONDUCTOR_DASHBOARD_ROUTE : DASHBOARD_ROUTE;
+function getDashboardRoute(view = null) {
+    return esConductor(view) ? CONDUCTOR_DASHBOARD_ROUTE : DASHBOARD_ROUTE;
 }
 
 export async function authGuard(to, from, next) {
@@ -29,7 +30,7 @@ export async function authGuard(to, from, next) {
 
         // Si la ruta es solo para invitados (ej: login) y ya está autenticado, enviarlo al dashboard
         if (to.meta.guestOnly && isAuthenticated) {
-            return next({ path: getDashboardRoute() });
+            return next({ path: getDashboardRoute(to.query.view ?? null) });
         }
 
         // Si la ruta es pública, permitir el paso sin requerir autenticación
@@ -46,7 +47,7 @@ export async function authGuard(to, from, next) {
         }
 
         // Si el conductor intenta acceder al dashboard general, redirigir al suyo
-        if (to.path === '/dashboard' && esConductor()) {
+        if (to.path === '/dashboard' && esConductor(to.query.view ?? null)) {
             return next({ path: CONDUCTOR_DASHBOARD_ROUTE });
         }
 

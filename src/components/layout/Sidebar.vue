@@ -445,6 +445,7 @@ import { useRoute } from 'vue-router';
 import { useAuthStore, usePermissionsStore, useUserStore } from '@store';
 import NoaBadge from '@/components/NoaBadge.vue';
 import { useSidebar } from '@/hooks/useSidebar.js';
+import { esDashboardDeConductor } from '@utils/modoConductor.js';
 
 const route = useRoute();
 const authStore = useAuthStore();
@@ -452,16 +453,11 @@ const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
 const { toggleCollapse, isOpen, isActiveLink } = useSidebar();
 
-const isConductorRole = computed(() => {
-    return permissionsStore.hasRole('CONDUCTOR');
-});
-
-const isConductorDashboard = computed(() => {
-    if (route.query.view === 'admin') return false;
-    if (route.path.includes('/dashboard/conductor')) return true;
-    if (route.query.view === 'conductor') return true;
-    return route.path === '/dashboard' && isConductorRole.value;
-});
+const isConductorDashboard = computed(() => esDashboardDeConductor({
+    path: route.path,
+    view: route.query.view ?? null,
+    esConductor: permissionsStore.hasRole('CONDUCTOR'),
+}));
 
 const showSidebar = computed(() => {
     if (!authStore.isAuthenticated) return false;

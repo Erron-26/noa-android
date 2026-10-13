@@ -172,12 +172,15 @@ export function createVersionUpdater(deps = {}) {
             return estado(currentVersion, cachedLatest, { fromCache: !!cachedLatest });
         }
         const result = estado(currentVersion, latest, { fromCache: false });
-        storage.set({
-            timestamp: now(),
-            latestVersion: result.latestVersion,
-            apkUrl: result.apkUrl,
-            releaseUrl: result.releaseUrl,
-        });
+        // Una respuesta vieja (otra pestaña) no pisa una caché más nueva.
+        if (!cachedLatest || compareVersions(result.latestVersion, cachedLatest.version) >= 0) {
+            storage.set({
+                timestamp: now(),
+                latestVersion: result.latestVersion,
+                apkUrl: result.apkUrl,
+                releaseUrl: result.releaseUrl,
+            });
+        }
         return result;
     }
 
@@ -193,7 +196,15 @@ export function createVersionUpdater(deps = {}) {
             return "navegador";
         };
 
-        if (!info.apkUrl || !(await plataforma.esNativa())) return abrirNavegador();
+        // Si no se puede detectar la plataforma, se asume el peor caso (web)
+        // y se abre el navegador: el usuario nunca queda sin salida.
+        let enNativo = false;
+        try {
+            enNativo = !!info.apkUrl && (await plataforma.esNativa());
+        } catch (e) {
+            logger.warn("VersionUpdate: no se pudo detectar la plataforma, abro navegador", { error: e?.message });
+        }
+        if (!enNativo) return abrirNavegador();
 
         onStatus("Descargando actualización…");
         let filePath;

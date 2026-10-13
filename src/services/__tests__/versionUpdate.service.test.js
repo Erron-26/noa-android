@@ -107,6 +107,19 @@ describe("checkForUpdate", () => {
         expect(await u.checkForUpdate()).toMatchObject({ hasUpdate: false, latestVersion: null });
     });
 
+    it("una respuesta vieja no pisa una caché más nueva", async () => {
+        const storage = memoria({ timestamp: 0, latestVersion: "2.0.0", apkUrl: "u2", releaseUrl: "r2" });
+        const u = createVersionUpdater({
+            fetch: async () => release("v1.5.0"),
+            storage,
+            currentVersion: "1.1.7",
+            now: () => CHECK_INTERVAL_MS * 10,
+        });
+        const r = await u.checkForUpdate({ force: true });
+        expect(r.latestVersion).toBe("1.5.0");
+        expect(storage.actual()).toMatchObject({ latestVersion: "2.0.0", apkUrl: "u2" });
+    });
+
     it("HTTP no exitoso o tag vacío no avisa", async () => {
         const mal = createVersionUpdater({ fetch: async () => ({ ok: false, status: 403 }), storage: memoria(), currentVersion: "1.1.7" });
         expect((await mal.checkForUpdate()).hasUpdate).toBe(false);
@@ -158,6 +171,17 @@ describe("installUpdate", () => {
         expect(await crear(p).installUpdate(info, (t) => estados.push(t))).toBe("navegador");
         expect(p.abrirInstalador).not.toHaveBeenCalled();
         expect(estados.at(-1)).toBe("No se pudo descargar. Intenta desde el navegador.");
+    });
+
+    it("si falla la detección de plataforma cae al navegador sin lanzar", async () => {
+        const p = {
+            esNativa: async () => { throw new Error("raro"); },
+            descargarApk: vi.fn(),
+            abrirEnNavegador: vi.fn(),
+        };
+        await expect(crear(p).installUpdate(info)).resolves.toBe("navegador");
+        expect(p.descargarApk).not.toHaveBeenCalled();
+        expect(p.abrirEnNavegador).toHaveBeenCalledWith("https://dl/a.apk");
     });
 
     it("si no abre el instalador cae al navegador", async () => {

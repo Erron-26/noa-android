@@ -91,11 +91,15 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 - **El estado nunca se comunica solo con color:** cada estado lleva icono y texto.
 - Texto de 14 sp o más para contenido; 12 sp solo para metadatos. Nada por debajo de 12 sp.
 - Sin efectos de hover; usar estados pressed y ripple.
-- **Naranja (`#F97316`): reservado para pendientes y alertas del conductor** (preoperacional pendiente, acciones urgentes en ruta). Se sigue el rediseño de Stitch, no el criterio del backend. "Editar" usa tratamiento neutro (texto o icono, sin naranja).
+- **Paleta (decisión 2026-10-13, Stitch para Android):** `primary #00103e`, `primary-container #0C2461`, `secondary #0051D5`, `secondary-container #316bf3`, éxito `#16A34A`, servicios `#14B8A6`. Fondo y superficies según `DESIGN.md` de Stitch. **Naranja (`#F97316`): reservado para pendientes y alertas del conductor** (preoperacional pendiente, acciones urgentes en ruta). "Editar" usa tratamiento neutro (texto o icono, sin naranja).
+- **Navegación del conductor (decisión 2026-10-13):** 4 pestañas como en las pantallas (Inicio, Inspección, Servicios, Perfil). FUEC no va en la barra: el conductor no crea FUEC, solo los ve y descarga desde la tarjeta de Inicio.
+- **Perfil (decisión 2026-10-13):** se conserva la versión de la app. Modo nocturno, datos offline y central 24/7 no están planeados; el modo nocturno queda anotado como idea futura, sin diseño.
+- **Sidebar (verificado 2026-10-13):** en Android nativo nunca se monta (`DashboardLayout` usa `MobileConductorLayout`; el `Sidebar` solo existe en web/escritorio). Sin acción necesaria en nativo; en web sigue oculto en el dashboard del conductor.
+- **Servicios (validado contra el backend 2026-10-13):** existen kilometraje, horas, recorridos con origen/destino, peajes, estados y novedad por recorrido. No existen aforo/pasajeros a bordo, ETA ni hitos de ruta: la pantalla se maqueta solo con datos reales.
 
 ### Estilos
 - Los estilos van en `<style scoped>` del componente. No duplicar bloques de estilo entre vistas: si se repiten, se extraen a un componente o a una clase compartida.
-- Los colores de marca viven como valores fijos hoy (`#0C2461`, `#2563EB`, `#F97316`, `#16A34A`, `#14B8A6`, fondo `#F0F3F8`). Mover a tokens antes del rediseño masivo.
+- Los colores de marca viven como valores fijos hoy. La F1 del rediseño los mueve a `src/styles/tokens.css` con la paleta Stitch decidida arriba.
 
 ## Pruebas
 
@@ -104,7 +108,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 - **Casos negativos obligatorios:** fallo de red, respuesta vacía, error sin mensaje, aviso que también falla, permiso denegado, estado sin datos.
 - **Forma de la respuesta:** al probar listados, armar la respuesta con la misma forma que devuelve `BaseService` (`{ success, message, data }`; un listado paginado está en `r.data.data`). Una prueba con otra forma pasa en verde con la pantalla vacía.
 - **Componentes Vue:** hoy no hay entorno DOM. Antes de la primera prueba de componente, añadir `jsdom` y `@vue/test-utils` en un PR propio y declarar `// @vitest-environment jsdom` en la primera línea de cada archivo.
-- **Estado actual:** 81 pruebas en 7 archivos (`npm run test:unit`, 2026-10-13).
+- **Estado actual:** 83 pruebas en 7 archivos (`npm run test:unit`, 2026-10-13).
 
 ## Medición de Rendimiento y Accesibilidad
 
@@ -174,7 +178,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.
 11. Portal del conductor: revisar el enlace "Ver todo" (hoy lleva a `/dashboard/conductor`, la misma pantalla).
-12. Rediseño móvil del conductor con Stitch: primero tokens compartidos, luego Inicio, después el resto. Pendiente de decisión: si el sidebar se oculta por completo para el rol conductor.
+12. Rediseño móvil del conductor con Stitch (decisiones 2026-10-13 en Diseño móvil; diseños en `Diseños Stitch/`, 5 pantallas). Fases: F0 línea base (perf + a11y contra `vite preview`), F1 tokens en `src/styles/tokens.css`, F2 componentes compartidos, F3 login, F4 inicio, F5 inspecciones, F6 servicios (solo piel, sin tocar lógica de GPS/planillas), F7 perfil (solo versión, sin funciones no confirmadas). Sin CDN ni hover; iconos SVG locales. Prueba en teléfono en fase de testing.
 13. Decidir si `AGENTS.md` y `docs/agents/` se quedan en el repo (ya están en PR #1).
 
 ### Decisiones abiertas

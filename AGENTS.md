@@ -178,7 +178,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.
 11. Portal del conductor: revisar el enlace "Ver todo" (hoy lleva a `/dashboard/conductor`, la misma pantalla).
-12. Rediseño móvil del conductor con Stitch (decisiones 2026-10-13 en Diseño móvil; diseños en `Diseños Stitch/`, 5 pantallas). Fases: F0 línea base (perf + a11y contra `vite preview`), F1 tokens en `src/styles/tokens.css`, F2 componentes compartidos, F3 login, F4 inicio, F5 inspecciones, F6 servicios (solo piel, sin tocar lógica de GPS/planillas), F7 perfil (solo versión, sin funciones no confirmadas). Sin CDN ni hover; iconos SVG locales. Prueba en teléfono en fase de testing.
+12. Rediseño móvil del conductor con Stitch (decisiones 2026-10-13 en Diseño móvil; diseños en `Diseños Stitch/`, 5 pantallas). F0 línea base lista (`docs/metrics/perf-baseline-rediseno.json`: JS 2859.8, CSS 288, índice 141.2). F1 hecha (2026-10-13, `redesign/stitch-conductor`): tokens en `src/styles/tokens.css` (solo variables, sin cambio visual) e Inter acotado en `index.html`. Medición: JS idéntico, CSS +0.7 kB (+0.24 %), a11y sin deltas. Hallazgo: `driver-tokens.css` es código muerto (no se importa; no tocarlo). Sigue F2 componentes compartidos.
 13. Decidir si `AGENTS.md` y `docs/agents/` se quedan en el repo (ya están en PR #1).
 
 ### Decisiones abiertas

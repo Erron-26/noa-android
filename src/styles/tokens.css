@@ -1,0 +1,54 @@
+/* Tokens de diseño NOA Conductor (Stitch, decisión 2026-10-13).
+ *
+ * Solo variables `:root`, sin selectores: importar este archivo no cambia
+ * nada visual por sí solo. Cada fase del rediseño usa estos tokens en vez
+ * de valores fijos. Los `*-stitch` replican `DESIGN.md`; los `*-min` aplican
+ * las reglas propias (14 sp contenido, 12 sp metadatos, 48 dp táctil).
+ *
+ * Nota: `src/assets/driver-tokens.css` existe pero no se importa en ningún
+ * lado (código muerto con resets globales); no usarlo hasta unificarlo aquí.
+ */
+:root {
+    /* ── Paleta Stitch ── */
+    --noa-primary: #00103e;
+    --noa-primary-container: #0c2461;
+    --noa-on-primary: #ffffff;
+    --noa-action: #0051d5;
+    --noa-action-container: #316bf3;
+    --noa-on-action: #ffffff;
+    --noa-alert: #f97316;
+    --noa-success: #16a34a;
+    --noa-teal: #14b8a6;
+    --noa-error: #ba1a1a;
+    --noa-on-error: #ffffff;
+    --noa-ink: #131b2e;
+    --noa-ink-soft: #454650;
+    --noa-paper: #faf8ff;
+    --noa-card: #ffffff;
+    --noa-line: #c5c6d1;
+
+    /* ── Tipografía Inter (mínimos propios, no los 11 px de Stitch) ── */
+    --noa-font: 'Inter', system-ui, -apple-system, sans-serif;
+    --noa-text-title: 16px;
+    --noa-text-body: 14px;
+    --noa-text-meta: 12px;
+
+    /* ── Radios ── */
+    --noa-radius-sm: 4px;
+    --noa-radius-md: 12px;
+    --noa-radius-lg: 16px;
+    --noa-radius-xl: 24px;
+    --noa-radius-full: 9999px;
+
+    /* ── Espaciado (rejilla 4/8 dp) ── */
+    --noa-space-xs: 4px;
+    --noa-space-sm: 8px;
+    --noa-space-md: 16px;
+    --noa-space-lg: 24px;
+    --noa-space-xl: 32px;
+
+    /* ── Objetivos táctiles ── */
+    --noa-touch-min: 48px;
+    --noa-touch-cta: 52px;
+    --noa-input-min: 56px;
+}

@@ -2965,7 +2965,7 @@ h1, h2, h3, h4, h5, h6,
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
-.fs-10 { font-size: 0.65rem !important; }
+.fs-10 { font-size: 0.75rem !important; }
 .fs-11 { font-size: 0.75rem !important; }
 .fs-12 { font-size: 0.8125rem !important; }
 .fs-13 { font-size: 0.875rem !important; }
@@ -3046,7 +3046,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .step-number {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     color: #9da9bb;

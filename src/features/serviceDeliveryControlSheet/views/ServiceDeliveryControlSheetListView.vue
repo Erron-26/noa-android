@@ -139,7 +139,7 @@
                                 <template #body="{ data }">
                                     <div class="d-flex flex-column">
                                         <span class="text-dark fw-medium text-truncate" style="max-width: 180px;" :title="data.project?.project_name">{{ data.project?.project_name || 'Sin Proyecto' }}</span>
-                                        <span class="badge rounded-pill badge-subtle-secondary mt-1 align-self-start" style="font-size: 0.65rem;">
+                                        <span class="badge rounded-pill badge-subtle-secondary mt-1 align-self-start" style="font-size: 0.75rem;">
                                             {{ tipoLabel(data.type_of_control_sheet) }}
                                         </span>
                                     </div>
@@ -173,7 +173,7 @@
                                     <div class="d-flex flex-column text-dark" style="font-size: 0.85rem;">
                                         <span class="fw-medium"><i class="fad fa-calendar-alt text-muted me-1"></i> {{ formatRango(data.start_date || data.service_date) || '-' }}</span>
                                         <span v-if="(data.end_date || data.service_date) && (data.end_date || data.service_date) !== (data.start_date || data.service_date)" class="text-muted mt-1">
-                                            <i class="fad fa-arrow-down text-muted mx-1" style="font-size: 0.7rem;"></i>{{ formatRango(data.end_date || data.service_date) }}
+                                            <i class="fad fa-arrow-down text-muted mx-1" style="font-size: 0.75rem;"></i>{{ formatRango(data.end_date || data.service_date) }}
                                         </span>
                                     </div>
                                 </template>
@@ -183,7 +183,7 @@
                                 style="width: 120px;">
                                 <template #body="{ data }">
                                     <span class="badge rounded-pill badge-subtle" :class="estadoBadge(data)">
-                                        <i :class="estadoIcono(data)" style="font-size:10px;" />
+                                        <i :class="estadoIcono(data)" style="font-size:0.75rem;" />
                                         {{ estadoLabel(data) }}
                                     </span>
                                 </template>

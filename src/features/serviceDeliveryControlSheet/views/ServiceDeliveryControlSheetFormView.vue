@@ -11,7 +11,7 @@
                         <i class="fad fa-edit text-primary"></i>
                         <h6 class="mb-0 fw-medium">Formulario de Control de Servicios</h6>
                         <span class="badge bg-primary bg-opacity-10 text-primary ms-2">
-                            <i class="fad fa-asterisk me-1" style="font-size: 0.5rem;"></i>Campos obligatorios
+                            <i class="fad fa-asterisk me-1" style="font-size: 0.75rem;"></i>Campos obligatorios
                         </span>
                     </div>
                 </div>

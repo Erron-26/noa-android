@@ -570,7 +570,7 @@ const conductorName = computed(() => {
     return conductorData.value.conductor?.name || userStore.fullName || userStore.username || 'Conductor';
 });
 const conductorDocument = computed(() => conductorData.value.conductor?.document || null);
-const companyName = computed(() => authStore.currentTenant?.name || userStore.companyName || 'Falcon Transportes S.A.S.');
+const companyName = computed(() => authStore.currentTenant?.name || userStore.companyName || 'NOA Transportes');
 const licenseInfo = computed(() => conductorData.value.conductor?.license || null);
 const kpis = computed(() => conductorData.value.kpis || {
     total_km: 0,

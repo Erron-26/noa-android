@@ -396,7 +396,7 @@ watch(selectedPeriod, () => {
 });
 
 onMounted(() => {
-    currentTenantName.value = authStore.currentTenant?.name || 'Falcon Transportes S.A.S.';
+    currentTenantName.value = authStore.currentTenant?.name || 'NOA Transportes';
     if (!isConductorMode.value) {
         startDriverTracking();
         refreshData();

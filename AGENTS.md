@@ -39,7 +39,9 @@ Toda decisión de UI, de datos y de pruebas se diseña pensando en el conductor 
 
 ## Estructura
 
-`src/` → `features/` (un módulo por dominio: `services/`, `store/`, `views/`, `components/`, `routes.js`), `components/`, `pages/`, `layouts/`, `router/` (`guards/` activos), `store/` (Pinia: `modules/`, `plugins/`, `helpers/`), `services/` (`api/` con `BaseService` y `client.js`, `security/`, `versionUpdate.service.js`), `hooks/`, `utils/`, `types/`.
+`src/` → `features/` (un módulo por dominio: `services/`, `store/`, `views/`, `components/`, `routes.js`), `components/` (`mobile/`, `layout/`), `pages/`, `router/` (`guards/` activos), `store/` (Pinia: `modules/`, `plugins/`, `helpers/`), `services/` (`api/` con `BaseService` y `client.js`, `security/`, `versionUpdate.service.js`), `hooks/`, `utils/`, `styles/` (`tokens.css`), `types/`.
+
+Limpieza 2026-10-13: se retiraron `src/views/`, `src/layouts/` y `src/components/driver/` (subárbol sin ruteo), más 25 archivos sin referencia y `assets/brand-tokens.css`. La app se arma solo con `features/*/views/` y `pages/`.
 
 `android/` es el proyecto Gradle nativo. `scripts/` contiene `a11y-audit.js` y `perf-budget.js`.
 

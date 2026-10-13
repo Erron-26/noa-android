@@ -1,12 +1,10 @@
 /* Tokens de diseño NOA Conductor (Stitch, decisión 2026-10-13).
  *
- * Solo variables `:root`, sin selectores: importar este archivo no cambia
- * nada visual por sí solo. Cada fase del rediseño usa estos tokens en vez
- * de valores fijos. Los `*-stitch` replican `DESIGN.md`; los `*-min` aplican
- * las reglas propias (14 sp contenido, 12 sp metadatos, 48 dp táctil).
- *
- * Nota: `src/assets/driver-tokens.css` existe pero no se importa en ningún
- * lado (código muerto con resets globales); no usarlo hasta unificarlo aquí.
+ * Fuente única de tokens del proyecto (reemplaza a `assets/brand-tokens.css`,
+ * retirado por no tener consumidores). Cada fase del rediseño usa estos
+ * tokens en vez de valores fijos. Los valores replican `DESIGN.md`; los
+ * mínimos propios (14 sp contenido, 12 sp metadatos, 48 dp táctil) mandan
+ * sobre lo que diga Stitch.
  */
 :root {
     /* ── Paleta Stitch ── */

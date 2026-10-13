@@ -20,8 +20,9 @@ describe("esDashboardDeConductor", () => {
     it("?view=admin lo anula incluso en la ruta del conductor", () => {
         expect(esDashboardDeConductor({ path: "/dashboard/conductor", view: "admin" })).toBe(false);
     });
-    it("?view=conductor fuerza el modo y ?view=admin lo anula (comportamiento actual, pendiente de decisión del punto 7)", () => {
+    it("?view=conductor solo rige en rutas operativas (decisión 2026-10-13: fuera de ellas no oculta el sidebar)", () => {
         expect(esDashboardDeConductor({ path: "/vehiculos", view: "conductor", esConductor: false })).toBe(true);
+        expect(esDashboardDeConductor({ path: "/configuracion/marcas", view: "conductor", esConductor: false })).toBe(false);
         expect(esDashboardDeConductor({ path: "/dashboard", view: "admin", esConductor: true })).toBe(false);
     });
 });

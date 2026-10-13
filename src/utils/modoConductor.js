@@ -38,7 +38,9 @@ export function esModoConductor({ view = null, esConductor = false } = {}) {
 export function esDashboardDeConductor({ path = '', view = null, esConductor = false } = {}) {
     if (view === 'admin') return false;
     if (path.includes('/dashboard/conductor')) return true;
-    if (view === 'conductor') return true;
+    // `?view=conductor` es previsualización: solo rige en rutas operativas,
+    // para no dejar sin navegación las pantallas de administración.
+    if (view === 'conductor') return esRutaOperativaConductor(path);
     return path === '/dashboard' && !!esConductor;
 }
 

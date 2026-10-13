@@ -7,6 +7,7 @@ describe("describirEstado", () => {
         expect(describirEstado("CERTIFICADA")).toMatchObject({ etiqueta: "Certificada", tono: "exito" });
         expect(describirEstado("PENDIENTE")).toMatchObject({ etiqueta: "Pendiente", tono: "pendiente" });
         expect(describirEstado("NO VIGENTE")).toMatchObject({ etiqueta: "No vigente", tono: "error" });
+        expect(describirEstado("FIRMADO")).toMatchObject({ etiqueta: "Firmado", tono: "exito" });
     });
 
     it("normaliza mayúsculas y espacios sobrantes", () => {

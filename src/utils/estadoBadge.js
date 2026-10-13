@@ -31,6 +31,8 @@ const MAPA = Object.freeze({
     PENDIENTE: { etiqueta: 'Pendiente', tono: 'pendiente' },
     APROBADO: { etiqueta: 'Aprobado', tono: 'exito' },
     APROBADA: { etiqueta: 'Aprobada', tono: 'exito' },
+    FIRMADO: { etiqueta: 'Firmado', tono: 'exito' },
+    FIRMADA: { etiqueta: 'Firmada', tono: 'exito' },
     RECHAZADO: { etiqueta: 'Rechazado', tono: 'error' },
     RECHAZADA: { etiqueta: 'Rechazada', tono: 'error' },
 });

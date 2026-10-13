@@ -17,7 +17,7 @@
                         <i class="fad fa-clipboard-list fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Total Inspecciones Flota</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Total Inspecciones Flota</span>
                         <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(store.pagination.totalItems) }}</h4>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <i class="fad fa-road fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Km Recorridos Acumulados</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Km Recorridos Acumulados</span>
                         <h4 class="mb-0 fw-bold text-success mt-1">+{{ formatNumber(totalKmTraveled) }} km</h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <i class="fad fa-tachometer-alt fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Promedio Kilometraje</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Promedio Kilometraje</span>
                         <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(averageMileage) }} km</h4>
                     </div>
                 </div>
@@ -368,7 +368,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Total Inspecciones</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Total Inspecciones</span>
                                     <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ store.historyItems.length }}</h4>
                                 </div>
                                 <div class="stat-icon bg-soft-primary text-primary">
@@ -381,7 +381,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Kilometraje Actual</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Kilometraje Actual</span>
                                     <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(store.historyItems[0]?.mileage) }} <span class="small text-muted" style="font-size: 0.75rem;">km</span></h4>
                                 </div>
                                 <div class="stat-icon bg-soft-info text-info">
@@ -394,7 +394,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Km Totales Recorridos</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Km Totales Recorridos</span>
                                     <h4 class="mb-0 fw-bold text-success mt-1">+{{ formatNumber(totalHistoryKmTraveled) }} <span class="small text-muted" style="font-size: 0.75rem;">km</span></h4>
                                 </div>
                                 <div class="stat-icon bg-soft-success text-success">
@@ -410,11 +410,11 @@
                     <table class="table table-sm table-hover mb-0 align-middle history-table">
                         <thead class="bg-light">
                             <tr>
-                                <th class="text-uppercase text-muted fw-bold ps-3 py-2" style="font-size: 0.7rem; letter-spacing: 0.5px;">Fecha</th>
-                                <th class="text-uppercase text-muted fw-bold py-2" style="font-size: 0.7rem; letter-spacing: 0.5px;">Inspector</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.7rem; letter-spacing: 0.5px;">Odómetro</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.7rem; letter-spacing: 0.5px; width: 140px;">Km Recorridos</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-center" style="font-size: 0.7rem; letter-spacing: 0.5px; width: 80px;">PDF</th>
+                                <th class="text-uppercase text-muted fw-bold ps-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Fecha</th>
+                                <th class="text-uppercase text-muted fw-bold py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Inspector</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.75rem; letter-spacing: 0.5px;">Odómetro</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.75rem; letter-spacing: 0.5px; width: 140px;">Km Recorridos</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-center" style="font-size: 0.75rem; letter-spacing: 0.5px; width: 80px;">PDF</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -423,7 +423,7 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <i class="fad fa-calendar-alt text-muted" style="font-size: 13px;"></i>
                                         <span>{{ formatDate(item.inspection_date) }}</span>
-                                        <span v-if="idx === 0" class="badge bg-primary bg-opacity-10 text-primary px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;">Reciente</span>
+                                        <span v-if="idx === 0" class="badge bg-primary bg-opacity-10 text-primary px-2 py-0.5 rounded-pill" style="font-size: 0.75rem;">Reciente</span>
                                     </div>
                                 </td>
                                 <td class="py-2">
@@ -439,7 +439,7 @@
                                 </td>
                                 <td class="py-2 text-end">
                                     <span v-if="item.km_traveled !== null" class="badge badge-subtle-success font-monospace px-2 py-1 rounded">
-                                        <i class="fas fa-arrow-up me-1" style="font-size: 10px;"></i>+{{ formatNumber(item.km_traveled) }} km
+                                        <i class="fas fa-arrow-up me-1" style="font-size: 0.75rem;"></i>+{{ formatNumber(item.km_traveled) }} km
                                     </span>
                                     <span v-else class="badge bg-light text-muted px-2 py-1 rounded">
                                         Inicial
@@ -494,21 +494,11 @@
             <div class="p-3 bg-light rounded border mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="text-muted small fw-medium">Firma Inspector / Conductor:</span>
-                    <span v-if="sigDetail.has_inspector_signature" class="badge bg-success">
-                        <i class="fas fa-check-circle me-1"></i> Firmado
-                    </span>
-                    <span v-else class="badge bg-warning text-dark">
-                        <i class="fas fa-clock me-1"></i> Pendiente
-                    </span>
+                    <StatusPill :estado="sigDetail.has_inspector_signature ? 'FIRMADO' : 'PENDIENTE'" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="text-muted small fw-medium">Firma Coordinador HSEQ / Operaciones:</span>
-                    <span v-if="sigDetail.has_coordinator_signature" class="badge bg-success">
-                        <i class="fas fa-check-circle me-1"></i> Firmado
-                    </span>
-                    <span v-else class="badge bg-warning text-dark">
-                        <i class="fas fa-clock me-1"></i> Pendiente
-                    </span>
+                    <StatusPill :estado="sigDetail.has_coordinator_signature ? 'FIRMADO' : 'PENDIENTE'" />
                 </div>
 
                 <!-- Mensaje de completado -->
@@ -573,6 +563,7 @@ import Dialog from 'primevue/dialog';
 import SignaturePad from '@/components/SignaturePad.vue';
 import MobileCard from '@/components/mobile/MobileCard.vue';
 import MobileSectionHeader from '@/components/mobile/MobileSectionHeader.vue';
+import StatusPill from '@/components/mobile/StatusPill.vue';
 import MobileEmptyState from '@/components/mobile/MobileEmptyState.vue';
 
 const router = useRouter();

@@ -9,7 +9,7 @@ const LOGGING_CONFIG = {
     minLevel: import.meta.env.MODE === 'production' ? 'warn' : 'debug'
 };
 
-const APP_NAME = import.meta.env.VITE_APP_NAME || "FactusNext";
+const APP_NAME = import.meta.env.VITE_APP_NAME || "NOA";
 
 /**
  * Máscara campos sensibles recursivamente

@@ -146,7 +146,7 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to) => {
-    document.title = `${import.meta.env.VITE_APP_NAME || 'FactusNext'} - ${to.meta.title || 'Inicio'}`;
+    document.title = `${import.meta.env.VITE_APP_NAME || 'NOA'} - ${to.meta.title || 'Inicio'}`;
 
     // Finalizar barra de progreso de navegación
     try { useConfigStore().endNavigation(); } catch (_) { /* Pinia no lista aún */ }

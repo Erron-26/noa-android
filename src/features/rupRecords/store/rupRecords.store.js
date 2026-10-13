@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { toast } from '@/utils/toast.js';
+import { runStoreAction } from '@store/helpers/runStoreAction.js';
 import rupRecordsService from '../services/rupRecords.service.js';
 
 /**
@@ -47,14 +48,7 @@ export const useRupRecordsStore = defineStore('rupRecords', {
          * @returns {Promise<any>} Resultado de la acción.
          */
         async _run(action, errorMsg) {
-            this.loading = true;
-            this.error = null;
-            try { return await action(); }
-            catch (error) {
-                this.error = error.message || errorMsg;
-                await toast('Error', this.error, 'error');
-                throw error;
-            } finally { this.loading = false; }
+            return runStoreAction(this, action, errorMsg);
         },
 
         /**

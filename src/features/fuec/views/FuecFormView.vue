@@ -458,6 +458,8 @@ import BaseFormActions from '@/components/BaseFormActions.vue';
 import Swal from 'sweetalert2';
 import { dateUtils } from '@utils/date.js';
 import { logger } from '@utils/logger.js';
+import { toast } from '@/utils/toast.js';
+import { aviso, confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -467,14 +469,6 @@ const systemConfigStore = useSystemConfigurationStore();
 const thirdPartiesStore = useThirdPartiesStore();
 
 const systemConfig = computed(() => systemConfigStore.config);
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true
-});
 
 const isEditMode = computed(() => route.params.id !== undefined);
 
@@ -613,35 +607,23 @@ const openPassengerModal = () => {
     }).then((result) => {
         if (result.isConfirmed && result.value) {
             formData.passengers.push(result.value);
-            Toast.fire({
-                title: 'Pasajero agregado',
-                icon: 'success'
-            });
+            toast('Pasajero agregado', '', 'success');
         }
     });
 };
 
-const removePassenger = (index) => {
-    Swal.fire({
-        title: '¿Eliminar pasajero?',
-        text: 'Esta acción removerá al pasajero de la lista.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-            confirmButton: 'btn btn-danger px-4 rounded-pill',
-            cancelButton: 'btn btn-outline-secondary px-4 rounded-pill ms-2'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            formData.passengers.splice(index, 1);
-            Toast.fire({
-                title: 'Pasajero eliminado',
-                icon: 'success'
-            });
-        }
+const removePassenger = async (index) => {
+    const confirmado = await confirmar({
+        titulo: '¿Eliminar pasajero?',
+        texto: 'Esta acción removerá al pasajero de la lista.',
+        confirmar: 'Sí, eliminar',
+        cancelar: 'Cancelar',
+        peligro: true,
     });
+    if (confirmado) {
+        formData.passengers.splice(index, 1);
+        toast('Pasajero eliminado', '', 'success');
+    }
 };
 
 const getDocumentTypeName = (uuid) => {
@@ -668,14 +650,10 @@ const validateDriverLicenseExpired = async (conductorUuid, fieldName) => {
                 formData[fieldName] = '';
                 driverLicenseExpirations[fieldName] = null;
 
-                await Swal.fire({
-                    title: 'Licencia Inválida',
-                    text: data.message || 'El conductor seleccionado tiene la licencia vencida y no puede ser asignado.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    customClass: {
-                        confirmButton: 'btn btn-danger px-4 rounded-pill'
-                    }
+                await aviso({
+                    titulo: 'Licencia Inválida',
+                    texto: data.message || 'El conductor seleccionado tiene la licencia vencida y no puede ser asignado.',
+                    icono: 'error',
                 });
             } else {
                 driverLicenseExpirations[fieldName] = data.expiration_date || null;
@@ -723,14 +701,10 @@ const validateDriverSocialSecurity = async (conductorUuid, fieldName) => {
                 formData[fieldName] = '';
 
                 const periodDisplay = dateUtils.dayjs(expectedPeriod).format('MM/YYYY');
-                await Swal.fire({
-                    title: 'Seguridad Social Pendiente',
-                    text: `El conductor seleccionado no cuenta con aportes de seguridad social pagados para el periodo del viaje (${periodDisplay}).`,
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    customClass: {
-                        confirmButton: 'btn btn-danger px-4 rounded-pill'
-                    }
+                await aviso({
+                    titulo: 'Seguridad Social Pendiente',
+                    texto: `El conductor seleccionado no cuenta con aportes de seguridad social pagados para el periodo del viaje (${periodDisplay}).`,
+                    icono: 'error',
                 });
             }
             return false;
@@ -803,14 +777,10 @@ const consultarVehiculo = async () => {
         const { vehicle, adminCharges } = await store.fetchVehicleValidationData(formData.vehicle_uuid);
 
         if (!vehicle) {
-            await Swal.fire({
-                title: 'Error',
-                text: 'No se encontraron datos para el vehículo seleccionado.',
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                customClass: {
-                    confirmButton: 'btn btn-danger px-4 rounded-pill'
-                }
+            await aviso({
+                titulo: 'Error',
+                texto: 'No se encontraron datos para el vehículo seleccionado.',
+                icono: 'error',
             });
             return;
         }
@@ -1058,8 +1028,8 @@ const consultarVehiculo = async () => {
             formData.vehicle_uuid = '';
             vehiclePaymentLimit.value = null;
 
-            await Swal.fire({
-                title: 'Vehículo no Apto',
+            await aviso({
+                titulo: 'Vehículo no Apto',
                 html: `
                     <div style="text-align: left; font-family: inherit; font-size: 0.95rem;">
                         <p>No se puede proceder debido a las siguientes inconsistencias en el vehículo:</p>
@@ -1069,11 +1039,7 @@ const consultarVehiculo = async () => {
                         <p style="font-weight: 500;">Por favor solucione estos pendientes antes de generar la planilla FUEC.</p>
                     </div>
                 `,
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                customClass: {
-                    confirmButton: 'btn btn-danger px-4 rounded-pill'
-                }
+                icono: 'error',
             });
             return;
         }
@@ -1119,10 +1085,7 @@ const consultarVehiculo = async () => {
             const driverInCatalog = store.catalogs.drivers.find(d => d.uuid === affiliateUuid);
             if (driverInCatalog) {
                 formData.main_conductor_uuid = driverInCatalog.uuid;
-                Toast.fire({
-                    title: 'Conductor propietario seleccionado automáticamente',
-                    icon: 'info'
-                });
+                toast('Conductor propietario seleccionado automáticamente', '', 'info');
             }
         }
 
@@ -1130,14 +1093,10 @@ const consultarVehiculo = async () => {
         formFuec.value = false;
     } catch (error) {
         logger.error('Error al consultar vehículo:', error?.message);
-        await Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al validar la información del vehículo.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-                confirmButton: 'btn btn-danger px-4 rounded-pill'
-            }
+        await aviso({
+            titulo: 'Error',
+            texto: 'Ocurrió un error al validar la información del vehículo.',
+            icono: 'error',
         });
     } finally {
         isFetchingVehicle.value = false;
@@ -1175,16 +1134,10 @@ const consultarContratista = async () => {
             });
             formData.contract_number_display = found.contract_number;
 
-            Toast.fire({
-                title: `Datos de ${found.company_name} cargados`,
-                icon: 'success'
-            });
+            toast(`Datos de ${found.company_name} cargados`, '', 'success');
 
         } else {
-            Toast.fire({
-                title: 'Contratante no registrado, ingrese los datos manualmente',
-                icon: 'info'
-            });
+            toast('Contratante no registrado, ingrese los datos manualmente', '', 'info');
         }
     } catch (error) {
         logger.error('Error al consultar contratista:', error?.message);
@@ -1359,14 +1312,10 @@ const handleSubmit = async () => {
             firstError.focus({ preventScroll: true });
             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return Swal.fire({
-            title: 'Atención',
-            text: 'Revisa los campos obligatorios',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-                confirmButton: 'btn btn-warning px-4 rounded-pill'
-            }
+        return aviso({
+            titulo: 'Atención',
+            texto: 'Revisa los campos obligatorios',
+            icono: 'warning',
         });
     }
 
@@ -1435,37 +1384,23 @@ const handleSubmit = async () => {
         }
 
         if (uuid) {
-            Swal.fire({
-                title: 'Generando PDF...',
-                text: 'Por favor espere mientras el servidor prepara el documento.',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+            await mostrarCargando({
+                titulo: 'Generando PDF...',
+                texto: 'Por favor espere mientras el servidor prepara el documento.',
             });
 
             try {
                 await store.downloadPdf(uuid);
 
-                Swal.close();
-                await Swal.fire({
-                    icon: 'success',
-                    title: '¡Guardado con éxito!',
-                    text: 'El FUEC ha sido guardado y el PDF se ha abierto en el navegador.',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+                cerrarDialogo();
+                toast('¡Guardado con éxito!', 'El FUEC ha sido guardado y el PDF se ha abierto en el navegador.', 'success');
             } catch (pdfError) {
                 logger.error('Error al abrir el PDF del FUEC', pdfError?.message);
-                Swal.close();
-                await Swal.fire({
-                    icon: 'warning',
-                    title: 'Guardado',
-                    text: 'El FUEC se guardó, pero hubo un error al abrir el PDF desde el servidor.',
-                    confirmButtonText: 'Aceptar',
-                    customClass: {
-                        confirmButton: 'btn btn-warning px-4 rounded-pill'
-                    }
+                cerrarDialogo();
+                await aviso({
+                    titulo: 'Guardado',
+                    texto: 'El FUEC se guardó, pero hubo un error al abrir el PDF desde el servidor.',
+                    icono: 'warning',
                 });
             }
         }
@@ -1474,14 +1409,10 @@ const handleSubmit = async () => {
     } catch (error) {
         logger.error('Error al guardar el FUEC', error?.message);
         const errMsg = error.response?.data?.message || 'No se pudo procesar la solicitud';
-        Swal.fire({
-            title: 'Error',
-            text: errMsg,
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-                confirmButton: 'btn btn-danger px-4 rounded-pill'
-            }
+        await aviso({
+            titulo: 'Error',
+            texto: errMsg,
+            icono: 'error',
         });
     } finally {
         submitting.value = false;

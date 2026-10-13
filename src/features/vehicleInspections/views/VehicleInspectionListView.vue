@@ -555,6 +555,7 @@
 <script setup>
 import { toast } from '@/utils/toast.js';
 import { logger } from '@/utils/logger.js';
+import { aviso, confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -570,7 +571,6 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
 import SignaturePad from '@/components/SignaturePad.vue';
-import Swal from 'sweetalert2';
 import MobileCard from '@/components/mobile/MobileCard.vue';
 import MobileSectionHeader from '@/components/mobile/MobileSectionHeader.vue';
 import MobileEmptyState from '@/components/mobile/MobileEmptyState.vue';
@@ -689,11 +689,10 @@ const openHistory = async (data) => {
 
 const openSignaturePad = async (data) => {
     if (!isAdmin.value) {
-        Swal.fire({
-            title: 'Sin permiso',
-            text: 'Solo un administrador puede firmar inspecciones vehiculares.',
-            icon: 'warning',
-            confirmButtonText: 'Entendido'
+        await aviso({
+            titulo: 'Sin permiso',
+            texto: 'Solo un administrador puede firmar inspecciones vehiculares.',
+            icono: 'warning',
         });
         return;
     }
@@ -726,13 +725,7 @@ const onSignatureSaved = async (signatureData) => {
         else if (sigActiveRole.value === 'coordinator') sigDetail.value.has_coordinator_signature = true;
     }
     
-    Swal.fire({
-        icon: 'success',
-        title: 'Firma guardada',
-        text: `Firma de ${sigActiveRole.value === 'inspector' ? 'Inspector/Conductor' : 'Coordinador HSEQ'} registrada correctamente.`,
-        timer: 2000,
-        showConfirmButton: false
-    });
+    toast('Firma guardada', `Firma de ${sigActiveRole.value === 'inspector' ? 'Inspector/Conductor' : 'Coordinador HSEQ'} registrada correctamente.`, 'success');
 
     // Auto-select the OTHER role if it is pending, so the user can sign the next one immediately
     if (sigActiveRole.value === 'inspector' && !sigDetail.value.has_coordinator_signature) {
@@ -770,22 +763,17 @@ const onSignatureSaved = async (signatureData) => {
 
 const generatePublicSignLink = async (uuid) => {
     if (!isAdmin.value) {
-        Swal.fire({
-            title: 'Sin permiso',
-            text: 'Solo un administrador puede compartir el enlace de firma.',
-            icon: 'warning',
-            confirmButtonText: 'Entendido'
+        await aviso({
+            titulo: 'Sin permiso',
+            texto: 'Solo un administrador puede compartir el enlace de firma.',
+            icono: 'warning',
         });
         return;
     }
     try {
-        Swal.fire({
-            title: 'Generando enlace...',
-            text: 'Por favor espera mientras generamos el enlace de firma temporal.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+        await mostrarCargando({
+            titulo: 'Generando enlace...',
+            texto: 'Por favor espera mientras generamos el enlace de firma temporal.',
         });
 
         const tenantId = useAuthStore().currentTenant?.id;
@@ -794,45 +782,35 @@ const generatePublicSignLink = async (uuid) => {
         const response = await instance.post(`/fleet-management/vehicle-inspections/${uuid}/generate-sign-url`);
         const publicUrl = response.data.data.url;
 
-        Swal.close();
+        cerrarDialogo();
 
-        Swal.fire({
-            title: '¡Enlace Generado!',
+        const copiar = await confirmar({
+            titulo: '¡Enlace Generado!',
             html: `
                 <p>El siguiente enlace público tiene una vigencia de <b>1 hora</b>:</p>
                 <div class="mt-2 p-2 bg-light border rounded text-break text-start font-monospace" style="font-size: 12px; max-height: 100px; overflow-y: auto; word-break: break-all;">
                     ${publicUrl}
                 </div>
             `,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar Enlace',
-            cancelButtonText: 'Cerrar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigator.clipboard.writeText(publicUrl).then(() => {
-                    Swal.fire({
-                        title: '¡Copiado!',
-                        text: 'El enlace de firma ha sido copiado al portapapeles.',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }).catch(err => {
-                    logger.error('No se pudo copiar el enlace de firma', { message: err?.message ?? err });
-                    toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-                });
-            }
+            confirmar: 'Copiar Enlace',
+            cancelar: 'Cerrar',
         });
+        if (copiar) {
+            try {
+                await navigator.clipboard.writeText(publicUrl);
+                toast('¡Copiado!', 'El enlace de firma ha sido copiado al portapapeles.', 'success');
+            } catch (copyError) {
+                logger.error('No se pudo copiar el enlace de firma', { message: copyError?.message ?? copyError });
+                toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
+            }
+        }
     } catch (err) {
         logger.error('Error al generar enlace firmado', { message: err?.message ?? err });
-        Swal.fire({
-            title: 'Error',
-            text: err.response?.data?.message ?? 'No se pudo generar el enlace firmado.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
+        cerrarDialogo();
+        await aviso({
+            titulo: 'Error',
+            texto: err.response?.data?.message ?? 'No se pudo generar el enlace firmado.',
+            icono: 'error',
         });
     }
 };

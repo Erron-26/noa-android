@@ -292,7 +292,7 @@
 <script setup>
 import { toast } from '@/utils/toast.js';
 import { logger } from '@/utils/logger.js';
-import Swal from 'sweetalert2';
+import { aviso, confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
 /**
  * @author Darwin Montes
  * @version 1.0.0
@@ -550,59 +550,44 @@ const shareCoordinatorLink = async () => {
     if (!isEditMode.value) return;
     try {
         sharingLink.value = true;
-        Swal.fire({
-            title: 'Generando enlace...',
-            text: 'Por favor espera mientras generamos el enlace de firma temporal.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+        await mostrarCargando({
+            titulo: 'Generando enlace...',
+            texto: 'Por favor espera mientras generamos el enlace de firma temporal.',
         });
 
         const result = await store.generateCoordinatorSignUrl(route.params.id);
         const publicUrl = result?.url ?? '';
         if (!publicUrl) throw new Error('Sin enlace');
 
-        Swal.close();
+        cerrarDialogo();
 
-        Swal.fire({
-            title: '¡Enlace Generado!',
+        const copiar = await confirmar({
+            titulo: '¡Enlace Generado!',
             html: `
                 <p>Comparte este enlace con el coordinador de servicios. Tiene una vigencia de <b>1 hora</b> y su firma se plasmará en el campo RECIBO Y FIRMA:</p>
                 <div class="mt-2 p-2 bg-light border rounded text-break text-start font-monospace" style="font-size: 12px; max-height: 100px; overflow-y: auto; word-break: break-all;">
                     ${publicUrl}
                 </div>
             `,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar Enlace',
-            cancelButtonText: 'Cerrar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigator.clipboard.writeText(publicUrl).then(() => {
-                    Swal.fire({
-                        title: '¡Copiado!',
-                        text: 'El enlace de firma ha sido copiado al portapapeles.',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }).catch(err => {
-                    logger.error('No se pudo copiar el enlace de firma', { message: err?.message ?? err });
-                    toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-                });
-            }
+            confirmar: 'Copiar Enlace',
+            cancelar: 'Cerrar',
         });
+        if (copiar) {
+            try {
+                await navigator.clipboard.writeText(publicUrl);
+                toast('¡Copiado!', 'El enlace de firma ha sido copiado al portapapeles.', 'success');
+            } catch (copyError) {
+                logger.error('No se pudo copiar el enlace', { message: copyError?.message ?? copyError });
+                toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
+            }
+        }
     } catch (err) {
         logger.error('Error al generar enlace de firma', { message: err?.message ?? err });
-        Swal.close();
-        Swal.fire({
-            title: 'Error',
-            text: err.response?.data?.message ?? 'No se pudo generar el enlace de firma del coordinador.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
+        cerrarDialogo();
+        await aviso({
+            titulo: 'Error',
+            texto: err.response?.data?.message ?? 'No se pudo generar el enlace de firma del coordinador.',
+            icono: 'error',
         });
     } finally {
         sharingLink.value = false;

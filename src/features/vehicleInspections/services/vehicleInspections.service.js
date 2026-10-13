@@ -1,4 +1,5 @@
 import { BaseService } from '@services/api/base.service.js';
+import { logger } from '@utils/logger.js';
 
 /**
  * Servicio para la gestión de inspecciones de vehículos.
@@ -69,7 +70,7 @@ class VehicleInspectionService extends BaseService {
             );
             return res.data?.data ?? res.data ?? { exists: false, inspection: null };
         } catch (err) {
-            console.warn('Error verificando inspección del día:', err.message);
+            logger.warn('Error verificando inspección del día:', err.message);
             return { exists: false, inspection: null };
         }
     }
@@ -92,7 +93,7 @@ class VehicleInspectionService extends BaseService {
                 const res = await this._getInstance().get(url);
                 return res.data?.data ?? res.data ?? [];
             } catch (err) {
-                console.warn(`Error cargando catálogo: ${url}`, err.message);
+                logger.warn(`Error cargando catálogo: ${url}`, err.message);
                 return [];
             }
         };

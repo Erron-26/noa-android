@@ -231,6 +231,7 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import { ref, reactive, computed, watch, onMounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -352,7 +353,7 @@ const loadConductorAssignments = async () => {
         }
         assignedVehicleUuids.value = ordered;
     } catch (e) {
-        console.warn('No se pudieron cargar las asignaciones del conductor', e?.message);
+        logger.warn('No se pudieron cargar las asignaciones del conductor', e?.message);
     } finally {
         assignedVehiclesLoaded.value = true;
     }
@@ -598,7 +599,7 @@ const downloadPdf = async () => {
         downloadingPdf.value = true;
         await VehicleInspectionsService.downloadPdf(route.params.id);
     } catch (error) {
-        console.error(error);
+        logger.error('No se pudo generar o descargar el PDF', { message: error?.message ?? error });
         toast('Error', 'No se pudo generar o descargar el PDF', 'error');
     } finally {
         downloadingPdf.value = false;

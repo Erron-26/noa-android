@@ -274,6 +274,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Swal from 'sweetalert2';
 import dateUtils from '@/utils/date.js';
+import { logger } from '@/utils/logger.js';
 import MobileCard from '@/components/mobile/MobileCard.vue';
 import MobileSectionHeader from '@/components/mobile/MobileSectionHeader.vue';
 import MobileEmptyState from '@/components/mobile/MobileEmptyState.vue';
@@ -327,7 +328,7 @@ const downloadPdfServer = async (item) => {
             showConfirmButton: false
         });
     } catch (error) {
-        console.error('Error al generar PDF del servidor:', error);
+        logger.error('Error al generar PDF del servidor', { message: error?.message ?? error });
         Swal.fire({
             icon: 'error',
             title: 'Error de Generación',

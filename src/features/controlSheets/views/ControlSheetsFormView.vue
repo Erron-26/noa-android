@@ -191,6 +191,7 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 /**
  * @author Darwin Montes
  * @version 1.0.0
@@ -245,7 +246,7 @@ const fetchPdfs = async () => {
         try {
             pdfs.value = await store.getPdfs(route.params.id);
         } catch (error) {
-            console.error('Error al cargar PDFs asociados', error);
+            logger.error('Error al cargar PDFs asociados', { message: error?.message ?? error });
         }
     }
 };

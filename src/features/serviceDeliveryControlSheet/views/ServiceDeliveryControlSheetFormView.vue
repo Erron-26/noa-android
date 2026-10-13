@@ -291,6 +291,7 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import Swal from 'sweetalert2';
 /**
  * @author Darwin Montes
@@ -589,13 +590,13 @@ const shareCoordinatorLink = async () => {
                         showConfirmButton: false
                     });
                 }).catch(err => {
-                    console.error('Error al copiar:', err);
+                    logger.error('No se pudo copiar el enlace de firma', { message: err?.message ?? err });
                     toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
                 });
             }
         });
     } catch (err) {
-        console.error('Error al generar enlace de firma:', err);
+        logger.error('Error al generar enlace de firma', { message: err?.message ?? err });
         Swal.close();
         Swal.fire({
             title: 'Error',

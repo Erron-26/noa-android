@@ -208,6 +208,7 @@ import NoaTableSpinner from '@/components/NoaTableSpinner.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Swal from 'sweetalert2';
+import { logger } from '@/utils/logger.js';
 
 const router = useRouter();
 const route = useRoute();
@@ -403,7 +404,7 @@ const handleChangeBranch = async (vehicle) => {
             await store.fetchItems();
         }
     } catch (error) {
-        console.error('Error al cambiar la sede:', error);
+        logger.error('Error al cambiar la sede:', { message: error?.message ?? error });
     }
 };
 

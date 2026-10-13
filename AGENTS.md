@@ -77,7 +77,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 
 ### Avisos, logs y errores
 - Avisos al usuario con `utils/toast.js`. No importar `sweetalert2` directamente.
-- Logs con `utils/logger.js`. No usar `console.*` directo. Los 79 archivos actuales que lo usan se migran poco a poco.
+- Logs con `utils/logger.js`. No usar `console.*` directo. Quedan 66 archivos que lo usan (eran 79 al 2026-10-09); los 6 features del conductor ya están migrados, el resto se migra poco a poco.
 - Error de API sin mensaje útil: usar el mensaje de respaldo en español, nunca un error técnico.
 
 ### Permisos y roles
@@ -169,7 +169,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 5. Hecho 2026-10-13: `DashboardService` migrado a `BaseService` con 5 pruebas (`refactor/limpieza-consistencia`); el store consume el cuerpo `{ success, data }`. Peso neutro (+0.1 kB).
 6. Hecho 2026-10-13: `Sidebar.vue` usa la regla única (`esDashboardDeConductor`); no queda lógica duplicada en vistas. El guard (`router/guards/auth.js`) sigue decidiendo solo por rol a propósito: el `?view` no lo toca hasta que se cierre el punto 7.
 7. Hecho 2026-10-13: `?view=conductor` solo rige en rutas operativas (decisión del usuario); fuera de ellas no oculta el sidebar. `?view=admin` lo anula en todas. Fijado con pruebas; el guard no usa `?view`.
-8. Migrar `console.*` (79 archivos) a `logger` y `sweetalert2` directo (36 archivos) a `toast`, en PRs separados por feature.
+8. En curso (2026-10-13): `console.*` migrado a `logger` en los 6 features del conductor (13 archivos, de 79 a 66). Pendiente el resto. `sweetalert2` directo sigue en pie: la mayoría son diálogos modales (confirmar, cargando, HTML interactivo, validación) que `utils/toast.js` no puede expresar; hace falta un helper de diálogos en `utils/` antes de migrarlos.
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.
 11. Portal del conductor: revisar el enlace "Ver todo" (hoy lleva a `/dashboard/conductor`, la misma pantalla).

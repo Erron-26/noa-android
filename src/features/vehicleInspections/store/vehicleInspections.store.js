@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import { runStoreAction } from '@store/helpers/runStoreAction.js';
 import vehicleInspectionsService from '../services/vehicleInspections.service.js';
 
@@ -252,7 +253,7 @@ export const useVehicleInspectionsStore = defineStore('vehicleInspections', {
                                 this.kmTraveledMap[vUuid] = prev ? prev.mileage : null;
                             }
                         } catch (e) {
-                            console.error(e);
+                            logger.error('No se pudo calcular el kilometraje del historial', { message: e?.message ?? e });
                         }
                     })()
                 );

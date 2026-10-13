@@ -554,6 +554,7 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -711,7 +712,7 @@ const openSignaturePad = async (data) => {
             sigActiveRole.value = 'inspector';
         }
     } catch (err) {
-        console.error('Error fetching inspection detail:', err);
+        logger.error('Error obteniendo el detalle de firmas de la inspección', { message: err?.message ?? err });
         sigDetail.value = { has_inspector_signature: false, has_coordinator_signature: false };
     } finally {
         sigLoadingDetail.value = false;
@@ -757,7 +758,7 @@ const onSignatureSaved = async (signatureData) => {
             sigActiveRole.value = 'inspector';
         }
     } catch (err) {
-        console.error('Error refreshing signature status:', err);
+        logger.error('Error refrescando el estado de las firmas', { message: err?.message ?? err });
     }
     
     // Si ambas ya están firmadas, cerrar el diálogo
@@ -820,13 +821,13 @@ const generatePublicSignLink = async (uuid) => {
                         showConfirmButton: false
                     });
                 }).catch(err => {
-                    console.error('Error al copiar:', err);
+                    logger.error('No se pudo copiar el enlace de firma', { message: err?.message ?? err });
                     toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
                 });
             }
         });
     } catch (err) {
-        console.error('Error al generar enlace firmado:', err);
+        logger.error('Error al generar enlace firmado', { message: err?.message ?? err });
         Swal.fire({
             title: 'Error',
             text: err.response?.data?.message ?? 'No se pudo generar el enlace firmado.',
@@ -841,7 +842,7 @@ const downloadPdf = async (uuid) => {
         downloadingPdf.value = uuid;
         await VehicleInspectionsService.downloadPdf(uuid);
     } catch (error) {
-        console.error(error);
+        logger.error('No se pudo generar o abrir el PDF de la inspección', { message: error?.message ?? error });
         toast('Error', 'No se pudo generar o abrir el PDF', 'error');
     } finally {
         downloadingPdf.value = null;

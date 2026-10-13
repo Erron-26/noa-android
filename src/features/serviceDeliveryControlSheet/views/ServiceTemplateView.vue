@@ -1438,6 +1438,7 @@
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
 import PrimeSelect from 'primevue/select';
 import { useServiceDeliveryControlSheetStore } from '../store/serviceDeliveryControlSheet.store.js';
@@ -2211,7 +2212,7 @@ const iniciarServicio = async () => {
         // El GPS debe seguir registrando la ruta durante el servicio en curso.
         sincronizarGpsOperativo();
     } catch (err) {
-        console.error(err);
+        logger.error('No se pudo iniciar el servicio', { message: err?.message ?? err });
         toast('Error', 'No se pudo iniciar el servicio', 'error');
     } finally {
         submitting.value = false;
@@ -2422,7 +2423,7 @@ const guardarPlanilla = async () => {
             submitting.value = true;
             await cerrarPlanillaGlobalMulti();
         } catch (err) {
-            console.error(err);
+            logger.error('No se pudo guardar la planilla global', { message: err?.message ?? err });
             toast('Error', 'No se pudo guardar la planilla.', 'error');
         } finally {
             submitting.value = false;
@@ -2487,7 +2488,7 @@ const guardarPlanilla = async () => {
 
         continuarTrasGuardar();
     } catch (err) {
-        console.error(err);
+        logger.error('No se pudo guardar la planilla', { message: err?.message ?? err });
         toast('Error', 'No se pudo guardar la planilla.', 'error');
     } finally {
         submitting.value = false;
@@ -2586,7 +2587,7 @@ const guardarCierreRecorrido = async () => {
         persistirProgreso();
         goStep(3);
     } catch (err) {
-        console.error(err);
+        logger.error('No se pudo guardar el cierre del recorrido', { message: err?.message ?? err });
         toast('Error', 'No se pudo guardar el cierre del recorrido.', 'error');
     } finally {
         submitting.value = false;
@@ -2628,7 +2629,7 @@ const guardarFuncionarioRecorridoCerrado = async () => {
         }
         toast('¡Funcionario Guardado!', `Se almacenó el funcionario para el recorrido ${i + 1}`, 'success');
     } catch (err) {
-        console.error(err);
+        logger.error('No se pudo actualizar el funcionario del recorrido', { message: err?.message ?? err });
         toast('Error', 'No se pudo actualizar el funcionario del recorrido.', 'error');
     } finally {
         submitting.value = false;
@@ -2852,7 +2853,7 @@ onMounted(async () => {
         // Retomar servicio en curso (recarga o reingreso): paso 3 si sigue en ruta.
         await restaurarProgreso();
     } catch (err) {
-        console.error(err);
+        logger.error('No se pudo restaurar el progreso del servicio', { message: err?.message ?? err });
     } finally {
         isViewLoading.value = false;
     }

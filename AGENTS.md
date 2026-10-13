@@ -56,15 +56,15 @@ Toda decisión de UI, de datos y de pruebas se diseña pensando en el conductor 
 El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no inventar uno paralelo.
 
 - **Capas:** vistas → stores (Pinia) → servicios de feature → `BaseService` → `apiClient` → interceptores.
-- **Servicios:** cada feature tiene su servicio que extiende `BaseService` (`resourcePath`, `metadata`). Las llamadas HTTP pasan por `_request`, `_downloadPdf` o `_multipart`. No usar `apiClient` directo desde una feature; `DashboardService` es la excepción pendiente de migrar.
+- **Servicios:** cada feature tiene su servicio que extiende `BaseService` (`resourcePath`, `metadata`). Las llamadas HTTP pasan por `_request`, `_downloadPdf` o `_multipart`. No usar `apiClient` directo desde una feature.
 - **Stores:** cada feature exporta `useXxxStore` con `state`, `getters` y `actions`. Las acciones que llaman a la API se ejecutan con `runStoreAction(this, action, errorMsg)` (`src/store/helpers/runStoreAction.js`): gestiona `loading`, `error`, el aviso y el relanzamiento. **No copiar un `_run` local**: ya no queda ninguno en features (los 26 migrados; `rolesandpermissions`, `notifications` y `tracking` usan manejo inline propio).
 - **Stores singleton de configuración:** `store/index.js` registra plugins por ID de store (persistencia, cifrado, logger) con `PLUGIN_REGISTRY`. Un store nuevo que necesite persistencia se añade ahí.
 - **Módulos puros:** la lógica de decisión vive en funciones puras sin Pinia ni DOM ni Capacitor (`utils/modoConductor.js`, `features/dashboard/utils/presentacionConductor.js`). Los hooks (`hooks/useModoConductor.js`) las conectan con la app.
 - **Inyección de dependencias:** los módulos con efectos externos exponen una fábrica con dependencias opcionales (`createVersionUpdater(deps)`). Así se prueban sin red ni plataforma.
 - **Plataforma:** `LoginView.vue` es un dispatcher entre `LoginMobile` y `LoginDesktop` según Capacitor; `?mobile=1|0` solo sirve para previsualizar en navegador.
 - **Interceptores:** `services/api/interceptors.js` es la cadena única de request y response. Los 401 limpian la sesión y emiten `auth:unauthorized`; las rutas `/login` y `/refresh-token` gestionan su propio error.
-- **Eventos del navegador:** `app:toast` y `auth:unauthorized` son el canal para avisar fuera de un store. No crear canales nuevos.
-- **Guards:** `router/index.js` ejecuta en orden `authGuard`, `twoFAGuard`, `tenantGuard` y `permissionsGuard`. `router/middleware/` está muerto y se elimina.
+- **Eventos del navegador:** `app:toast`, `auth:unauthorized` y `noa:logout` son el canal para avisar fuera de un store. No crear canales nuevos.
+- **Guards:** `router/index.js` ejecuta en orden `authGuard`, `twoFAGuard`, `tenantGuard` y `permissionsGuard`. Sin carpeta `middleware` (eliminada 2026-10-13: no tenía referencias).
 - **Hooks de formulario:** `useAccessibleForm` (y `useFormManager`, que lo envuelve) son el estándar para formularios nuevos.
 
 ## Convenciones
@@ -104,7 +104,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 - **Casos negativos obligatorios:** fallo de red, respuesta vacía, error sin mensaje, aviso que también falla, permiso denegado, estado sin datos.
 - **Forma de la respuesta:** al probar listados, armar la respuesta con la misma forma que devuelve `BaseService` (`{ success, message, data }`; un listado paginado está en `r.data.data`). Una prueba con otra forma pasa en verde con la pantalla vacía.
 - **Componentes Vue:** hoy no hay entorno DOM. Antes de la primera prueba de componente, añadir `jsdom` y `@vue/test-utils` en un PR propio y declarar `// @vitest-environment jsdom` en la primera línea de cada archivo.
-- **Estado actual:** 58 pruebas en 5 archivos (`npm run test:unit`, 2026-10-09).
+- **Estado actual:** 63 pruebas en 6 archivos (`npm run test:unit`, 2026-10-13).
 
 ## Medición de Rendimiento y Accesibilidad
 
@@ -164,9 +164,9 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 ### Pendiente (en orden sugerido)
 1. Hecho 2026-10-09/13: `runStoreAction` + migración completa de los 26 stores, fusionados en `refactor/modo-conductor-pr` (rama `refactor/store-run-helper` y su PR del fork ya cerradas; `refactor/store-run-rest` fusionada directo por ser el mismo repo).
 2. Hecho 2026-10-13: los 21 stores restantes migrados a `runStoreAction`; ya no queda ningún `_run` local. Peso total −1.3 kB.
-3. Eliminar `src/router/middleware/` (`auth.js`, `role.js` no tienen referencias).
-4. Renombrar restos de la plantilla original: evento `factus:logout` (`store/index.js`) y `FactusNext` en `utils/logger.js` y `utils/plugins.js`.
-5. Migrar `DashboardService` a `BaseService`.
+3. Hecho 2026-10-13: `src/router/middleware/` eliminado (sin referencias).
+4. Hecho 2026-10-13: restos `FactusNext` renombrados a NOA y evento `factus:logout` a `noa:logout`.
+5. Hecho 2026-10-13: `DashboardService` migrado a `BaseService` con 5 pruebas (`refactor/limpieza-consistencia`); el store consume el cuerpo `{ success, data }`. Peso neutro (+0.1 kB).
 6. Unificar la lógica de conductor duplicada: `Sidebar.vue` (`isConductorDashboard`) y `esConductor()` de `router/guards/auth.js` pasan a usar `useModoConductor` o `hasRole`.
 7. Decidir si `?view=conductor` oculta el sidebar en cualquier ruta o solo en las operativas, y probarlo.
 8. Migrar `console.*` (79 archivos) a `logger` y `sweetalert2` directo (36 archivos) a `toast`, en PRs separados por feature.

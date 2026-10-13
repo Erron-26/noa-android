@@ -20,7 +20,7 @@ describe("esDashboardDeConductor", () => {
     it("?view=admin lo anula incluso en la ruta del conductor", () => {
         expect(esDashboardDeConductor({ path: "/dashboard/conductor", view: "admin" })).toBe(false);
     });
-    it("?view=conductor lo fuerza en cualquier ruta (decisión 2026-10-13: es un override explícito de previsualización)", () => {
+    it("?view=conductor fuerza el modo y ?view=admin lo anula (comportamiento actual, pendiente de decisión del punto 7)", () => {
         expect(esDashboardDeConductor({ path: "/vehiculos", view: "conductor", esConductor: false })).toBe(true);
         expect(esDashboardDeConductor({ path: "/dashboard", view: "admin", esConductor: true })).toBe(false);
     });

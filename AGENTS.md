@@ -57,7 +57,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 
 - **Capas:** vistas → stores (Pinia) → servicios de feature → `BaseService` → `apiClient` → interceptores.
 - **Servicios:** cada feature tiene su servicio que extiende `BaseService` (`resourcePath`, `metadata`). Las llamadas HTTP pasan por `_request`, `_downloadPdf` o `_multipart`. No usar `apiClient` directo desde una feature; `DashboardService` es la excepción pendiente de migrar.
-- **Stores:** cada feature exporta `useXxxStore` con `state`, `getters` y `actions`. Las acciones que llaman a la API se ejecutan con `runStoreAction(this, action, errorMsg)` (`src/store/helpers/runStoreAction.js`): gestiona `loading`, `error`, el aviso y el relanzamiento. **No copiar un `_run` local**: los stores que aún lo tienen (21) se migran a este ayudante.
+- **Stores:** cada feature exporta `useXxxStore` con `state`, `getters` y `actions`. Las acciones que llaman a la API se ejecutan con `runStoreAction(this, action, errorMsg)` (`src/store/helpers/runStoreAction.js`): gestiona `loading`, `error`, el aviso y el relanzamiento. **No copiar un `_run` local**: ya no queda ninguno en features (los 26 migrados; `rolesandpermissions`, `notifications` y `tracking` usan manejo inline propio).
 - **Stores singleton de configuración:** `store/index.js` registra plugins por ID de store (persistencia, cifrado, logger) con `PLUGIN_REGISTRY`. Un store nuevo que necesite persistencia se añade ahí.
 - **Módulos puros:** la lógica de decisión vive en funciones puras sin Pinia ni DOM ni Capacitor (`utils/modoConductor.js`, `features/dashboard/utils/presentacionConductor.js`). Los hooks (`hooks/useModoConductor.js`) las conectan con la app.
 - **Inyección de dependencias:** los módulos con efectos externos exponen una fábrica con dependencias opcionales (`createVersionUpdater(deps)`). Así se prueban sin red ni plataforma.
@@ -133,7 +133,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 - **PR apiladas:** evitar. Una PR por propósito; si dos cambios dependen uno del otro, van en una sola PR.
 - **Quién abre la PR:** el usuario, o el agente cuando el usuario lo pida explícitamente.
 - **Cuerpo del PR:** resumen, cambios, verificación (tests, build, perf) y pendientes. Sin línea de atribución ni firma (decisión del usuario).
-- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE, 2026-10-09). PR #1 del fork abierta y apilada sobre ella (`refactor/store-run-helper`, 2026-10-09): al fusionarse la del original, esta se reubica a su `main` y se reabre allí. Rama activa: `refactor/store-run-helper` (subida).
+- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE). PR del fork fusionada en esa rama (squash `9f3ddb6`, 2026-10-09). Rama activa: `refactor/store-run-rest` (migración de los 21 stores, sin subir).
 - Para actualizar el fork: `git fetch upstream && git merge --ff-only upstream/main`.
 
 ## Lanzamientos (quién publica y cómo)
@@ -163,7 +163,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 
 ### Pendiente (en orden sugerido)
 1. Hecho 2026-10-09: `refactor/store-run-helper` subida con su PR apilada en el fork (base `refactor/modo-conductor-pr`). Al fusionarse la PR #1 del original, reubicarla a su `main` y reabrirla allí.
-2. Migrar los 21 stores restantes a `runStoreAction`, en lotes por feature, midiendo cada lote.
+2. Hecho 2026-10-13: los 21 stores restantes migrados a `runStoreAction` (`refactor/store-run-rest`); ya no queda ningún `_run` local. Peso total −1.3 kB.
 3. Eliminar `src/router/middleware/` (`auth.js`, `role.js` no tienen referencias).
 4. Renombrar restos de la plantilla original: evento `factus:logout` (`store/index.js`) y `FactusNext` en `utils/logger.js` y `utils/plugins.js`.
 5. Migrar `DashboardService` a `BaseService`.

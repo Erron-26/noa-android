@@ -94,14 +94,13 @@
 
     </div>
 
-    <!-- Módulos de gestión rápida -->
+    <!-- Módulos de gestión operativa -->
     <div class="mobile-section" role="region" aria-labelledby="titulo-modulos">
       <div class="section-header">
         <h2 id="titulo-modulos" class="section-title">
           <span class="section-icon" aria-hidden="true"><i class="fas fa-th-large" aria-hidden="true"></i></span>
-          Gestión Rápida
+          Gestión operativa
         </h2>
-        <router-link class="see-all" to="/dashboard/conductor">Ver todo</router-link>
       </div>
       <div class="module-grid">
         <article class="module-card mc-blue" aria-labelledby="mod-inspecciones">
@@ -345,7 +344,7 @@ onMounted(async () => {
   overflow: hidden !important;
 }
 .hero-greeting {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   color: #93c5fd !important;
   font-weight: 400;
   margin: 0;
@@ -363,7 +362,7 @@ onMounted(async () => {
   margin: 6px 0 0;
 }
 .badge {
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
   padding: 3px 8px;
   border-radius: 20px;
@@ -378,7 +377,7 @@ onMounted(async () => {
   border: 1px solid rgba(34,197,94,.3) !important;
 }
 .hero-meta {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   color: rgba(255,255,255,.5) !important;
   font-weight: 400;
   margin: 3px 0 0;
@@ -411,7 +410,7 @@ onMounted(async () => {
   color: #ffffff !important;
 }
 .stat-item dt {
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 400;
   color: rgba(255,255,255,.55) !important;
   letter-spacing: 0;
@@ -466,7 +465,7 @@ onMounted(async () => {
 }
 .pf-icon-green { color: #16a34a; }
 .pf-label {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   color: #1e293b;
   white-space: nowrap;
@@ -474,7 +473,7 @@ onMounted(async () => {
   text-overflow: ellipsis;
 }
 .pf-plate {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   color: #64748b;
   background: #f1f5f9;
@@ -491,7 +490,7 @@ onMounted(async () => {
 }
 .pf-action-btn {
   flex-shrink: 0;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   padding: 5px 10px;
   border-radius: 8px;
@@ -517,7 +516,7 @@ onMounted(async () => {
   align-items: center;
 }
 .priority-pill {
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 800;
   letter-spacing: 0.3px;
   padding: 2px 8px;
@@ -549,7 +548,7 @@ onMounted(async () => {
   100% { transform: scale(0.95); opacity: 0.7; }
 }
 .priority-vehicle-tag {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   color: #475569;
   background: #f1f5f9;
@@ -601,7 +600,7 @@ onMounted(async () => {
   line-height: 1.25;
 }
 .priority-desc {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   color: #475569 !important;
   margin: 0;
   line-height: 1.35;
@@ -617,7 +616,7 @@ onMounted(async () => {
   width: 100%;
   border-radius: 10px;
   padding: 9px 12px;
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 800 !important;
   text-align: center;
   text-decoration: none !important;
@@ -656,7 +655,7 @@ onMounted(async () => {
   width: 100%;
   border-radius: 9px;
   padding: 7px 10px;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
   text-align: center;
   background: #f1f5f9 !important;
@@ -669,7 +668,7 @@ onMounted(async () => {
   cursor: not-allowed;
 }
 .priority-sub-btn {
-  font-size: 10.5px;
+  font-size: var(--noa-text-meta);
   color: #2563eb !important;
   font-weight: 700;
   text-align: center;
@@ -711,13 +710,13 @@ onMounted(async () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
 }
 .section-icon.is-orange {
   background: #f97316;
 }
 .see-all {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   color: #3b82f6;
   font-weight: 600;
   text-decoration: none;
@@ -758,7 +757,7 @@ onMounted(async () => {
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 20px;
@@ -790,7 +789,7 @@ onMounted(async () => {
   line-height: 1.3;
 }
 .mc-desc {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   color: #94a3b8 !important;
   margin: 0;
   line-height: 1.4;
@@ -807,7 +806,7 @@ a.mc-btn-primary,
 button.mc-btn-primary {
   border-radius: 8px;
   padding: 6px 8px;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 600 !important;
   text-align: center;
   text-decoration: none !important;
@@ -860,7 +859,7 @@ a.mc-btn-secondary,
 button.mc-btn-secondary {
   border-radius: 8px;
   padding: 6px 8px;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 600 !important;
   text-align: center;
   text-decoration: none !important;
@@ -880,7 +879,7 @@ a.mc-btn-secondary:active {
 .mc-note-btn {
   border-radius: 8px;
   padding: 6px 8px;
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
   text-align: center;
   display: inline-block;
@@ -889,7 +888,7 @@ a.mc-btn-secondary:active {
   color: #64748b;
 }
 .vehicle-search input {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 4px 8px;
@@ -921,7 +920,7 @@ a.mc-btn-secondary:active {
   font-weight: 800;
 }
 .vehicle-data {
-  font-size: 10.5px;
+  font-size: var(--noa-text-meta);
   color: #475569 !important;
   margin: 1px 0;
   font-weight: 500;
@@ -953,7 +952,7 @@ a.mc-btn-secondary:active {
   margin: 0 0 4px;
 }
 .ev-sub {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   color: #94a3b8;
   line-height: 1.5;
   margin: 0 0 8px;
@@ -993,7 +992,7 @@ a.mc-btn-secondary:active {
   pointer-events: none;
 }
 .mobile-app-version {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   color: #94a3b8;
   margin: 0;
   font-weight: 500;

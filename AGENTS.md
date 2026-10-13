@@ -133,7 +133,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 - **PR apiladas:** evitar. Una PR por propósito; si dos cambios dependen uno del otro, van en una sola PR.
 - **Quién abre la PR:** el usuario, o el agente cuando el usuario lo pida explícitamente.
 - **Cuerpo del PR:** resumen, cambios, verificación (tests, build, perf) y pendientes. Sin línea de atribución ni firma (decisión del usuario).
-- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE). PR del fork fusionada en esa rama (squash `9f3ddb6`, 2026-10-09). Rama activa: `refactor/store-run-rest` (migración de los 21 stores, sin subir).
+- **Estado actual:** PR #1 abierta en el original (`refactor/modo-conductor-pr`, OPEN, MERGEABLE). Incluye: módulos de actualización/roles/modo conductor, `runStoreAction` + 5 stores del conductor y la migración de los 21 stores restantes. Rama activa: `refactor/modo-conductor-pr` (subida).
 - Para actualizar el fork: `git fetch upstream && git merge --ff-only upstream/main`.
 
 ## Lanzamientos (quién publica y cómo)
@@ -159,11 +159,11 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 - **Roles:** `hasRole()` como comparación única; `rbac.js` retirado; 26 vistas migradas (PR #1).
 - **Modo conductor:** `utils/modoConductor.js`, `hooks/useModoConductor.js` y `presentacionConductor.js`, probados (PR #1).
 - **Documentación del agente y de dominio:** `AGENTS.md` y `docs/agents/` (PR #1).
-- **Ayudante de stores:** `runStoreAction` con 12 pruebas (casos de error incluidos); 5 stores del conductor migrados (`refactor/store-run-helper`, subida con PR apilada en el fork).
+- **Ayudante de stores:** `runStoreAction` con 12 pruebas (casos de error incluidos); los 26 stores migrados, sin ningún `_run` local.
 
 ### Pendiente (en orden sugerido)
-1. Hecho 2026-10-09: `refactor/store-run-helper` subida con su PR apilada en el fork (base `refactor/modo-conductor-pr`). Al fusionarse la PR #1 del original, reubicarla a su `main` y reabrirla allí.
-2. Hecho 2026-10-13: los 21 stores restantes migrados a `runStoreAction` (`refactor/store-run-rest`); ya no queda ningún `_run` local. Peso total −1.3 kB.
+1. Hecho 2026-10-09/13: `runStoreAction` + migración completa de los 26 stores, fusionados en `refactor/modo-conductor-pr` (rama `refactor/store-run-helper` y su PR del fork ya cerradas; `refactor/store-run-rest` fusionada directo por ser el mismo repo).
+2. Hecho 2026-10-13: los 21 stores restantes migrados a `runStoreAction`; ya no queda ningún `_run` local. Peso total −1.3 kB.
 3. Eliminar `src/router/middleware/` (`auth.js`, `role.js` no tienen referencias).
 4. Renombrar restos de la plantilla original: evento `factus:logout` (`store/index.js`) y `FactusNext` en `utils/logger.js` y `utils/plugins.js`.
 5. Migrar `DashboardService` a `BaseService`.

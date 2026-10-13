@@ -207,7 +207,7 @@ import { usePermissionsStore, useUserStore } from '@store';
 import BasePageHeader from '@/components/BasePageHeader.vue';
 import PrimeSelect from 'primevue/select';
 import BaseFormActions from '@/components/BaseFormActions.vue';
-import Swal from 'sweetalert2';
+import { confirmar } from '@/utils/dialogs.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -272,21 +272,15 @@ const uploadSelectedFiles = async () => {
 };
 
 const deleteAssociatedPdf = async (mediaUuid) => {
-    const result = await Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Esta acción eliminará de forma permanente el archivo PDF.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-            confirmButton: 'btn btn-danger rounded-pill px-4',
-            cancelButton: 'btn btn-outline-secondary rounded-pill me-2 px-4'
-        },
-        buttonsStyling: false
+    const confirmado = await confirmar({
+        titulo: '¿Estás seguro?',
+        texto: 'Esta acción eliminará de forma permanente el archivo PDF.',
+        confirmar: 'Sí, eliminar',
+        cancelar: 'Cancelar',
+        peligro: true,
     });
 
-    if (result.isConfirmed) {
+    if (confirmado) {
         try {
             await store.deletePdf(route.params.id, mediaUuid);
             await fetchPdfs();

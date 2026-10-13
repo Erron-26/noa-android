@@ -371,7 +371,8 @@ import { useRouter } from 'vue-router';
 import { useServiceDeliveryControlSheetStore } from '../store/serviceDeliveryControlSheet.store.js';
 import { usePermissionsStore, useUserStore } from '@store';
 import { toast } from '@/utils/toast.js';
-import Swal from 'sweetalert2';
+import { logger } from '@/utils/logger.js';
+import { confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
 import { useTable } from '@/hooks/useTable.js';
 import { useTableActions } from '@/hooks/useTableActions.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
@@ -458,22 +459,28 @@ const downloadDaily = async (uuid) => {
 const shareCoordinatorLink = async (uuid) => {
     try {
         sharingLink.value = uuid;
-        Swal.fire({ title: 'Generando enlace...', text: 'Por favor espera...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+        await mostrarCargando({ titulo: 'Generando enlace...', texto: 'Por favor espera...' });
         const result = await store.generateCoordinatorSignUrl(uuid);
         const url = result?.url;
         if(!url) throw new Error();
-        Swal.close();
-        Swal.fire({
-            title: '¡Enlace Generado!',
+        cerrarDialogo();
+        const copiar = await confirmar({
+            titulo: '¡Enlace Generado!',
             html: `<p>Comparte este enlace con el coordinador:</p><div class="mt-2 p-2 bg-light border rounded text-break font-monospace" style="font-size: 12px;">${url}</div>`,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar',
-            cancelButtonText: 'Cerrar'
-        }).then(r => {
-            if(r.isConfirmed) navigator.clipboard.writeText(url).then(() => toast('Éxito', 'Enlace copiado', 'success'));
+            confirmar: 'Copiar',
+            cancelar: 'Cerrar',
         });
+        if (copiar) {
+            try {
+                await navigator.clipboard.writeText(url);
+                toast('Éxito', 'Enlace copiado', 'success');
+            } catch (copyError) {
+                logger.error('No se pudo copiar el enlace', { message: copyError?.message ?? copyError });
+                toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
+            }
+        }
     } catch(err) {
+        cerrarDialogo();
         toast('Error', 'Error al generar enlace', 'error');
     } finally {
         sharingLink.value = null;

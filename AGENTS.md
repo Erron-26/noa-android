@@ -104,7 +104,7 @@ El repo sigue patrones intencionales. Un código nuevo debe encajar en ellos, no
 - **Casos negativos obligatorios:** fallo de red, respuesta vacía, error sin mensaje, aviso que también falla, permiso denegado, estado sin datos.
 - **Forma de la respuesta:** al probar listados, armar la respuesta con la misma forma que devuelve `BaseService` (`{ success, message, data }`; un listado paginado está en `r.data.data`). Una prueba con otra forma pasa en verde con la pantalla vacía.
 - **Componentes Vue:** hoy no hay entorno DOM. Antes de la primera prueba de componente, añadir `jsdom` y `@vue/test-utils` en un PR propio y declarar `// @vitest-environment jsdom` en la primera línea de cada archivo.
-- **Estado actual:** 74 pruebas en 7 archivos (`npm run test:unit`, 2026-10-13).
+- **Estado actual:** 81 pruebas en 7 archivos (`npm run test:unit`, 2026-10-13).
 
 ## Medición de Rendimiento y Accesibilidad
 
@@ -121,6 +121,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 - Sin cuerpo ni bullets, salvo que el cambio lo exija. Si lo exige: una o dos frases, tres puntos como máximo. Nunca el listado de archivos.
 - **Cuándo commitear:** solo después de revisar el código (`/code-review` o revisión propia contra este archivo), o cuando el usuario lo pida explícitamente. Si la revisión encuentra hallazgos, se corrigen antes de commitear.
 - Tipos: feat, fix, refactor, perf, style, docs, test, build, ci, chore.
+- Los ajustes de `AGENTS.md` que documentan un cambio van en el mismo commit de ese cambio, no en commits `docs` separados.
 - **Ojo:** `.github/COMMIT_CONVENTION.md` (del repo original) pide título, cuerpo en viñetas y línea `Verificación:`. Los commits recientes usan una línea. Para el original, confirmar con el responsable antes de subir.
 - Reescribir commits (`commit --amend`, `rebase`) solo en ramas que no se han subido, o con permiso explícito.
 
@@ -169,7 +170,7 @@ Todo cambio que afecte peso, arranque o interacción se mide antes y después. U
 5. Hecho 2026-10-13: `DashboardService` migrado a `BaseService` con 5 pruebas (`refactor/limpieza-consistencia`); el store consume el cuerpo `{ success, data }`. Peso neutro (+0.1 kB).
 6. Hecho 2026-10-13: `Sidebar.vue` usa la regla única (`esDashboardDeConductor`); no queda lógica duplicada en vistas. El guard (`router/guards/auth.js`) sigue decidiendo solo por rol a propósito: el `?view` no lo toca hasta que se cierre el punto 7.
 7. Hecho 2026-10-13: `?view=conductor` solo rige en rutas operativas (decisión del usuario); fuera de ellas no oculta el sidebar. `?view=admin` lo anula en todas. Fijado con pruebas; el guard no usa `?view`.
-8. En curso (2026-10-13): `console.*` migrado a `logger` en los 6 features del conductor (de 79 a 66 archivos). Nuevo `utils/dialogs.js` (`aviso`, `confirmar`, `mostrarCargando`, `cerrarDialogo`) con 10 pruebas; 6 vistas migradas y 3 libres de `Swal`. Quedan 3 vistas con `Swal` directo por formularios embebidos con validación inline (VehiclesListView, VehicleInspectionFormView, FuecFormView): migrarlas exige un `formulario()` en el helper o llevar esos modales a pantallas propias.
+8. En curso (2026-10-13): `console.*` migrado a `logger` en los 6 features del conductor (de 79 a 66 archivos). `utils/dialogs.js` (`aviso`, `confirmar`, `mostrarCargando`, `cerrarDialogo`, `copiarEnlace`, `escaparHtml`) con 17 pruebas, incluida la guardia anti-spinner-atascado; copiar-enlace triplicado extraído; URL escapadas. 9 vistas migradas y 6 libres de `Swal`. Quedan 3 vistas con `Swal` directo por formularios embebidos con validación inline (VehiclesListView, VehicleInspectionFormView, FuecFormView).
 9. Añadir `test:unit` a `npm test`, o documentar que no va.
 10. Login móvil: contraste del logo (decisión: texto + icono, sin asset), tagline con más contraste, "¿Olvidaste tu contraseña?" con estilo deshabilitado real. Comparar con el rediseño de Stitch (`DESIGN.md`) y medir antes y después.
 11. Portal del conductor: revisar el enlace "Ver todo" (hoy lleva a `/dashboard/conductor`, la misma pantalla).

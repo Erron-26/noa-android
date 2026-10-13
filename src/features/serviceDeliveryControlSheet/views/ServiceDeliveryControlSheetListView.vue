@@ -371,8 +371,7 @@ import { useRouter } from 'vue-router';
 import { useServiceDeliveryControlSheetStore } from '../store/serviceDeliveryControlSheet.store.js';
 import { usePermissionsStore, useUserStore } from '@store';
 import { toast } from '@/utils/toast.js';
-import { logger } from '@/utils/logger.js';
-import { confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
+import { mostrarCargando, cerrarDialogo, copiarEnlace } from '@/utils/dialogs.js';
 import { useTable } from '@/hooks/useTable.js';
 import { useTableActions } from '@/hooks/useTableActions.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
@@ -464,21 +463,11 @@ const shareCoordinatorLink = async (uuid) => {
         const url = result?.url;
         if(!url) throw new Error();
         cerrarDialogo();
-        const copiar = await confirmar({
-            titulo: '¡Enlace Generado!',
-            html: `<p>Comparte este enlace con el coordinador:</p><div class="mt-2 p-2 bg-light border rounded text-break font-monospace" style="font-size: 12px;">${url}</div>`,
-            confirmar: 'Copiar',
-            cancelar: 'Cerrar',
+        await copiarEnlace(url, {
+            descripcion: 'Comparte este enlace con el coordinador:',
+            textoCopiar: 'Copiar',
+            textoCerrar: 'Cerrar',
         });
-        if (copiar) {
-            try {
-                await navigator.clipboard.writeText(url);
-                toast('Éxito', 'Enlace copiado', 'success');
-            } catch (copyError) {
-                logger.error('No se pudo copiar el enlace', { message: copyError?.message ?? copyError });
-                toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-            }
-        }
     } catch(err) {
         cerrarDialogo();
         toast('Error', 'Error al generar enlace', 'error');

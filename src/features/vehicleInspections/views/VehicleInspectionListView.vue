@@ -555,7 +555,7 @@
 <script setup>
 import { toast } from '@/utils/toast.js';
 import { logger } from '@/utils/logger.js';
-import { aviso, confirmar, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
+import { aviso, mostrarCargando, cerrarDialogo, copiarEnlace } from '@/utils/dialogs.js';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -784,26 +784,11 @@ const generatePublicSignLink = async (uuid) => {
 
         cerrarDialogo();
 
-        const copiar = await confirmar({
-            titulo: '¡Enlace Generado!',
-            html: `
-                <p>El siguiente enlace público tiene una vigencia de <b>1 hora</b>:</p>
-                <div class="mt-2 p-2 bg-light border rounded text-break text-start font-monospace" style="font-size: 12px; max-height: 100px; overflow-y: auto; word-break: break-all;">
-                    ${publicUrl}
-                </div>
-            `,
-            confirmar: 'Copiar Enlace',
-            cancelar: 'Cerrar',
+        await copiarEnlace(publicUrl, {
+            descripcion: 'El siguiente enlace público tiene una vigencia de <b>1 hora</b>:',
+            textoCopiar: 'Copiar Enlace',
+            textoCerrar: 'Cerrar',
         });
-        if (copiar) {
-            try {
-                await navigator.clipboard.writeText(publicUrl);
-                toast('¡Copiado!', 'El enlace de firma ha sido copiado al portapapeles.', 'success');
-            } catch (copyError) {
-                logger.error('No se pudo copiar el enlace de firma', { message: copyError?.message ?? copyError });
-                toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-            }
-        }
     } catch (err) {
         logger.error('Error al generar enlace firmado', { message: err?.message ?? err });
         cerrarDialogo();

@@ -545,16 +545,12 @@ const _escapeHtml = (str) => {
     return div.innerHTML;
 };
 
-const openPassengerModal = () => {
+const openPassengerModal = async () => {
     if (!store.catalogs.documentTypes || store.catalogs.documentTypes.length === 0) {
-        Swal.fire({
-            title: 'Sin tipos de documento',
-            text: 'No se pudieron cargar los tipos de documento. Intente de nuevo.',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-                confirmButton: 'btn btn-warning px-4 rounded-pill'
-            }
+        await aviso({
+            titulo: 'Sin tipos de documento',
+            texto: 'No se pudieron cargar los tipos de documento. Intente de nuevo.',
+            icono: 'warning',
         });
         return;
     }

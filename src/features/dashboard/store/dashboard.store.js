@@ -7,6 +7,7 @@
  */
 
 import { defineStore } from 'pinia';
+import { logger } from '@utils/logger.js';
 import dashboardService from '../services/dashboard.service';
 
 export const useDashboardStore = defineStore('dashboard', {
@@ -65,7 +66,7 @@ export const useDashboardStore = defineStore('dashboard', {
                     this.alerts = alertsRes.data ?? [];
                 }
             } catch (error) {
-                console.error('Error al cargar datos del dashboard', error);
+                logger.error('Error al cargar datos del dashboard', { message: error?.message ?? error });
             } finally {
                 this.isLoading = false;
             }
@@ -95,7 +96,7 @@ export const useDashboardStore = defineStore('dashboard', {
                     return data;
                 }
             } catch (error) {
-                console.error('Error al cargar datos del conductor', error);
+                logger.error('Error al cargar datos del conductor', { message: error?.message ?? error });
             } finally {
                 this.isLoading = false;
             }

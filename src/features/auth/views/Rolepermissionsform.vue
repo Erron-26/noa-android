@@ -326,31 +326,31 @@ const filteredModules = computed(() => {
 const fmt = v => String(v || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[_-]+/g, ' ').trim()
 
 const MODULE_LABELS = {
-    adjustment_notes: 'Notas de Ajuste', affiliate: 'Afiliados', affiliate_admin_charges: 'Cobros de Administración',
-    assistant: 'Asistente', assistant_configuration: 'Config. asistente', bank_accounts: 'Cuentas bancarias',
-    bank_details: 'Datos bancarios', billing_providers: 'Proveedores facturación', billing_resolutions: 'Resoluciones facturación',
-    branches: 'Sucursales', budgets: 'Presupuestos', business_collaboration_agreements: 'Acuerdos colaboración',
-    capacity_inventory: 'Inventario capacidad', categories: 'Categorías', chart_of_accounts: 'Plan de cuentas',
-    commercial_invoices: 'Facturas comerciales', companies: 'Empresas', contacts: 'Contactos',
-    contractors: 'Contratistas', control_sheets: 'Hojas de control', conveyor_capacity: 'Cap. transportadora',
-    cost_centers: 'Centros de costos', credit_notes: 'Notas crédito', customer: 'Clientes',
-    debit_notes: 'Notas débito', driver: 'Conductores', driver_licenses: 'Licencias conductor',
-    economic_activities: 'Act. económicas', electronic_documents: 'Doc. electrónicos',
-    electronic_invoices: 'Facturas electrónicas', employee: 'Empleados', employmentContracts: 'Contratos laborales',
-    enabling_resolutions: 'Res. habilitación', experiences: 'Experiencias', extract_of_contract: 'Extractos contrato',
-    financial_statements: 'Estados financieros', fiscal_documents: 'Doc. fiscales',
+    affiliate: 'Afiliados', affiliate_admin_charges: 'Cobros de Administración',
+    bank_details: 'Datos bancarios',
+    branches: 'Sucursales', business_collaboration_agreements: 'Acuerdos colaboración',
+    cost_centers: 'Centros de costos', customer: 'Clientes',
+    driver: 'Conductores', driver_licenses: 'Licencias conductor',
+    economic_activities: 'Act. económicas',
+    employee: 'Empleados', employmentContracts: 'Contratos laborales',
+    enabling_resolutions: 'Res. habilitación', experiences: 'Experiencias',
+    financial_statements: 'Estados financieros',
     fleet_service_contracts: 'Contratos flota', fuec: 'FUEC', inspection_results: 'Resultados inspección',
     maintenance: 'Mantenimiento', maintenance_parts: 'Repuestos', objects_contracts: 'Contratos objetos',
     occupational_safety_records: 'Seguridad ocupacional', operation_cards: 'Tarjetas operación',
-    procedures: 'Procedimientos', product_variants: 'Variantes productos', products: 'Productos',
-    projects: 'Proyectos', purchase_orders: 'Órdenes compra', purchases: 'Compras',
+    procedures: 'Procedimientos',
+    projects: 'Proyectos',
     rup_records: 'Registros RUP', security_contributions: 'Aportes seguridad',
-    service_delivery_control_sheets: 'Hojas entrega', supplier: 'Proveedores',
-    support_documents: 'Doc. soporte', system_configurations: 'Config. sistema',
+    service_delivery_control_sheets: 'Hojas entrega', service_provision_contracts: 'Contratos prestación', supplier: 'Proveedores',
+    system_configurations: 'Config. sistema',
     tax_declarations: 'Declaraciones tributarias', tax_information: 'Info tributaria',
-    tax_periods: 'Periodos tributarios', territorial_directors: 'Directores territoriales',
+    territorial_directors: 'Directores territoriales',
     third_parties: 'Terceros', vehicle_documents: 'Doc. vehículos', vehicle_inspections: 'Inspecciones vehículos',
-    vehicles: 'Vehículos', voucher_types: 'Tipos comprobantes', warehouses: 'Almacenes',
+    vehicles: 'Vehículos',
+    capacity_inventory: 'Inventario capacidad', companies: 'Empresas', contacts: 'Contactos',
+    contractors: 'Contratistas', control_sheets: 'Hojas de control', conveyor_capacity: 'Cap. transportadora',
+    brands: 'Marcas', vehicle_classes: 'Clases de Vehículos', inspection_items: 'Ítems de Inspección',
+    withholdings: 'Retenciones', radicacion_to: 'Radicación TO', 'reports.vehicles': 'Reportes de Vehículos',
     users: 'Usuarios', roles: 'Roles del sistema', permissions: 'Permisos del sistema', locations: 'Geolocalización',
 }
 
@@ -360,36 +360,36 @@ const MODULE_ICONS = {
     conveyor_capacity: '🚛', experiences: '⭐', rup_records: '📋', financial_statements: '📈',
     tax_declarations: '📑', occupational_safety_records: '🦺', customer: '🧑‍🤝‍🧑', supplier: '🏭',
     employee: '👷', employmentContracts: '📝', affiliate: '🤝', driver: '🚚', third_parties: '👥',
-    categories: '🏷️', warehouses: '🏚️', products: '📦', product_variants: '🧩',
-    chart_of_accounts: '📚', cost_centers: '💼', voucher_types: '🧮', bank_accounts: '💳',
-    budgets: '💰', billing_providers: '🏢', billing_resolutions: '🧾', fiscal_documents: '📄',
-    commercial_invoices: '🧾', electronic_invoices: '⚡', credit_notes: '↩️', debit_notes: '↪️',
-    purchase_orders: '🛒', purchases: '🛍️', support_documents: '📎', adjustment_notes: '⚖️',
-    tax_periods: '📅', electronic_documents: '📃', affiliate_admin_charges: '💸',
-    extract_of_contract: '📃', vehicles: '🚐', vehicle_documents: '📄', operation_cards: '💳',
+    cost_centers: '💼',
+    affiliate_admin_charges: '💸',
+    vehicles: '🚐', vehicle_documents: '📄', operation_cards: '💳',
     business_collaboration_agreements: '🤝', maintenance: '🔧', maintenance_parts: '⚙️',
     vehicle_inspections: '🔍', inspection_results: '✅', driver_licenses: '🪪',
     security_contributions: '🛡️', territorial_directors: '🧭', procedures: '📝',
-    fleet_service_contracts: '📄', capacity_inventory: '📦', objects_contracts: '📦',
+    fleet_service_contracts: '📄', service_provision_contracts: '📄', capacity_inventory: '📦', objects_contracts: '📦',
     contractors: '👷', fuec: '📊', system_configurations: '⚙️', control_sheets: '📋',
-    service_delivery_control_sheets: '📋', assistant_configuration: '🤖', assistant: '💬', projects: '📈', locations: '📍',
+    service_delivery_control_sheets: '📋', projects: '📈', locations: '📍',
+    brands: '🏷️', vehicle_classes: '🚗', inspection_items: '🔎',
+    withholdings: '🧾', radicacion_to: '📤', 'reports.vehicles': '📊',
 }
 
 const ACTION_LABELS = {
-    index: 'Listar', create: 'Crear', update: 'Editar', delete: 'Eliminar', destroy: 'Eliminar',
+    index: 'Listar', create: 'Crear', update: 'Editar', delete: 'Eliminar',
     profile: 'Perfil', show: 'Detalle', view: 'Ver', edit: 'Editar',
-    'toggle-status': 'Estado', 'toggle_status': 'Estado',
+    'toggle-status': 'Estado',
     change_branch: 'Cambiar sede', history_pdf: 'Historial PDF',
-    technical_sheet_pdf: 'Ficha técnica', cold_chain_pdf: 'Cadena frío', forecast: 'Pronóstico',
+    technical_sheet_pdf: 'Ficha técnica', cold_chain_pdf: 'PDF cadena de frío', close_exception: 'Cerrar con excepción', forecast: 'Pronóstico',
+    'export-excel': 'Exportar Excel', 'export-pdf': 'Exportar PDF',
     track: 'Rastrear', history: 'Historial', geofences: 'Geocercas', alerts: 'Alertas',
 }
 
 const ACTION_ICONS = {
     index: 'fa-eye', list: 'fa-list', create: 'fa-plus', update: 'fa-pen', edit: 'fa-pen',
-    delete: 'fa-trash-alt', destroy: 'fa-trash-alt', profile: 'fa-user', show: 'fa-eye',
-    view: 'fa-eye', 'toggle-status': 'fa-toggle-on', toggle_status: 'fa-toggle-on',
+    delete: 'fa-trash-alt', profile: 'fa-user', show: 'fa-eye',
+    view: 'fa-eye', 'toggle-status': 'fa-toggle-on',
     change_branch: 'fa-exchange-alt', history_pdf: 'fa-file-pdf',
-    technical_sheet_pdf: 'fa-file-alt', cold_chain_pdf: 'fa-snowflake', forecast: 'fa-chart-line',
+    technical_sheet_pdf: 'fa-file-alt', cold_chain_pdf: 'fa-snowflake', close_exception: 'fa-lock', forecast: 'fa-chart-line',
+    'export-excel': 'fa-file-excel', 'export-pdf': 'fa-file-pdf',
     track: 'fa-location-arrow', history: 'fa-history', geofences: 'fa-draw-polygon', alerts: 'fa-bell',
 }
 
@@ -428,7 +428,14 @@ function getRoleDesc(desc, name) {
 }
 
 // ── Procesado de permisos de la API ───────────────────────────────────────────
-const ACTION_ORDER = ['index', 'create', 'update', 'delete', 'destroy', 'profile', 'show', 'view', 'edit', 'change_branch', 'history_pdf', 'technical_sheet_pdf', 'cold_chain_pdf', 'forecast', 'toggle-status', 'track', 'history', 'geofences', 'alerts']
+// Los nombres pueden tener 2 segmentos (modulo.accion) o 3 (reports.vehicles.index):
+// el módulo son todos los segmentos menos el último, la acción es el último.
+const splitPerm = (name) => {
+    const p = String(name).split('.')
+    return { mod: p.slice(0, -1).join('.'), act: p.at(-1) }
+}
+
+const ACTION_ORDER = ['index', 'create', 'update', 'delete', 'profile', 'show', 'view', 'edit', 'change_branch', 'history_pdf', 'technical_sheet_pdf', 'cold_chain_pdf', 'close_exception', 'forecast', 'export-excel', 'export-pdf', 'toggle-status', 'track', 'history', 'geofences', 'alerts']
 
 function processPermissions(apiPerms) {
     if (!Array.isArray(apiPerms) || apiPerms.length === 0) {
@@ -441,8 +448,7 @@ function processPermissions(apiPerms) {
     apiPerms.forEach(p => {
         if (!p?.name || typeof p.name !== 'string') return
         valid.add(p.name)
-        const parts = p.name.split('.')
-        const m = parts[0], a = parts[1]
+        const { mod: m, act: a } = splitPerm(p.name)
         if (m && a) { mods.add(m); acts.add(a) }
     })
     validPerms.value = valid
@@ -457,7 +463,7 @@ function mapPerms(apiRole) {
     const result = {}
     modules.value.forEach(m => { result[m.id] = [] })
         ; (apiRole.permissions || []).forEach(p => {
-            const [m, a] = p.name.split('.')
+            const { mod: m, act: a } = splitPerm(p.name)
             if (result[m] && !result[m].includes(a)) result[m].push(a)
         })
     return result
@@ -471,7 +477,7 @@ function initNewRolePerms() {
 const BACKUP_PERMS = [
     'users.index', 'users.create', 'users.update', 'users.delete',
     'fuec.index', 'fuec.create', 'fuec.update', 'fuec.delete',
-    'commercial_invoices.index', 'commercial_invoices.create', 'commercial_invoices.update', 'commercial_invoices.delete',
+    'projects.index', 'projects.create', 'projects.update', 'projects.delete',
     'branches.index', 'branches.create', 'branches.update', 'branches.delete',
     'vehicles.index', 'vehicles.create', 'vehicles.update', 'vehicles.delete',
     'rup_records.index', 'rup_records.create', 'rup_records.update', 'rup_records.delete',
@@ -968,8 +974,7 @@ function showToast(message, type = 'success') {
     border-color: #d97706;
 }
 
-.perm-chip-toggle.active.pct-delete,
-.perm-chip-toggle.active.pct-destroy {
+.perm-chip-toggle.active.pct-delete {
     background: #fee2e2;
     color: #b91c1c;
     border-color: #dc2626;
@@ -993,8 +998,7 @@ function showToast(message, type = 'success') {
     border-color: #3b82f6;
 }
 
-.perm-chip-toggle.active.pct-toggle-status,
-.perm-chip-toggle.active.pct-toggle_status {
+.perm-chip-toggle.active.pct-toggle-status {
     background: #e0e7ff;
     color: #3730a3;
     border-color: #4f46e5;
@@ -1028,6 +1032,24 @@ function showToast(message, type = 'success') {
     background: #f0fdf4;
     color: #166534;
     border-color: #22c55e;
+}
+
+.perm-chip-toggle.active.pct-close_exception {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #d97706;
+}
+
+.perm-chip-toggle.active.pct-export-excel {
+    background: #ccfbf1;
+    color: #0f766e;
+    border-color: #0d9488;
+}
+
+.perm-chip-toggle.active.pct-export-pdf {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #dc2626;
 }
 
 .btn-select-all {
@@ -1323,8 +1345,7 @@ function showToast(message, type = 'success') {
     color: #d97706;
 }
 
-.col-ac-label.col-ac-delete,
-.col-ac-label.col-ac-destroy {
+.col-ac-label.col-ac-delete {
     color: #dc2626;
 }
 
@@ -1340,8 +1361,7 @@ function showToast(message, type = 'success') {
     color: #2563eb;
 }
 
-.col-ac-label.col-ac-toggle-status,
-.col-ac-label.col-ac-toggle_status {
+.col-ac-label.col-ac-toggle-status {
     color: #4f46e5;
 }
 
@@ -1363,6 +1383,18 @@ function showToast(message, type = 'success') {
 
 .col-ac-label.col-ac-forecast {
     color: #16a34a;
+}
+
+.col-ac-label.col-ac-close_exception {
+    color: #b45309;
+}
+
+.col-ac-label.col-ac-export-excel {
+    color: #0d9488;
+}
+
+.col-ac-label.col-ac-export-pdf {
+    color: #dc2626;
 }
 
 .ac-icon-box {
@@ -1478,8 +1510,7 @@ function showToast(message, type = 'success') {
     background: #f59e0b;
 }
 
-.perm-cell.cell-on.cell-on-delete,
-.perm-cell.cell-on.cell-on-destroy {
+.perm-cell.cell-on.cell-on-delete {
     background: #ef4444;
 }
 
@@ -1495,8 +1526,7 @@ function showToast(message, type = 'success') {
     background: #3b82f6;
 }
 
-.perm-cell.cell-on.cell-on-toggle-status,
-.perm-cell.cell-on.cell-on-toggle_status {
+.perm-cell.cell-on.cell-on-toggle-status {
     background: #6366f1;
 }
 
@@ -1518,6 +1548,18 @@ function showToast(message, type = 'success') {
 
 .perm-cell.cell-on.cell-on-forecast {
     background: #22c55e;
+}
+
+.perm-cell.cell-on.cell-on-close_exception {
+    background: #f59e0b;
+}
+
+.perm-cell.cell-on.cell-on-export-excel {
+    background: #10b981;
+}
+
+.perm-cell.cell-on.cell-on-export-pdf {
+    background: #ef4444;
 }
 
 .cell-ghost-icon {
@@ -1616,8 +1658,7 @@ function showToast(message, type = 'success') {
     color: #92400e;
 }
 
-.sum-badge.sum-delete,
-.sum-badge.sum-destroy {
+.sum-badge.sum-delete {
     background: #fee2e2;
     color: #991b1b;
 }
@@ -1637,8 +1678,7 @@ function showToast(message, type = 'success') {
     color: #1e40af;
 }
 
-.sum-badge.sum-toggle-status,
-.sum-badge.sum-toggle_status {
+.sum-badge.sum-toggle-status {
     background: #c7d2fe;
     color: #3730a3;
 }

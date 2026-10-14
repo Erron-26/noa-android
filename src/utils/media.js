@@ -16,7 +16,7 @@ export function getMediaUrl(path, fallback = null) {
     }
 
     // Obtener la URL base del servidor (quitando la parte de /api/v1 si existe)
-    const baseApiUrl = env.API_BASE_URL || 'https://api.transportessinbarreras.com/api/v1';
+    const baseApiUrl = env.API_BASE_URL || 'https://apinoatransportes.solucionesintegralesmana.com/api/v1';
     const baseUrl = baseApiUrl.replace(/\/api\/v1\/?$/, '');
 
     // Si el backend devuelve una URL absoluta, extraemos su ruta (pathname)

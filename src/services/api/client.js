@@ -14,7 +14,7 @@ const getBaseUrl = () => {
         if (env.API_BASE_URL && /^https?:\/\//i.test(env.API_BASE_URL)) {
             return env.API_BASE_URL;
         }
-        return "https://api.transportessinbarreras.com/api/v1/";
+        return "https://apinoatransportes.solucionesintegralesmana.com/api/v1/";
     }
     return env.API_BASE_URL;
 };

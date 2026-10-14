@@ -208,6 +208,8 @@ import NoaTableSpinner from '@/components/NoaTableSpinner.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Swal from 'sweetalert2';
+import { logger } from '@/utils/logger.js';
+import { aviso } from '@/utils/dialogs.js';
 
 const router = useRouter();
 const route = useRoute();
@@ -247,11 +249,10 @@ const handleChangeBranch = async (vehicle) => {
 
         const branches = store.catalogs.branches || [];
         if (branches.length === 0) {
-            await Swal.fire({
-                title: 'Atención',
-                text: 'No hay sedes configuradas en el sistema.',
-                icon: 'warning',
-                confirmButtonText: 'Aceptar'
+            await aviso({
+                titulo: 'Atención',
+                texto: 'No hay sedes configuradas en el sistema.',
+                icono: 'warning',
             });
             return;
         }
@@ -260,11 +261,10 @@ const handleChangeBranch = async (vehicle) => {
         const availableBranches = branches.filter(b => b.uuid !== currentBranchUuid);
 
         if (availableBranches.length === 0) {
-            await Swal.fire({
-                title: 'Información',
-                text: 'No hay otras sedes configuradas en el sistema a las que se pueda trasladar este vehículo.',
-                icon: 'info',
-                confirmButtonText: 'Aceptar'
+            await aviso({
+                titulo: 'Información',
+                texto: 'No hay otras sedes configuradas en el sistema a las que se pueda trasladar este vehículo.',
+                icono: 'info',
             });
             return;
         }
@@ -403,7 +403,7 @@ const handleChangeBranch = async (vehicle) => {
             await store.fetchItems();
         }
     } catch (error) {
-        console.error('Error al cambiar la sede:', error);
+        logger.error('Error al cambiar la sede:', { message: error?.message ?? error });
     }
 };
 

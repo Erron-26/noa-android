@@ -8,9 +8,7 @@ const permissionsStore = usePermissionsStore();
 
 onMounted(async () => {
     try {
-        const roles = permissionsStore.roles || [];
-        const isConductor = roles.includes('CONDUCTOR') || roles.includes('conductor');
-        if (!isConductor) return;
+        if (!permissionsStore.hasRole('CONDUCTOR')) return;
         await driverTracking.checkPermission();
         // El vehículo se define cuando el Dashboard o el Control Operativo
         // llaman a ensureTracking/updateContext. Aquí no se fuerza sesión

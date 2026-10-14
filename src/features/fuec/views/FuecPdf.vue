@@ -67,7 +67,8 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useFuecStore } from '../store/fuec.store.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
-import Swal from 'sweetalert2';
+import { logger } from '@/utils/logger.js';
+import { aviso } from '@/utils/dialogs.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -101,17 +102,13 @@ const loadPdf = async () => {
         rawBlob = blob;
         pdfUrl.value = URL.createObjectURL(blob);
     } catch (err) {
-        console.error('Error al generar la vista previa del FUEC:', err);
+        logger.error('Error al generar la vista previa del FUEC', { message: err?.message ?? err });
         error.value = err.message || 'Ocurrió un error inesperado al intentar descargar el archivo desde el servidor.';
         
-        Swal.fire({
-            title: 'Error de carga',
-            text: error.value,
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-                confirmButton: 'btn btn-danger px-4 rounded-pill'
-            }
+        await aviso({
+            titulo: 'Error de carga',
+            texto: error.value,
+            icono: 'error',
         });
     } finally {
         loading.value = false;

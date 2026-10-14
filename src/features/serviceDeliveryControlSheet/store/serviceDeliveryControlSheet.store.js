@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { toast } from '@/utils/toast.js';
+import { runStoreAction } from '@store/helpers/runStoreAction.js';
 import serviceDeliveryControlSheetService from '../services/serviceDeliveryControlSheet.service.js';
-import { handleGlobalError } from '@/utils/error-handler.js';
 
 /**
  * @author Darwin Montes
@@ -40,14 +40,7 @@ export const useServiceDeliveryControlSheetStore = defineStore('serviceDeliveryC
          * @private
          */
         async _run(action, errorMsg) {
-            this.loading = true;
-            this.error = null;
-            try { return await action(); }
-            catch (error) {
-                this.error = error.message || errorMsg;
-                handleGlobalError(error, 'ServiceDeliveryControlSheetStore');
-                throw error;
-            } finally { this.loading = false; }
+            return runStoreAction(this, action, errorMsg);
         },
 
         /**

@@ -1,4 +1,5 @@
 import { BaseService } from '@services/api/base.service.js';
+import { logger } from '@utils/logger.js';
 
 /**
  * @author Darwin Montes
@@ -89,7 +90,7 @@ class ServiceDeliveryControlSheetService extends BaseService {
                 const res = await this._getInstance().get(url, { timeout: 15000 });
                 return res.data?.data ?? res.data ?? [];
             } catch (err) {
-                console.warn(`Error cargando catálogo: ${url}`, err.message);
+                logger.warn(`Error cargando catálogo: ${url}`, err.message);
                 return [];
             }
         };
@@ -112,7 +113,7 @@ class ServiceDeliveryControlSheetService extends BaseService {
                 const res = await this._getInstance().get(`projects/list?${params.toString()}`, { timeout: 15000 });
                 projects = res.data?.data ?? res.data ?? [];
             } catch (err) {
-                console.warn('Error cargando proyectos', err.message);
+                logger.warn('Error cargando proyectos', err.message);
             }
         }
 
@@ -142,7 +143,7 @@ class ServiceDeliveryControlSheetService extends BaseService {
             const res = await this._getInstance().get(query, { timeout: 15000 });
             return res.data?.data ?? res.data ?? [];
         } catch (err) {
-            console.warn('Error cargando proyectos', err.message);
+            logger.warn('Error cargando proyectos', err.message);
             return [];
         }
     }
@@ -157,7 +158,7 @@ class ServiceDeliveryControlSheetService extends BaseService {
             const res = await this._getInstance().get(`projects/${uuid}`, { timeout: 15000 });
             return res.data?.data ?? res.data ?? null;
         } catch (err) {
-            console.warn('Error cargando detalle de proyecto', err.message);
+            logger.warn('Error cargando detalle de proyecto', err.message);
             return null;
         }
     }

@@ -92,7 +92,7 @@ defineProps({
   position: absolute;
   top: 10px;
   right: 12px;
-  font-size: 9px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 20px;
@@ -135,23 +135,23 @@ defineProps({
 }
 
 .mc-title {
-  font-size: 13px;
+  font-size: var(--noa-text-body);
   font-weight: 700;
-  color: #1e293b;
+  color: var(--noa-ink);
   margin: 0;
   line-height: 1.3;
 }
 
 .mc-desc {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: var(--noa-text-meta);
+  color: var(--noa-ink-soft);
   margin: 2px 0 0;
   line-height: 1.3;
 }
 
 .mc-body {
-  font-size: 12px;
-  color: #334155;
+  font-size: var(--noa-text-body);
+  color: var(--noa-ink-soft);
 }
 
 .mc-actions {
@@ -164,10 +164,11 @@ defineProps({
 :deep(.mc-btn-primary),
 :deep(a.mc-btn-primary),
 :deep(button.mc-btn-primary) {
-  border-radius: 8px;
+  border-radius: var(--noa-radius-md);
   padding: 8px 10px;
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 700;
+  min-height: var(--noa-touch-min);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -214,10 +215,11 @@ defineProps({
 :deep(.mc-btn-secondary),
 :deep(a.mc-btn-secondary),
 :deep(button.mc-btn-secondary) {
-  border-radius: 8px;
+  border-radius: var(--noa-radius-md);
   padding: 8px 10px;
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
+  min-height: var(--noa-touch-min);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -226,9 +228,9 @@ defineProps({
   flex: 1;
   text-decoration: none !important;
   text-align: center;
-  background: #f8fafc;
-  border: 1px solid #cbd5e1 !important;
-  color: #1e293b !important;
+  background: var(--noa-paper);
+  border: 1px solid var(--noa-line) !important;
+  color: var(--noa-ink) !important;
   transition: all 0.15s ease;
 }
 :deep(.mc-btn-secondary:active),

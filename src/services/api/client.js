@@ -25,7 +25,7 @@ const DEFAULT_CONFIG = {
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "X-App-Version": env.APP_VERSION || "1.1.6",
+        "X-App-Version": env.APP_VERSION,
     }
 };
 

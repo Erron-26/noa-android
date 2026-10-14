@@ -4,17 +4,27 @@
       <!-- Hero de marca -->
       <div class="hero">
         <div class="hero-inner">
-          <div class="logo-area">
-            <img :src="logoUrl" alt="NOA Transportes" class="logo-img" width="1010" height="270" fetchpriority="high" decoding="async" />
+          <div class="brand">
+            <span class="brand-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h16" /><path d="M5 17V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8" /><path d="M4 11h16" /><circle cx="8" cy="17" r="2" /><circle cx="16" cy="17" r="2" /></svg>
+            </span>
+            <span class="brand-texts">
+              <span class="brand-name">NOA</span>
+              <span class="brand-sub">Transportes</span>
+            </span>
           </div>
+
+          <span class="hero-badge">
+            <span class="hero-badge-dot" aria-hidden="true"></span>Portal Conductor
+          </span>
+
+          <p class="hero-tagline">Plataforma de gestión para flotas — eficiencia y control en ruta</p>
 
           <div class="hero-pills" aria-hidden="true">
             <span class="pill pill-erp">ERP</span>
             <span class="pill pill-seg">Seguro</span>
             <span class="pill pill-cloud">Cloud</span>
           </div>
-
-          <p class="hero-tagline">Plataforma de gestión para flotas — eficiencia y control en un solo lugar</p>
         </div>
         <div class="hero-deco" aria-hidden="true"></div>
       </div>
@@ -42,6 +52,7 @@
               >
             </div>
             <span v-if="errors.email" id="login-email-mobile-error" class="field-error" role="alert">{{ errors.email }}</span>
+            <p v-else class="field-help">Ingresa tu cédula colombiana o correo institucional</p>
           </div>
 
           <div class="field">
@@ -124,7 +135,6 @@
  */
 import { useLogin } from '../composables/useLogin.js';
 import { toast } from '@/utils/toast.js';
-import logoUrl from '@/assets/logo.svg';
 
 const { formData, errors, isSubmitting, showPassword, loginError, handleLogin } = useLogin();
 
@@ -200,16 +210,60 @@ const handleLegal = (nombre) => {
   align-items: center;
   gap: 14px;
 }
-.logo-area {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.brand-icon svg { width: 26px; height: 26px; }
+.brand-texts {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  line-height: 1;
+  text-align: left;
 }
-.logo-img {
-  width: min(220px, 72%);
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 2px 16px rgba(0,0,0,.35));
+.brand-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+}
+.brand-sub {
+  font-size: var(--noa-text-meta);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--noa-tertiary-fixed, #7dd3fc);
+  margin-top: 2px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--noa-radius-full);
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .18);
+  font-size: var(--noa-text-meta);
+  font-weight: 600;
+  color: rgba(255, 255, 255, .92);
+}
+.hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
 }
 .hero-pills {
   display: flex;
@@ -217,10 +271,10 @@ const handleLegal = (nombre) => {
   margin-top: 4px;
 }
 .pill {
-  font-size: 10px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: var(--noa-radius-full);
   letter-spacing: .03em;
   backdrop-filter: blur(8px);
 }
@@ -228,11 +282,11 @@ const handleLegal = (nombre) => {
 .pill-seg  { background: rgba(34,197,94,.15);  color: #86efac; border: 1px solid rgba(34,197,94,.25); }
 .pill-cloud{ background: rgba(56,189,248,.15); color: #7dd3fc; border: 1px solid rgba(56,189,248,.25); }
 .hero-tagline {
-  font-size: 13px;
-  color: rgba(255,255,255,.45);
+  font-size: var(--noa-text-body);
+  color: rgba(255,255,255,.82);
   text-align: center;
   line-height: 1.5;
-  max-width: 240px;
+  max-width: 260px;
   margin: 0;
 }
 
@@ -257,7 +311,7 @@ const handleLegal = (nombre) => {
   margin-bottom: 4px;
 }
 .form-sub {
-  font-size: 13px;
+  font-size: var(--noa-text-body);
   color: #94a3b8;
   margin-bottom: 24px;
   line-height: 1.4;
@@ -271,7 +325,7 @@ const handleLegal = (nombre) => {
 /* ── Campos ── */
 .field { margin-bottom: 18px; }
 .field-label {
-  font-size: 12px;
+  font-size: var(--noa-text-body);
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 8px;
@@ -284,7 +338,7 @@ const handleLegal = (nombre) => {
 }
 .field-label-row label { margin: 0; }
 .forgot {
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   font-weight: 600;
   color: #3b82f6;
   background: none;
@@ -292,11 +346,23 @@ const handleLegal = (nombre) => {
   padding: 0;
   font-family: inherit;
 }
-.forgot:disabled { cursor: not-allowed; opacity: .8; }
+.forgot:disabled {
+  cursor: not-allowed;
+  color: #94a3b8;
+  text-decoration: line-through;
+  opacity: 1;
+}
+.field-help {
+  font-size: var(--noa-text-meta);
+  color: #94a3b8;
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
 .input-wrap {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-height: var(--noa-input-min);
   background: #f8fafc;
   border: 1.5px solid #e2e8f0;
   border-radius: 14px;
@@ -323,7 +389,7 @@ const handleLegal = (nombre) => {
   border: none;
   outline: none;
   background: transparent;
-  font-size: 13.5px;
+  font-size: 15px;
   font-family: inherit;
   color: #1e293b;
   padding: 0;
@@ -333,8 +399,12 @@ const handleLegal = (nombre) => {
   background: none;
   border: none;
   padding: 0;
+  min-width: var(--noa-touch-min);
+  min-height: var(--noa-touch-min);
+  margin: -10px -10px -10px 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   font-family: inherit;
 }
@@ -363,6 +433,7 @@ const handleLegal = (nombre) => {
 /* ── CTA ── */
 .btn-login {
   width: 100%;
+  min-height: var(--noa-touch-cta);
   padding: 15px;
   background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
   border: none;
@@ -412,14 +483,15 @@ const handleLegal = (nombre) => {
   margin-top: 16px;
 }
 .bio-divider { flex: 1; height: 1px; background: #e2e8f0; }
-.bio-text { font-size: 11px; color: #cbd5e1; white-space: nowrap; }
+.bio-text { font-size: var(--noa-text-meta); color: #94a3b8; white-space: nowrap; }
 .bio-btn {
   width: 100%;
+  min-height: var(--noa-touch-cta);
   padding: 12px;
   background: #f8fafc;
   border: 1.5px solid #e2e8f0;
   border-radius: 14px;
-  font-size: 13px;
+  font-size: var(--noa-text-body);
   font-weight: 600;
   font-family: inherit;
   color: #475569;
@@ -435,7 +507,7 @@ const handleLegal = (nombre) => {
 /* ── Términos ── */
 .terms {
   text-align: center;
-  font-size: 11px;
+  font-size: var(--noa-text-meta);
   color: #94a3b8;
   margin-top: 18px;
   line-height: 1.5;

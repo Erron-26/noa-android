@@ -7,6 +7,7 @@
  */
 
 import { defineStore } from 'pinia';
+import { logger } from '@utils/logger.js';
 import dashboardService from '../services/dashboard.service';
 
 export const useDashboardStore = defineStore('dashboard', {
@@ -52,20 +53,20 @@ export const useDashboardStore = defineStore('dashboard', {
                     dashboardService.getAlerts()
                 ]);
 
-                if (summaryRes.data?.success) {
-                    this.stats = summaryRes.data.data?.stats ?? [];
+                if (summaryRes?.success) {
+                    this.stats = summaryRes.data?.stats ?? [];
                 }
 
-                if (activityRes.data?.success) {
-                    this.recentContracts = activityRes.data.data?.contracts ?? [];
-                    this.activities     = activityRes.data.data?.activities ?? [];
+                if (activityRes?.success) {
+                    this.recentContracts = activityRes.data?.contracts ?? [];
+                    this.activities     = activityRes.data?.activities ?? [];
                 }
 
-                if (alertsRes.data?.success) {
-                    this.alerts = alertsRes.data.data ?? [];
+                if (alertsRes?.success) {
+                    this.alerts = alertsRes.data ?? [];
                 }
             } catch (error) {
-                console.error('Error al cargar datos del dashboard', error);
+                logger.error('Error al cargar datos del dashboard', { message: error?.message ?? error });
             } finally {
                 this.isLoading = false;
             }
@@ -74,10 +75,10 @@ export const useDashboardStore = defineStore('dashboard', {
         async fetchConductorDashboardData(days = 30) {
             this.isLoading = true;
             try {
-                const response = await dashboardService.getConductorSummary(days);
+                const body = await dashboardService.getConductorSummary(days);
 
-                if (response.data?.success && response.data?.data) {
-                    const data = response.data.data;
+                if (body?.success && body?.data) {
+                    const data = body.data;
                     this.conductorData = data;
 
                     const kpis = data.kpis || {};
@@ -95,7 +96,7 @@ export const useDashboardStore = defineStore('dashboard', {
                     return data;
                 }
             } catch (error) {
-                console.error('Error al cargar datos del conductor', error);
+                logger.error('Error al cargar datos del conductor', { message: error?.message ?? error });
             } finally {
                 this.isLoading = false;
             }

@@ -43,7 +43,7 @@ if (import.meta.env.DEV) {
 
 // 3. Global Event Bus (Solo cliente para logout)
 if (typeof window !== 'undefined') {
-    window.addEventListener('factus:logout', () => {
+    window.addEventListener('noa:logout', () => {
         useAuthStore().$reset();
         logger.warn('Logout global recibido: Estado de autenticación reseteado.');
     });

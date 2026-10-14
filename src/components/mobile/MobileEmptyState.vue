@@ -74,15 +74,15 @@ defineEmits(['action']);
 }
 
 .mes-title {
-  font-size: 14px;
+  font-size: var(--noa-text-title);
   font-weight: 700;
-  color: #1e293b;
+  color: var(--noa-ink);
   margin: 0 0 6px;
 }
 
 .mes-sub {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: var(--noa-text-meta);
+  color: var(--noa-ink-soft);
   line-height: 1.5;
   margin: 0 auto 16px;
   max-width: 280px;
@@ -94,22 +94,23 @@ defineEmits(['action']);
 }
 
 .mes-btn {
-  background: #2563eb;
-  color: #ffffff;
-  font-size: 11px;
+  background: var(--noa-action);
+  color: var(--noa-on-action);
+  font-size: var(--noa-text-body);
   font-weight: 600;
   padding: 8px 16px;
-  border-radius: 8px;
+  min-height: var(--noa-touch-min);
+  border-radius: var(--noa-radius-md);
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 81, 213, 0.25);
   transition: background 0.15s ease;
 }
 
 .mes-btn:active {
-  background: #1d4ed8;
+  background: var(--noa-action-container);
 }
 </style>

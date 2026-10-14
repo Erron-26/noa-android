@@ -14,7 +14,7 @@
                             <i class="fad fa-edit text-primary"></i>
                             <h6 class="mb-0 fw-medium">Información General</h6>
                             <span class="badge bg-primary bg-opacity-10 text-primary ms-2">
-                                <i class="fad fa-asterisk me-1" style="font-size: 0.5rem;"></i>Campos obligatorios
+                                <i class="fad fa-asterisk me-1" style="font-size: 0.75rem;"></i>Campos obligatorios
                             </span>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                                         </div>
                                         <span
                                             class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-10 py-1 px-2"
-                                            style="font-size: 0.7rem;">
+                                            style="font-size: 0.75rem;">
                                             {{ getCategoryCount(category) }} ítems
                                         </span>
                                     </div>
@@ -179,7 +179,7 @@
                                                 </div>
                                                 <div v-if="result.observations"
                                                     class="item-observations text-muted text-truncate"
-                                                    style="font-size: 0.7rem; max-width: 180px;"
+                                                    style="font-size: 0.75rem; max-width: 180px;"
                                                     :title="result.observations">
                                                     {{ result.observations }}
                                                 </div>
@@ -231,6 +231,7 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
 import { ref, reactive, computed, watch, onMounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -248,7 +249,7 @@ const router = useRouter();
 const store = useVehicleInspectionsStore();
 const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
-const isSuperAdmin = computed(() => permissionsStore.hasRole('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 const isConductor = computed(() => permissionsStore.hasRole('CONDUCTOR'));
 
 
@@ -352,7 +353,7 @@ const loadConductorAssignments = async () => {
         }
         assignedVehicleUuids.value = ordered;
     } catch (e) {
-        console.warn('No se pudieron cargar las asignaciones del conductor', e?.message);
+        logger.warn('No se pudieron cargar las asignaciones del conductor', e?.message);
     } finally {
         assignedVehiclesLoaded.value = true;
     }
@@ -598,7 +599,7 @@ const downloadPdf = async () => {
         downloadingPdf.value = true;
         await VehicleInspectionsService.downloadPdf(route.params.id);
     } catch (error) {
-        console.error(error);
+        logger.error('No se pudo generar o descargar el PDF', { message: error?.message ?? error });
         toast('Error', 'No se pudo generar o descargar el PDF', 'error');
     } finally {
         downloadingPdf.value = false;

@@ -17,7 +17,7 @@
                         <i class="fad fa-clipboard-list fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Total Inspecciones Flota</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Total Inspecciones Flota</span>
                         <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(store.pagination.totalItems) }}</h4>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <i class="fad fa-road fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Km Recorridos Acumulados</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Km Recorridos Acumulados</span>
                         <h4 class="mb-0 fw-bold text-success mt-1">+{{ formatNumber(totalKmTraveled) }} km</h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <i class="fad fa-tachometer-alt fs-4"></i>
                     </div>
                     <div>
-                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem; letter-spacing: 0.5px;">Promedio Kilometraje</span>
+                        <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Promedio Kilometraje</span>
                         <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(averageMileage) }} km</h4>
                     </div>
                 </div>
@@ -368,7 +368,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Total Inspecciones</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Total Inspecciones</span>
                                     <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ store.historyItems.length }}</h4>
                                 </div>
                                 <div class="stat-icon bg-soft-primary text-primary">
@@ -381,7 +381,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Kilometraje Actual</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Kilometraje Actual</span>
                                     <h4 class="mb-0 fw-bold text-slate-800 mt-1">{{ formatNumber(store.historyItems[0]?.mileage) }} <span class="small text-muted" style="font-size: 0.75rem;">km</span></h4>
                                 </div>
                                 <div class="stat-icon bg-soft-info text-info">
@@ -394,7 +394,7 @@
                         <div class="stat-card p-3 bg-light rounded-3 border">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
-                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Km Totales Recorridos</span>
+                                    <span class="text-muted small text-uppercase fw-semibold" style="font-size: 0.75rem;">Km Totales Recorridos</span>
                                     <h4 class="mb-0 fw-bold text-success mt-1">+{{ formatNumber(totalHistoryKmTraveled) }} <span class="small text-muted" style="font-size: 0.75rem;">km</span></h4>
                                 </div>
                                 <div class="stat-icon bg-soft-success text-success">
@@ -410,11 +410,11 @@
                     <table class="table table-sm table-hover mb-0 align-middle history-table">
                         <thead class="bg-light">
                             <tr>
-                                <th class="text-uppercase text-muted fw-bold ps-3 py-2" style="font-size: 0.7rem; letter-spacing: 0.5px;">Fecha</th>
-                                <th class="text-uppercase text-muted fw-bold py-2" style="font-size: 0.7rem; letter-spacing: 0.5px;">Inspector</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.7rem; letter-spacing: 0.5px;">Odómetro</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.7rem; letter-spacing: 0.5px; width: 140px;">Km Recorridos</th>
-                                <th class="text-uppercase text-muted fw-bold py-2 text-center" style="font-size: 0.7rem; letter-spacing: 0.5px; width: 80px;">PDF</th>
+                                <th class="text-uppercase text-muted fw-bold ps-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Fecha</th>
+                                <th class="text-uppercase text-muted fw-bold py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Inspector</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.75rem; letter-spacing: 0.5px;">Odómetro</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-end" style="font-size: 0.75rem; letter-spacing: 0.5px; width: 140px;">Km Recorridos</th>
+                                <th class="text-uppercase text-muted fw-bold py-2 text-center" style="font-size: 0.75rem; letter-spacing: 0.5px; width: 80px;">PDF</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -423,7 +423,7 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <i class="fad fa-calendar-alt text-muted" style="font-size: 13px;"></i>
                                         <span>{{ formatDate(item.inspection_date) }}</span>
-                                        <span v-if="idx === 0" class="badge bg-primary bg-opacity-10 text-primary px-2 py-0.5 rounded-pill" style="font-size: 0.65rem;">Reciente</span>
+                                        <span v-if="idx === 0" class="badge bg-primary bg-opacity-10 text-primary px-2 py-0.5 rounded-pill" style="font-size: 0.75rem;">Reciente</span>
                                     </div>
                                 </td>
                                 <td class="py-2">
@@ -439,7 +439,7 @@
                                 </td>
                                 <td class="py-2 text-end">
                                     <span v-if="item.km_traveled !== null" class="badge badge-subtle-success font-monospace px-2 py-1 rounded">
-                                        <i class="fas fa-arrow-up me-1" style="font-size: 10px;"></i>+{{ formatNumber(item.km_traveled) }} km
+                                        <i class="fas fa-arrow-up me-1" style="font-size: 0.75rem;"></i>+{{ formatNumber(item.km_traveled) }} km
                                     </span>
                                     <span v-else class="badge bg-light text-muted px-2 py-1 rounded">
                                         Inicial
@@ -494,21 +494,11 @@
             <div class="p-3 bg-light rounded border mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="text-muted small fw-medium">Firma Inspector / Conductor:</span>
-                    <span v-if="sigDetail.has_inspector_signature" class="badge bg-success">
-                        <i class="fas fa-check-circle me-1"></i> Firmado
-                    </span>
-                    <span v-else class="badge bg-warning text-dark">
-                        <i class="fas fa-clock me-1"></i> Pendiente
-                    </span>
+                    <StatusPill :estado="sigDetail.has_inspector_signature ? 'FIRMADO' : 'PENDIENTE'" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="text-muted small fw-medium">Firma Coordinador HSEQ / Operaciones:</span>
-                    <span v-if="sigDetail.has_coordinator_signature" class="badge bg-success">
-                        <i class="fas fa-check-circle me-1"></i> Firmado
-                    </span>
-                    <span v-else class="badge bg-warning text-dark">
-                        <i class="fas fa-clock me-1"></i> Pendiente
-                    </span>
+                    <StatusPill :estado="sigDetail.has_coordinator_signature ? 'FIRMADO' : 'PENDIENTE'" />
                 </div>
 
                 <!-- Mensaje de completado -->
@@ -554,6 +544,8 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
+import { logger } from '@/utils/logger.js';
+import { aviso, mostrarCargando, cerrarDialogo, copiarEnlace } from '@/utils/dialogs.js';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useVehicleInspectionsStore } from '../store/vehicleInspections.store.js';
@@ -569,9 +561,9 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
 import SignaturePad from '@/components/SignaturePad.vue';
-import Swal from 'sweetalert2';
 import MobileCard from '@/components/mobile/MobileCard.vue';
 import MobileSectionHeader from '@/components/mobile/MobileSectionHeader.vue';
+import StatusPill from '@/components/mobile/StatusPill.vue';
 import MobileEmptyState from '@/components/mobile/MobileEmptyState.vue';
 
 const router = useRouter();
@@ -688,11 +680,10 @@ const openHistory = async (data) => {
 
 const openSignaturePad = async (data) => {
     if (!isAdmin.value) {
-        Swal.fire({
-            title: 'Sin permiso',
-            text: 'Solo un administrador puede firmar inspecciones vehiculares.',
-            icon: 'warning',
-            confirmButtonText: 'Entendido'
+        await aviso({
+            titulo: 'Sin permiso',
+            texto: 'Solo un administrador puede firmar inspecciones vehiculares.',
+            icono: 'warning',
         });
         return;
     }
@@ -711,7 +702,7 @@ const openSignaturePad = async (data) => {
             sigActiveRole.value = 'inspector';
         }
     } catch (err) {
-        console.error('Error fetching inspection detail:', err);
+        logger.error('Error obteniendo el detalle de firmas de la inspección', { message: err?.message ?? err });
         sigDetail.value = { has_inspector_signature: false, has_coordinator_signature: false };
     } finally {
         sigLoadingDetail.value = false;
@@ -725,13 +716,7 @@ const onSignatureSaved = async (signatureData) => {
         else if (sigActiveRole.value === 'coordinator') sigDetail.value.has_coordinator_signature = true;
     }
     
-    Swal.fire({
-        icon: 'success',
-        title: 'Firma guardada',
-        text: `Firma de ${sigActiveRole.value === 'inspector' ? 'Inspector/Conductor' : 'Coordinador HSEQ'} registrada correctamente.`,
-        timer: 2000,
-        showConfirmButton: false
-    });
+    toast('Firma guardada', `Firma de ${sigActiveRole.value === 'inspector' ? 'Inspector/Conductor' : 'Coordinador HSEQ'} registrada correctamente.`, 'success');
 
     // Auto-select the OTHER role if it is pending, so the user can sign the next one immediately
     if (sigActiveRole.value === 'inspector' && !sigDetail.value.has_coordinator_signature) {
@@ -757,7 +742,7 @@ const onSignatureSaved = async (signatureData) => {
             sigActiveRole.value = 'inspector';
         }
     } catch (err) {
-        console.error('Error refreshing signature status:', err);
+        logger.error('Error refrescando el estado de las firmas', { message: err?.message ?? err });
     }
     
     // Si ambas ya están firmadas, cerrar el diálogo
@@ -769,22 +754,17 @@ const onSignatureSaved = async (signatureData) => {
 
 const generatePublicSignLink = async (uuid) => {
     if (!isAdmin.value) {
-        Swal.fire({
-            title: 'Sin permiso',
-            text: 'Solo un administrador puede compartir el enlace de firma.',
-            icon: 'warning',
-            confirmButtonText: 'Entendido'
+        await aviso({
+            titulo: 'Sin permiso',
+            texto: 'Solo un administrador puede compartir el enlace de firma.',
+            icono: 'warning',
         });
         return;
     }
     try {
-        Swal.fire({
-            title: 'Generando enlace...',
-            text: 'Por favor espera mientras generamos el enlace de firma temporal.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+        await mostrarCargando({
+            titulo: 'Generando enlace...',
+            texto: 'Por favor espera mientras generamos el enlace de firma temporal.',
         });
 
         const tenantId = useAuthStore().currentTenant?.id;
@@ -793,45 +773,20 @@ const generatePublicSignLink = async (uuid) => {
         const response = await instance.post(`/fleet-management/vehicle-inspections/${uuid}/generate-sign-url`);
         const publicUrl = response.data.data.url;
 
-        Swal.close();
+        cerrarDialogo();
 
-        Swal.fire({
-            title: '¡Enlace Generado!',
-            html: `
-                <p>El siguiente enlace público tiene una vigencia de <b>1 hora</b>:</p>
-                <div class="mt-2 p-2 bg-light border rounded text-break text-start font-monospace" style="font-size: 12px; max-height: 100px; overflow-y: auto; word-break: break-all;">
-                    ${publicUrl}
-                </div>
-            `,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar Enlace',
-            cancelButtonText: 'Cerrar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigator.clipboard.writeText(publicUrl).then(() => {
-                    Swal.fire({
-                        title: '¡Copiado!',
-                        text: 'El enlace de firma ha sido copiado al portapapeles.',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }).catch(err => {
-                    console.error('Error al copiar:', err);
-                    toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-                });
-            }
+        await copiarEnlace(publicUrl, {
+            descripcion: 'El siguiente enlace público tiene una vigencia de <b>1 hora</b>:',
+            textoCopiar: 'Copiar Enlace',
+            textoCerrar: 'Cerrar',
         });
     } catch (err) {
-        console.error('Error al generar enlace firmado:', err);
-        Swal.fire({
-            title: 'Error',
-            text: err.response?.data?.message ?? 'No se pudo generar el enlace firmado.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
+        logger.error('Error al generar enlace firmado', { message: err?.message ?? err });
+        cerrarDialogo();
+        await aviso({
+            titulo: 'Error',
+            texto: err.response?.data?.message ?? 'No se pudo generar el enlace firmado.',
+            icono: 'error',
         });
     }
 };
@@ -841,7 +796,7 @@ const downloadPdf = async (uuid) => {
         downloadingPdf.value = uuid;
         await VehicleInspectionsService.downloadPdf(uuid);
     } catch (error) {
-        console.error(error);
+        logger.error('No se pudo generar o abrir el PDF de la inspección', { message: error?.message ?? error });
         toast('Error', 'No se pudo generar o abrir el PDF', 'error');
     } finally {
         downloadingPdf.value = null;
@@ -946,7 +901,7 @@ onUnmounted(() => destroyTooltips());
 }
 
 :deep(.p-paginator .p-dropdown .p-dropdown-label) {
-    font-size: 0.725rem !important;
+    font-size: 0.75rem !important;
     padding: 0 0.25rem !important;
 }
 

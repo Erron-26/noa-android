@@ -272,8 +272,10 @@ import BasePageHeader from '@/components/BasePageHeader.vue';
 import NoaTableSpinner from '@/components/NoaTableSpinner.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import Swal from 'sweetalert2';
 import dateUtils from '@/utils/date.js';
+import { logger } from '@/utils/logger.js';
+import { toast } from '@/utils/toast.js';
+import { aviso, mostrarCargando, cerrarDialogo } from '@/utils/dialogs.js';
 import MobileCard from '@/components/mobile/MobileCard.vue';
 import MobileSectionHeader from '@/components/mobile/MobileSectionHeader.vue';
 import MobileEmptyState from '@/components/mobile/MobileEmptyState.vue';
@@ -306,33 +308,23 @@ const handleDelete = (item) => confirmDelete(item, {
 });
 
 const downloadPdfServer = async (item) => {
-    Swal.fire({
-        title: 'Generando PDF...',
-        text: 'Por favor espere mientras el servidor prepara el documento.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
+    await mostrarCargando({
+        titulo: 'Generando PDF...',
+        texto: 'Por favor espere mientras el servidor prepara el documento.',
     });
 
     try {
         await store.downloadPdf(item.uuid);
 
-        Swal.close();
-        Swal.fire({
-            icon: 'success',
-            title: '¡Listo!',
-            text: 'El PDF del FUEC se ha generado y abierto en el navegador.',
-            timer: 2000,
-            showConfirmButton: false
-        });
+        cerrarDialogo();
+        toast('¡Listo!', 'El PDF del FUEC se ha generado y abierto en el navegador.', 'success');
     } catch (error) {
-        console.error('Error al generar PDF del servidor:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error de Generación',
-            text: error.response?.data?.message || 'No se pudo generar el documento PDF desde el servidor.',
-            confirmButtonText: 'Aceptar'
+        logger.error('Error al generar PDF del servidor', { message: error?.message ?? error });
+        cerrarDialogo();
+        await aviso({
+            titulo: 'Error de Generación',
+            texto: error.response?.data?.message || 'No se pudo generar el documento PDF desde el servidor.',
+            icono: 'error',
         });
     }
 };

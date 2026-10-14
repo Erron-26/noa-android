@@ -11,7 +11,7 @@
                         <i class="fad fa-edit text-primary"></i>
                         <h6 class="mb-0 fw-medium">Formulario de Control de Servicios</h6>
                         <span class="badge bg-primary bg-opacity-10 text-primary ms-2">
-                            <i class="fad fa-asterisk me-1" style="font-size: 0.5rem;"></i>Campos obligatorios
+                            <i class="fad fa-asterisk me-1" style="font-size: 0.75rem;"></i>Campos obligatorios
                         </span>
                     </div>
                 </div>
@@ -291,7 +291,8 @@
 
 <script setup>
 import { toast } from '@/utils/toast.js';
-import Swal from 'sweetalert2';
+import { logger } from '@/utils/logger.js';
+import { aviso, mostrarCargando, cerrarDialogo, copiarEnlace } from '@/utils/dialogs.js';
 /**
  * @author Darwin Montes
  * @version 1.0.0
@@ -315,13 +316,10 @@ const permissionsStore = usePermissionsStore();
 const userStore = useUserStore();
 
 // --- ESTADOS ---
-const isSuperAdmin = computed(() => permissionsStore.roles?.includes('SUPERADMIN'));
+const isSuperAdmin = computed(() => permissionsStore.isSuperAdmin);
 
 // Solo administradores (SUPERADMIN o ADMIN_EMPRESA) pueden compartir el enlace de firma
-const canShareCoordinatorLink = computed(() => (permissionsStore.roles || []).some((r) => {
-    const name = typeof r === 'string' ? r : (r?.name ?? '');
-    return name === 'SUPERADMIN' || name === 'ADMIN_EMPRESA';
-}));
+const canShareCoordinatorLink = computed(() => permissionsStore.hasAnyRole('SUPERADMIN', 'ADMIN_EMPRESA'));
 const isEditMode = computed(() => route.params.id !== undefined);
 const pageTitle = computed(() => isEditMode.value ? 'Actualizar Hoja de Control' : 'Registrar Hoja de Control');
 const pageSubtitle = computed(() => isEditMode.value ? 'Modifica los datos del registro' : 'Completa los datos para crear un nuevo registro');
@@ -552,59 +550,29 @@ const shareCoordinatorLink = async () => {
     if (!isEditMode.value) return;
     try {
         sharingLink.value = true;
-        Swal.fire({
-            title: 'Generando enlace...',
-            text: 'Por favor espera mientras generamos el enlace de firma temporal.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+        await mostrarCargando({
+            titulo: 'Generando enlace...',
+            texto: 'Por favor espera mientras generamos el enlace de firma temporal.',
         });
 
         const result = await store.generateCoordinatorSignUrl(route.params.id);
         const publicUrl = result?.url ?? '';
         if (!publicUrl) throw new Error('Sin enlace');
 
-        Swal.close();
+        cerrarDialogo();
 
-        Swal.fire({
-            title: '¡Enlace Generado!',
-            html: `
-                <p>Comparte este enlace con el coordinador de servicios. Tiene una vigencia de <b>1 hora</b> y su firma se plasmará en el campo RECIBO Y FIRMA:</p>
-                <div class="mt-2 p-2 bg-light border rounded text-break text-start font-monospace" style="font-size: 12px; max-height: 100px; overflow-y: auto; word-break: break-all;">
-                    ${publicUrl}
-                </div>
-            `,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar Enlace',
-            cancelButtonText: 'Cerrar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigator.clipboard.writeText(publicUrl).then(() => {
-                    Swal.fire({
-                        title: '¡Copiado!',
-                        text: 'El enlace de firma ha sido copiado al portapapeles.',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }).catch(err => {
-                    console.error('Error al copiar:', err);
-                    toast('Error', 'No se pudo copiar automáticamente. Por favor selecciónalo y cópialo manualmente.', 'warning');
-                });
-            }
+        await copiarEnlace(publicUrl, {
+            descripcion: 'Comparte este enlace con el coordinador de servicios. Tiene una vigencia de <b>1 hora</b> y su firma se plasmará en el campo RECIBO Y FIRMA:',
+            textoCopiar: 'Copiar Enlace',
+            textoCerrar: 'Cerrar',
         });
     } catch (err) {
-        console.error('Error al generar enlace de firma:', err);
-        Swal.close();
-        Swal.fire({
-            title: 'Error',
-            text: err.response?.data?.message ?? 'No se pudo generar el enlace de firma del coordinador.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
+        logger.error('Error al generar enlace de firma', { message: err?.message ?? err });
+        cerrarDialogo();
+        await aviso({
+            titulo: 'Error',
+            texto: err.response?.data?.message ?? 'No se pudo generar el enlace de firma del coordinador.',
+            icono: 'error',
         });
     } finally {
         sharingLink.value = false;

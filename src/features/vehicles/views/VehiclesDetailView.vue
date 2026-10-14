@@ -585,6 +585,7 @@ import { useVehiclesStore } from '../store/vehicles.store.js';
 import { usePermissionsStore } from '@store';
 import VehiclesService from '../services/vehicles.service.js';
 import { useToast } from 'vue-toastification';
+import { logger } from '@/utils/logger.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
 import VehicleDocumentsMenu from '../components/VehicleDocumentsMenu.vue';
 
@@ -746,8 +747,7 @@ const handleDownloadTechnicalSheet = async () => {
         await VehiclesService.downloadTechnicalSheet(vehicle.value.uuid);
         toast.success('Ficha técnica generada correctamente');
     } catch (error) {
-        console.error('Error al descargar ficha técnica:', error);
-        toast.error('No se pudo generar la ficha técnica');
+        logger.error('Error al descargar ficha técnica:', { message: error?.message ?? error });        toast.error('No se pudo generar la ficha técnica');
     } finally {
         isDownloading.value = false;
     }
@@ -761,7 +761,7 @@ const handleDownloadVehicleHistory = async () => {
         await VehiclesService.downloadVehicleHistory(vehicle.value.uuid);
         toast.success('Hoja de vida generada correctamente');
     } catch (error) {
-        console.error('Error al descargar hoja de vida:', error);
+        logger.error('Error al descargar hoja de vida:', { message: error?.message ?? error });
         toast.error('No se pudo generar la hoja de vida');
     } finally {
         isDownloadingHistory.value = false;
@@ -776,7 +776,7 @@ const handleDownloadMaintenanceHistory = async () => {
         await VehiclesService.downloadMaintenanceHistory(vehicle.value.uuid);
         toast.success('Historial de mantenimiento generado correctamente');
     } catch (error) {
-        console.error('Error al descargar historial de mantenimiento:', error);
+        logger.error('Error al descargar historial de mantenimiento:', { message: error?.message ?? error });
         toast.error('No se pudo generar el historial de mantenimiento');
     } finally {
         isDownloadingMaintenance.value = false;
@@ -791,7 +791,7 @@ const handleDownloadHandoverRecord = async () => {
         await VehiclesService.downloadHandoverRecord(vehicle.value.uuid);
         toast.success('Acta de entrega generada correctamente');
     } catch (error) {
-        console.error('Error al descargar acta de entrega:', error);
+        logger.error('Error al descargar acta de entrega:', { message: error?.message ?? error });
         toast.error('No se pudo generar el acta de entrega');
     } finally {
         isDownloadingHandover.value = false;
@@ -820,7 +820,7 @@ const loadVehicle = async () => {
 
 
     } catch (error) {
-        console.error('Error cargando vehículo:', error);
+        logger.error('Error cargando vehículo:', { message: error?.message ?? error });
     } finally {
         isViewLoading.value = false;
         initTooltips();

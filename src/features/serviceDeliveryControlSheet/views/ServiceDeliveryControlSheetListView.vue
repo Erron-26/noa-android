@@ -139,7 +139,7 @@
                                 <template #body="{ data }">
                                     <div class="d-flex flex-column">
                                         <span class="text-dark fw-medium text-truncate" style="max-width: 180px;" :title="data.project?.project_name">{{ data.project?.project_name || 'Sin Proyecto' }}</span>
-                                        <span class="badge rounded-pill badge-subtle-secondary mt-1 align-self-start" style="font-size: 0.65rem;">
+                                        <span class="badge rounded-pill badge-subtle-secondary mt-1 align-self-start" style="font-size: 0.75rem;">
                                             {{ tipoLabel(data.type_of_control_sheet) }}
                                         </span>
                                     </div>
@@ -173,7 +173,7 @@
                                     <div class="d-flex flex-column text-dark" style="font-size: 0.85rem;">
                                         <span class="fw-medium"><i class="fad fa-calendar-alt text-muted me-1"></i> {{ formatRango(data.start_date || data.service_date) || '-' }}</span>
                                         <span v-if="(data.end_date || data.service_date) && (data.end_date || data.service_date) !== (data.start_date || data.service_date)" class="text-muted mt-1">
-                                            <i class="fad fa-arrow-down text-muted mx-1" style="font-size: 0.7rem;"></i>{{ formatRango(data.end_date || data.service_date) }}
+                                            <i class="fad fa-arrow-down text-muted mx-1" style="font-size: 0.75rem;"></i>{{ formatRango(data.end_date || data.service_date) }}
                                         </span>
                                     </div>
                                 </template>
@@ -183,7 +183,7 @@
                                 style="width: 120px;">
                                 <template #body="{ data }">
                                     <span class="badge rounded-pill badge-subtle" :class="estadoBadge(data)">
-                                        <i :class="estadoIcono(data)" style="font-size:10px;" />
+                                        <i :class="estadoIcono(data)" style="font-size:0.75rem;" />
                                         {{ estadoLabel(data) }}
                                     </span>
                                 </template>
@@ -371,7 +371,7 @@ import { useRouter } from 'vue-router';
 import { useServiceDeliveryControlSheetStore } from '../store/serviceDeliveryControlSheet.store.js';
 import { usePermissionsStore, useUserStore } from '@store';
 import { toast } from '@/utils/toast.js';
-import Swal from 'sweetalert2';
+import { mostrarCargando, cerrarDialogo, copiarEnlace } from '@/utils/dialogs.js';
 import { useTable } from '@/hooks/useTable.js';
 import { useTableActions } from '@/hooks/useTableActions.js';
 import BasePageHeader from '@/components/BasePageHeader.vue';
@@ -401,7 +401,7 @@ const reportDrivers = computed(() => store.catalogs.drivers ?? []);
 const downloadingDaily = ref(null);
 const sharingLink = ref(null);
 
-const canShareCoordinatorLink = computed(() => (permissionsStore.roles || []).some(r => r === 'SUPERADMIN' || r === 'ADMIN_EMPRESA' || r?.name === 'SUPERADMIN' || r?.name === 'ADMIN_EMPRESA'));
+const canShareCoordinatorLink = computed(() => permissionsStore.hasAnyRole('SUPERADMIN', 'ADMIN_EMPRESA'));
 
 const permissions = reactive({ edit: false, delete: false, pdf: false });
 const { debouncedSearch } = useTable({}, () => store.setGlobalFilter(searchQuery.value));
@@ -458,22 +458,18 @@ const downloadDaily = async (uuid) => {
 const shareCoordinatorLink = async (uuid) => {
     try {
         sharingLink.value = uuid;
-        Swal.fire({ title: 'Generando enlace...', text: 'Por favor espera...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+        await mostrarCargando({ titulo: 'Generando enlace...', texto: 'Por favor espera...' });
         const result = await store.generateCoordinatorSignUrl(uuid);
         const url = result?.url;
         if(!url) throw new Error();
-        Swal.close();
-        Swal.fire({
-            title: '¡Enlace Generado!',
-            html: `<p>Comparte este enlace con el coordinador:</p><div class="mt-2 p-2 bg-light border rounded text-break font-monospace" style="font-size: 12px;">${url}</div>`,
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fad fa-copy"></i> Copiar',
-            cancelButtonText: 'Cerrar'
-        }).then(r => {
-            if(r.isConfirmed) navigator.clipboard.writeText(url).then(() => toast('Éxito', 'Enlace copiado', 'success'));
+        cerrarDialogo();
+        await copiarEnlace(url, {
+            descripcion: 'Comparte este enlace con el coordinador:',
+            textoCopiar: 'Copiar',
+            textoCerrar: 'Cerrar',
         });
     } catch(err) {
+        cerrarDialogo();
         toast('Error', 'Error al generar enlace', 'error');
     } finally {
         sharingLink.value = null;

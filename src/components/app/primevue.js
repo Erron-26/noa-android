@@ -1,5 +1,5 @@
 /**
- * Configuración de PrimeVue para FactusNext
+ * Configuración de PrimeVue para NOA
  * Ubicación: src/components/app/primevue.js
  */
 

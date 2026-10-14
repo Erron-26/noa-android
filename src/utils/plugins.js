@@ -1,5 +1,5 @@
 /**
- * Orquestador de Plugins - FactusNext
+ * Orquestador de Plugins - NOA
  * Ubicación: src/utils/plugins.js
  */
 
@@ -94,7 +94,7 @@ export async function registerPlugins(app) {
             registrarListenerSesionExpirada();
         }
 
-        logger.info("FactusNext: Sistema inicializado correctamente.");
+        logger.info("NOA: Sistema inicializado correctamente.");
     } catch (error) {
         logger.error("Error crítico en el registro de plugins:", error);
         throw error;

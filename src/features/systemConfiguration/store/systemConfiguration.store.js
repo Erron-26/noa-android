@@ -1,6 +1,7 @@
 /** @author Darwin Montes @version 1.0.0 @created_at 2026-06-13 @module {systemConfiguration} @resource {systemConfiguration} */
 import { defineStore } from 'pinia';
 import { toast } from '@/utils/toast.js';
+import { runStoreAction } from '@store/helpers/runStoreAction.js';
 import systemConfigurationService from '../services/systemConfiguration.service.js';
 
 
@@ -14,17 +15,7 @@ export const useSystemConfigurationStore = defineStore('systemConfiguration', {
 
     actions: {
         async _run(action, errorMsg) {
-            this.loading = true;
-            this.error = null;
-            try {
-                return await action();
-            } catch (error) {
-                this.error = error.message || errorMsg;
-                await toast('Error', this.error, 'error');
-                throw error;
-            } finally {
-                this.loading = false;
-            }
+            return runStoreAction(this, action, errorMsg);
         },
 
         async fetchByCompany(companyUuid) {

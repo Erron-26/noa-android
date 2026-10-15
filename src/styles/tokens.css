@@ -28,6 +28,22 @@
     --noa-card: #ffffff;
     --noa-line: #c5c6d1;
 
+    /* ── Login móvil (valores antes fijos en LoginMobile.vue) ── */
+    --noa-fondo: #f0f3f8;
+    --noa-hero: linear-gradient(160deg, #0c1f4a 0%, #0e2d6b 45%, #1a4db8 100%);
+    --noa-cta: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+    --noa-campo: #f8fafc;
+    --noa-line-soft: #e2e8f0;
+    --noa-ink-form: #1e293b;
+    /* Solo placeholders e iconos decorativos: no pasa AA como texto. */
+    --noa-muted: #94a3b8;
+    --noa-enfoque: #3b82f6;
+    --noa-live: #34d399;
+    --noa-error-vivo: #e5484d;
+    --noa-error-fondo: #fef4f4;
+    --noa-error-borde: #f4b8ba;
+    --noa-error-texto: #c2222a;
+
     /* ── Tipografía Inter (mínimos propios, no los 11 px de Stitch) ── */
     --noa-font: 'Inter', system-ui, -apple-system, sans-serif;
     --noa-text-title: 16px;

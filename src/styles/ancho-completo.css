@@ -1,0 +1,20 @@
+/* Ancho completo en móvil: neutraliza el padding lateral del `.container` de
+ * Bootstrap. Fuente única (antes duplicado en MobileConductorLayout y LoginMobile).
+ * Se activa con la clase `noa-fullbleed` en <body> vía `usePantallaCompleta()`.
+ * Se usa `100%` (nunca `100vw`) para no generar scroll horizontal cuando la
+ * barra de desplazamiento vertical ocupa parte del viewport.
+ */
+body.noa-fullbleed,
+body.noa-fullbleed .main,
+body.noa-fullbleed [data-layout="container"],
+body.noa-fullbleed .container,
+body.noa-fullbleed .container-fluid,
+body.noa-fullbleed #app {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+body.noa-fullbleed {
+    overflow-x: hidden !important;
+}

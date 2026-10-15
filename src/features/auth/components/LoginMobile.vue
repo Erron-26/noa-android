@@ -5,8 +5,8 @@
       <div class="hero">
         <div class="hero-inner">
           <div class="brand">
-            <span class="brand-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h16" /><path d="M5 17V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8" /><path d="M4 11h16" /><circle cx="8" cy="17" r="2" /><circle cx="16" cy="17" r="2" /></svg>
+            <span class="brand-logo" aria-hidden="true">
+              <img src="/noa.svg" alt="" />
             </span>
             <span class="brand-texts">
               <span class="brand-name">NOA</span>
@@ -19,20 +19,13 @@
           </span>
 
           <p class="hero-tagline">Plataforma de gestión para flotas — eficiencia y control en ruta</p>
-
-          <div class="hero-pills" aria-hidden="true">
-            <span class="pill pill-erp">ERP</span>
-            <span class="pill pill-seg">Seguro</span>
-            <span class="pill pill-cloud">Cloud</span>
-          </div>
         </div>
-        <div class="hero-deco" aria-hidden="true"></div>
       </div>
 
       <!-- Tarjeta de acceso -->
       <div class="form-card">
         <div class="form-title">Iniciar sesión</div>
-        <div class="form-sub">Accede para gestionar tu flota</div>
+        <div class="form-sub">Accede para gestionar tu flota y turno operativo</div>
         <div class="form-divider" aria-hidden="true"></div>
 
         <form @submit.prevent="handleLogin" novalidate>
@@ -56,16 +49,7 @@
           </div>
 
           <div class="field">
-            <div class="field-label field-label-row">
-              <label for="login-password-mobile">Contraseña</label>
-              <button
-                type="button"
-                class="forgot"
-                disabled
-                aria-disabled="true"
-                title="Recuperación de contraseña no disponible por el momento"
-              >¿Olvidaste tu contraseña?</button>
-            </div>
+            <label class="field-label" for="login-password-mobile">Contraseña</label>
             <div class="input-wrap" :class="{ 'input-error': errors.password }">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               <input
@@ -100,17 +84,6 @@
           </button>
         </form>
 
-        <div class="biometric-row" aria-hidden="true">
-          <div class="bio-divider"></div>
-          <span class="bio-text">o continúa con</span>
-          <div class="bio-divider"></div>
-        </div>
-
-        <button class="bio-btn" type="button" @click="handleBiometric">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/></svg>
-          Acceso biométrico
-        </button>
-
         <div class="terms">
           Al ingresar aceptas los
           <button type="button" class="terms-link" @click="handleLegal('Términos y Condiciones')">Términos y Condiciones</button><br>y la
@@ -134,16 +107,13 @@
  * @resource {Session}
  */
 import { useLogin } from '../composables/useLogin.js';
+import { usePantallaCompleta } from '@/hooks/usePantallaCompleta.js';
 import { toast } from '@/utils/toast.js';
 
 const { formData, errors, isSubmitting, showPassword, loginError, handleLogin } = useLogin();
 
-/**
- * Acceso biométrico aún no disponible en esta versión: se informa sin romper el flujo.
- */
-const handleBiometric = () => {
-  toast('Acceso biométrico', 'El acceso con huella aún no está disponible en esta versión.', 'info');
-};
+/** Ancho completo del teléfono (hook compartido con el shell del conductor). */
+usePantallaCompleta();
 
 /**
  * Documentos legales aún no publicados en la app: se informa sin romper el flujo.
@@ -157,8 +127,8 @@ const handleLegal = (nombre) => {
 
 <style scoped>
 .login-screen {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #eef2f9;
+  font-family: var(--noa-font);
+  background: var(--noa-fondo);
   min-height: 100dvh;
   width: 100%;
   display: flex;
@@ -173,8 +143,8 @@ const handleLegal = (nombre) => {
 
 /* ── Hero ── */
 .hero {
-  background: linear-gradient(160deg, #0c1f4a 0%, #0e2d6b 45%, #1a4db8 100%);
-  padding: 28px 28px 44px;
+  background: var(--noa-hero);
+  padding: calc(20px + env(safe-area-inset-top)) 24px 44px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -195,13 +165,6 @@ const handleLegal = (nombre) => {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(16,185,205,.15) 0%, transparent 70%);
 }
-.hero-deco {
-  position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 36px;
-  background: #eef2f9;
-  clip-path: ellipse(60% 100% at 50% 100%);
-}
 .hero-inner {
   position: relative;
   z-index: 2;
@@ -215,18 +178,23 @@ const handleLegal = (nombre) => {
   align-items: center;
   gap: 10px;
 }
-.brand-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .12);
-  border: 1px solid rgba(255, 255, 255, .22);
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--noa-card);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+  flex-shrink: 0;
 }
-.brand-icon svg { width: 26px; height: 26px; }
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .brand-texts {
   display: flex;
   flex-direction: column;
@@ -236,7 +204,7 @@ const handleLegal = (nombre) => {
 .brand-name {
   font-size: 26px;
   font-weight: 800;
-  color: #fff;
+  color: var(--noa-on-primary);
   letter-spacing: -.02em;
 }
 .brand-sub {
@@ -263,24 +231,8 @@ const handleLegal = (nombre) => {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #34d399;
+  background: var(--noa-live);
 }
-.hero-pills {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-.pill {
-  font-size: var(--noa-text-meta);
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: var(--noa-radius-full);
-  letter-spacing: .03em;
-  backdrop-filter: blur(8px);
-}
-.pill-erp  { background: rgba(255,255,255,.12); color: #bfdbfe; border: 1px solid rgba(255,255,255,.15); }
-.pill-seg  { background: rgba(34,197,94,.15);  color: #86efac; border: 1px solid rgba(34,197,94,.25); }
-.pill-cloud{ background: rgba(56,189,248,.15); color: #7dd3fc; border: 1px solid rgba(56,189,248,.25); }
 .hero-tagline {
   font-size: var(--noa-text-body);
   color: rgba(255,255,255,.82);
@@ -291,14 +243,13 @@ const handleLegal = (nombre) => {
 }
 
 /* ── Form card ── */
+/* Hoja a sangre completa, esquinas superiores curvas (estilo Stitch). */
 .form-card {
-  background: #fff;
-  margin: -4px 16px 0;
-  border-radius: 24px;
-  padding: 28px 22px 24px;
-  box-shadow:
-    0 8px 32px rgba(14,45,107,.12),
-    0 1px 4px rgba(14,45,107,.08);
+  background: var(--noa-card);
+  margin: -24px 0 0;
+  border-radius: var(--noa-radius-xl) var(--noa-radius-xl) 0 0;
+  padding: 28px 22px calc(24px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 30px rgba(12, 36, 97, .12);
   position: relative;
   z-index: 2;
   flex-shrink: 0;
@@ -306,19 +257,19 @@ const handleLegal = (nombre) => {
 .form-title {
   font-size: 22px;
   font-weight: 800;
-  color: #0c1f4a;
+  color: var(--noa-primary-container);
   letter-spacing: -.5px;
   margin-bottom: 4px;
 }
 .form-sub {
   font-size: var(--noa-text-body);
-  color: #94a3b8;
+  color: var(--noa-ink-soft);
   margin-bottom: 24px;
   line-height: 1.4;
 }
 .form-divider {
   height: 1px;
-  background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+  background: linear-gradient(to right, transparent, var(--noa-line-soft), transparent);
   margin-bottom: 22px;
 }
 
@@ -327,34 +278,13 @@ const handleLegal = (nombre) => {
 .field-label {
   font-size: var(--noa-text-body);
   font-weight: 700;
-  color: #1e293b;
+  color: var(--noa-ink-form);
   margin-bottom: 8px;
   display: block;
 }
-.field-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.field-label-row label { margin: 0; }
-.forgot {
-  font-size: var(--noa-text-meta);
-  font-weight: 600;
-  color: #3b82f6;
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-}
-.forgot:disabled {
-  cursor: not-allowed;
-  color: #94a3b8;
-  text-decoration: line-through;
-  opacity: 1;
-}
 .field-help {
   font-size: var(--noa-text-meta);
-  color: #94a3b8;
+  color: var(--noa-ink-soft);
   margin: 6px 0 0;
   line-height: 1.4;
 }
@@ -363,24 +293,24 @@ const handleLegal = (nombre) => {
   align-items: center;
   gap: 10px;
   min-height: var(--noa-input-min);
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
+  background: var(--noa-campo);
+  border: 1.5px solid var(--noa-line-soft);
   border-radius: 14px;
   padding: 13px 14px;
   transition: border-color .2s, background-color .2s, box-shadow .2s;
 }
 .input-wrap:focus-within {
-  border-color: #3b82f6;
-  background: #fff;
+  border-color: var(--noa-enfoque);
+  background: var(--noa-card);
   box-shadow: 0 0 0 3px rgba(59,130,246,.1);
 }
 .input-wrap.input-error {
-  border-color: #e5484d;
-  background: #fef4f4;
+  border-color: var(--noa-error-vivo);
+  background: var(--noa-error-fondo);
 }
 .input-wrap svg {
   width: 17px; height: 17px;
-  stroke: #94a3b8;
+  stroke: var(--noa-muted);
   flex-shrink: 0;
 }
 .login-input {
@@ -389,12 +319,12 @@ const handleLegal = (nombre) => {
   border: none;
   outline: none;
   background: transparent;
-  font-size: 15px;
+  font-size: var(--noa-text-title);
   font-family: inherit;
-  color: #1e293b;
+  color: var(--noa-ink-form);
   padding: 0;
 }
-.login-input::placeholder { color: #94a3b8; }
+.login-input::placeholder { color: var(--noa-muted); }
 .eye-btn {
   background: none;
   border: none;
@@ -408,23 +338,23 @@ const handleLegal = (nombre) => {
   cursor: pointer;
   font-family: inherit;
 }
-.eye-btn svg { stroke: #cbd5e1; }
-.eye-btn:focus-visible, .forgot:focus-visible, .btn-login:focus-visible,
-.bio-btn:focus-visible, .terms-link:focus-visible {
-  outline: 2px solid #3b82f6;
+.eye-btn svg { stroke: var(--noa-muted); }
+.eye-btn:focus-visible, .btn-login:focus-visible,
+.terms-link:focus-visible {
+  outline: 2px solid var(--noa-enfoque);
   outline-offset: 2px;
 }
 .field-error {
   display: block;
-  font-size: 12px;
-  color: #e5484d;
+  font-size: var(--noa-text-meta);
+  color: var(--noa-error-vivo);
   margin-top: 6px;
 }
 .alert-error {
-  background: #fef4f4;
-  border: 1px solid #f4b8ba;
-  color: #c2222a;
-  font-size: 13px;
+  background: var(--noa-error-fondo);
+  border: 1px solid var(--noa-error-borde);
+  color: var(--noa-error-texto);
+  font-size: var(--noa-text-body);
   padding: 10px 12px;
   border-radius: 12px;
   margin-bottom: 14px;
@@ -435,13 +365,13 @@ const handleLegal = (nombre) => {
   width: 100%;
   min-height: var(--noa-touch-cta);
   padding: 15px;
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  background: var(--noa-cta);
   border: none;
   border-radius: 14px;
-  font-size: 15px;
+  font-size: var(--noa-text-body);
   font-weight: 700;
   font-family: inherit;
-  color: #fff;
+  color: var(--noa-on-primary);
   letter-spacing: .02em;
   cursor: pointer;
   margin-top: 6px;
@@ -464,56 +394,27 @@ const handleLegal = (nombre) => {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
   transform: skewX(-20deg);
 }
-.btn-login svg { width: 17px; height: 17px; stroke: #fff; flex-shrink: 0; }
+.btn-login svg { width: 17px; height: 17px; stroke: var(--noa-on-primary); flex-shrink: 0; }
 .btn-login:disabled { opacity: .75; cursor: not-allowed; }
 .btn-spinner {
   width: 16px; height: 16px;
   border: 2px solid rgba(255,255,255,.4);
-  border-top-color: #fff;
+  border-top-color: var(--noa-on-primary);
   border-radius: 50%;
   animation: login-spin .7s linear infinite;
 }
 @keyframes login-spin { to { transform: rotate(360deg); } }
 
-/* ── Biométrico ── */
-.biometric-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-}
-.bio-divider { flex: 1; height: 1px; background: #e2e8f0; }
-.bio-text { font-size: var(--noa-text-meta); color: #94a3b8; white-space: nowrap; }
-.bio-btn {
-  width: 100%;
-  min-height: var(--noa-touch-cta);
-  padding: 12px;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  font-size: var(--noa-text-body);
-  font-weight: 600;
-  font-family: inherit;
-  color: #475569;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-}
-.bio-btn svg { width: 18px; height: 18px; stroke: #475569; flex-shrink: 0; }
-
 /* ── Términos ── */
 .terms {
   text-align: center;
   font-size: var(--noa-text-meta);
-  color: #94a3b8;
+  color: var(--noa-ink-soft);
   margin-top: 18px;
   line-height: 1.5;
 }
 .terms-link {
-  color: #3b82f6;
+  color: var(--noa-enfoque);
   font-weight: 600;
   font-size: inherit;
   font-family: inherit;
@@ -525,7 +426,7 @@ const handleLegal = (nombre) => {
 
 .bottom-pad {
   height: 28px;
-  background: #eef2f9;
+  background: var(--noa-fondo);
   flex-shrink: 0;
   flex-grow: 1;
 }

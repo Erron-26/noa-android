@@ -89,6 +89,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { useAuthStore, useConfigStore, usePermissionsStore } from '@store';
 import { confirmLogout } from '@/utils/confirm.js';
+import { usePantallaCompleta } from '@/hooks/usePantallaCompleta.js';
 import { logger } from '@utils/logger.js';
 
 const props = defineProps({
@@ -123,20 +124,15 @@ async function ejecutarCerrarSesion() {
   }
 }
 
+/** Ancho completo (hook compartido) + clase propia para los extras del shell. */
+usePantallaCompleta();
+
 onMounted(() => {
   document.body.classList.add('mobile-conductor-active');
-  const container = document.querySelector('[data-layout]');
-  if (container) {
-    container.classList.add('mobile-full-width');
-  }
 });
 
 onUnmounted(() => {
   document.body.classList.remove('mobile-conductor-active');
-  const container = document.querySelector('[data-layout]');
-  if (container) {
-    container.classList.remove('mobile-full-width');
-  }
 });
 
 const tieneNoLeidas = computed(() => Number(props.noLeidas) > 0);
@@ -562,32 +558,8 @@ function esActiva(item) {
   gap: 6px;
 }
 
-/* ── REGLAS GLOBALES DE ANCHO COMPLETO EN MÓVIL ────────── */
-:global(body.mobile-conductor-active) {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  max-width: 100vw !important;
-  overflow-x: hidden !important;
-}
-:global(body.mobile-conductor-active .main),
-:global(body.mobile-conductor-active [data-layout="container"]),
-:global(body.mobile-conductor-active .container),
-:global(body.mobile-conductor-active .container-fluid),
-:global(body.mobile-conductor-active #app) {
-  width: 100% !important;
-  max-width: 100vw !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-:global(.mobile-full-width) {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  max-width: 100vw !important;
-  width: 100% !important;
-}
+/* El ancho completo vive en `src/styles/ancho-completo.css` (clase
+   `noa-fullbleed`, hook `usePantallaCompleta()`). Aquí solo los extras del shell. */
 :global(body.mobile-conductor-active section) {
   padding-top: 0 !important;
   padding-bottom: 0 !important;

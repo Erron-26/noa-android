@@ -44,6 +44,27 @@
     --noa-error-borde: #f4b8ba;
     --noa-error-texto: #c2222a;
 
+    /* ── Portal del conductor (antes fijos en ConductorDashboardMobileView.vue) ── */
+    --noa-hero-inicio: linear-gradient(135deg, #0c2461 0%, #10307e 50%, #0a1f52 100%);
+    --noa-hero-soft: #93c5fd;
+    --noa-texto-secundario: #64748b;
+    --noa-fondo-secundario: #f1f5f9;
+    --noa-tinte-azul: #eff6ff;
+    --noa-tinte-verde: #f0fdf4;
+    --noa-tinte-teal: #f0fdfa;
+    --noa-fondo-interno: #dbe1ff;
+    --noa-verde-vivo: #22c55e;
+    --noa-fondo-ambar: #fff7ed;
+    --noa-borde-ambar: #fdba74;
+    --noa-ambar-claro: #ffedd5;
+    --noa-titulo-ambar: #9a3412;
+    --noa-desc-ambar: #c2410c;
+    --noa-naranja-oscuro: #ea580c;
+    --noa-verde-fondo: #f6fef9;
+    --noa-verde-claro: #86efac;
+    --noa-borde-exito: #bbf7d0;
+    --noa-texto-exito: #166534;
+
     /* ── Tipografía Inter (mínimos propios, no los 11 px de Stitch) ── */
     --noa-font: 'Inter', system-ui, -apple-system, sans-serif;
     --noa-text-title: 16px;

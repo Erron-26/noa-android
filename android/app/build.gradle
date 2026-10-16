@@ -13,9 +13,9 @@ android {
         // versionCode/versionName los inyecta el workflow desde el tag vX.Y.Z.
         // Valores locales solo para desarrollo con Android Studio.
         // versionCode 6: la v1.1.3 publicada por CI quedó en 6; el CI
-        // sumará +1 (=> 7) para que Android acepte la actualización.
-        versionCode 9
-        versionName "1.1.7"
+        // sumará +1 (=> 11) para que Android acepte la actualización sobre v1.2.1.
+        versionCode 10
+        versionName "1.2.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

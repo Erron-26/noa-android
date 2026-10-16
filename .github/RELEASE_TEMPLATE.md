@@ -1,26 +1,21 @@
-## NOA v1.1.0 — Rediseño del panel de conductor y navegación móvil
+## NOA v1.2.2 — Ajustes del login móvil y ancho completo
 
 App de Transportes Sin Barreras para Android (Vue + Capacitor).
 
 ### Incluye
-- Rediseño integral para dispositivos móviles del panel de conductor:
-  - Barra de navegación inferior fija (`ConductorBottomNav`) adaptada al safe-area de Android.
-  - Tarjeta persistente de servicio activo (`ActiveServiceStickyCard`) con estado en tiempo real.
-  - Carrusel interactivo vehicular (`VehicleCarousel`) con formato de placa colombiana.
-  - Cuadrícula de accesos rápidos (`QuickActionsGrid`) a inspecciones, FUEC y tareas prioritarias.
-  - Mapa móvil de ubicación propia (`DriverSelfMapMobile`) y cronología de actividad (`RecentActivityTimeline`).
-- Integración nativa de `@capacitor-community/file-opener` para descarga e instalación directa del APK.
-- Alerta automática de nueva versión en web y Android (con banner no intrusivo y comprobación semver).
-- Acceso, gestión FUEC y rastreo GPS en segundo plano con servicio foreground persistente.
-- Icono e identidad NOA (`com.transportessinbarreras.noa`).
+- Login móvil a ancho completo: la pantalla sangra hasta los bordes (neutraliza el padding lateral del contenedor) y el comportamiento se centraliza en una sola utilidad (`noa-fullbleed` + `usePantallaCompleta`) en lugar de CSS duplicado entre vistas.
+- Tokens de diseño para el login: los colores y gradientes que estaban fijos en `LoginMobile.vue` pasan a variables en `tokens.css` (hero, botón principal, campos, estados de enfoque y error).
+- Se retira el botón "Acceso biométrico" del login (solo mostraba un aviso de que no estaba disponible); la biometría queda documentada como investigación futura, sin implementar (`docs/features/biometria.md`).
+- Prueba unitaria de la utilidad de pantalla completa (`src/utils/__tests__/pantallaCompleta.test.js`).
+- Nuevo `.env.development` para desarrollo local (no afecta los builds de release).
 
 ### Requisitos
 - Android 7.0 o superior.
-- Conexión a https://api.transportessinbarreras.com.
+- Conexión a https://apinoatransportes.solucionesintegralesmana.com.
 - Permisos: ubicación (incluida en segundo plano), notificaciones, ejecución en segundo plano e instalación de paquetes.
 
 ### Instalación
-1. Descargar `NOA-v1.1.0.apk` desde este Release.
+1. Descargar `NOA-v1.2.2.apk` desde este Release.
 2. Permitir "instalar apps desconocidas" cuando Android lo pida.
 3. Abrir NOA e iniciar sesión con tu usuario.
 
@@ -30,6 +25,5 @@ App de Transportes Sin Barreras para Android (Vue + Capacitor).
 - Verifica el SHA256 con el `.sha256.txt` adjunto si lo descargaste fuera de aquí.
 
 ### Verificación técnica
-- `applicationId com.transportessinbarreras.noa`, `versionName 1.1.0`, `versionCode 3`, APK firmado release.
+- `applicationId com.transportessinbarreras.noa`, `versionName 1.2.2`, `versionCode 11` (build.gradle 10 + 1), APK firmado release.
 - Para la próxima versión solo cambian versión y la sección "Incluye".
-

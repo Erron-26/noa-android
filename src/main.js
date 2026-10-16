@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./styles/tokens.css";
+import "./styles/ancho-completo.css";
 import "./assets/primevue-bridge.css";
 import "./assets/modals-android.css";
 // Estilos de SweetAlert2 (los toasts usan import() diferido, el CSS queda en el bundle inicial)

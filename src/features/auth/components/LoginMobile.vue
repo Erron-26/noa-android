@@ -231,7 +231,7 @@ const handleLegal = (nombre) => {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--noa-live);
+  background: var(--noa-verde-claro);
 }
 .hero-tagline {
   font-size: var(--noa-text-body);

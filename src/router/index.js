@@ -51,24 +51,9 @@ const createRoute = (path, component, options = {}) => ({
     children: options.children || [],
 });
 
-const initialView = import.meta.env.VITE_INITIAL_VIEW || "home";
-
 const routes = [
-    createRoute(
-        "/",
-        () => initialView === "login"
-            ? import("@features/auth/views/LoginView.vue")
-            : import("@pages/HomeView.vue"),
-        {
-            name: "home",
-            layout: initialView === "login" ? "auth" : "default",
-            meta: {
-                public: true,
-                title: initialView === "login" ? "Iniciar Sesión" : "Inicio",
-                guestOnly: initialView === "login"
-            }
-        }
-    ),
+    // La raíz apunta al login del módulo de auth (no se duplica la vista aquí).
+    { path: "/", redirect: "/login" },
 
     // Auth & Dashboard (Modular Feature Routes)
     ...authRoutes,
